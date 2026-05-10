@@ -8,7 +8,7 @@ import app3Img from '../assets/app_3.jpg';
 import app4Img from '../assets/app_4.jpg';
 import app5Img from '../assets/app_5.jpg';
 import app6Img from '../assets/app_6.jpg';
-import app7Img from '../assets/app_7.jpg';
+import app7Img from '../assets/app_7.png';
 import app8Img from '../assets/app_8.jpg';
 import app9Img from '../assets/app_9.jpg';
 import downloadBtn from '../assets/download_button.jpg';
@@ -95,18 +95,18 @@ const keyFeatures = [
 ];
 
 const supportedCryptos = [
-  { name: 'Bitcoin', symbol: 'BTC', network: 'Layer 1 + Lightning' },
-  { name: 'Ethereum', symbol: 'ETH', network: 'Layer 1' },
-  { name: 'USDT', symbol: 'USDT', network: 'Multi-chain' },
-  { name: 'USDC', symbol: 'USDC', network: 'Multi-chain' },
-  { name: 'Litecoin', symbol: 'LTC', network: 'Layer 1' },
-  { name: 'Dogecoin', symbol: 'DOGE', network: 'Layer 1' },
-  { name: 'Monero', symbol: 'XMR', network: 'Privacy' },
-  { name: 'Solana', symbol: 'SOL', network: 'Layer 1' },
-  { name: 'Polygon', symbol: 'MATIC', network: 'Layer 2' },
-  { name: 'Arbitrum', symbol: 'ARB', network: 'Layer 2' },
-  { name: 'Optimism', symbol: 'OP', network: 'Layer 2' },
-  { name: 'Avalanche', symbol: 'AVAX', network: 'Layer 1' }
+  { name: 'Bitcoin', symbol: 'BTC', network: 'Layer 1 + Lightning', icon: '₿', color: '#F7931A' },
+  { name: 'Ethereum', symbol: 'ETH', network: 'Layer 1', icon: 'Ξ', color: '#627EEA' },
+  { name: 'USDT', symbol: 'USDT', network: 'Multi-chain', icon: '₮', color: '#26A17B' },
+  { name: 'USDC', symbol: 'USDC', network: 'Multi-chain', icon: '◎', color: '#2775CA' },
+  { name: 'Litecoin', symbol: 'LTC', network: 'Layer 1', icon: 'Ł', color: '#345D9D' },
+  { name: 'Dogecoin', symbol: 'DOGE', network: 'Layer 1', icon: 'Ð', color: '#BA9F33' },
+  { name: 'Monero', symbol: 'XMR', network: 'Privacy', icon: '⬡', color: '#FF6600' },
+  { name: 'Solana', symbol: 'SOL', network: 'Layer 1', icon: '◎', color: '#14F195' },
+  { name: 'Polygon', symbol: 'MATIC', network: 'Layer 2', icon: '△', color: '#8247E5' },
+  { name: 'Optimism', symbol: 'OP', network: 'Layer 2', icon: '◆', color: '#FF0420' },
+  { name: 'Avalanche', symbol: 'AVAX', network: 'Layer 1', icon: '▲', color: '#E84142' },
+  { name: 'Chainlink', symbol: 'LINK', network: 'Layer 1', icon: '⛓', color: '#375BD2' }
 ];
 
 const comparisonData = [
@@ -316,11 +316,11 @@ export default function Products() {
           <div className="crypto-grid">
             {supportedCryptos.map((crypto, index) => (
               <div key={index} className="crypto-card fade-in">
+                <div className="crypto-icon" style={{ color: crypto.color, backgroundColor: `${crypto.color}15` }}>{crypto.icon}</div>
                 <div className="crypto-info">
                   <span className="crypto-symbol">{crypto.symbol}</span>
                   <span className="crypto-name">{crypto.name}</span>
                 </div>
-                <span className="crypto-network">{crypto.network}</span>
               </div>
             ))}
           </div>

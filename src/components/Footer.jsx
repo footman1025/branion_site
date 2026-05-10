@@ -18,12 +18,12 @@ export default function Footer() {
         </div>
 
         <div className="footer-links">
-          <h4>{f.services}</h4>
+          <h4>Services</h4>
           <ul>
-            <li><Link to="/products">DeFi Protocol Suite</Link></li>
-            <li><Link to="/products">Smart Contract Platform</Link></li>
-            <li><Link to="/products">Web3 Wallet SDK</Link></li>
-            <li><Link to="/products">Chain Analytics</Link></li>
+            <li><Link to="/services">DeFi Protocol Suite</Link></li>
+            <li><Link to="/services">Smart Contract Platform</Link></li>
+            <li><Link to="/services">Cross-Chain Bridge</Link></li>
+            <li><Link to="/services">Web3 Wallet Infrastructure</Link></li>
           </ul>
         </div>
 

@@ -518,87 +518,98 @@
 /* ── Mission & Goals Split Section ── */
 .mission-goals-split-section {
   position: relative;
-  height: 400px;
-  background: url('../assets/contact.jpg') center center / cover no-repeat;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: #ffffff;
 }
 
-/* Mission Half - Top */
+/* Mission Half - Left */
 .mission-half {
   position: relative;
-  height: 50%;
   display: flex;
   align-items: center;
+  padding: 80px 60px;
+  background: linear-gradient(135deg, #f0f8ff 0%, #f5f5ff 100%);
 }
 
 .mission-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.85) 0%, rgba(168, 85, 247, 0.85) 100%);
+  position: relative;
+  inset: auto;
+  background: transparent;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .mission-content {
-  color: #fff;
-  max-width: 600px;
+  color: #111827;
+  max-width: 100%;
 }
 
 .mission-content h2 {
   font-family: 'Outfit', sans-serif;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  margin-bottom: 16px;
-  color: #fff;
+  margin-bottom: 20px;
+  color: #111827;
+  letter-spacing: -0.5px;
 }
 
 .mission-content p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.7;
+  color: #6b7280;
   margin: 0;
 }
 
-/* Goals Half - Bottom */
+/* Goals Half - Right */
 .goals-half {
   position: relative;
-  height: 50%;
   display: flex;
   align-items: center;
+  padding: 80px 60px;
+  background: linear-gradient(135deg, #f5f5ff 0%, #f0f8ff 100%);
 }
 
 .goals-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(88, 28, 135, 0.85) 0%, rgba(109, 40, 217, 0.85) 100%);
+  position: relative;
+  inset: auto;
+  background: transparent;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .goals-content {
-  color: #fff;
-  max-width: 600px;
+  color: #111827;
+  max-width: 100%;
 }
 
 .goals-content h2 {
   font-family: 'Outfit', sans-serif;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  margin-bottom: 16px;
-  color: #fff;
+  margin-bottom: 20px;
+  color: #111827;
+  letter-spacing: -0.5px;
 }
 
 .goals-content p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.7;
+  color: #6b7280;
   margin: 0;
 }
 
 @media (max-width: 768px) {
   .mission-goals-split-section {
-    height: 350px;
+    grid-template-columns: 1fr;
+  }
+  
+  .mission-half,
+  .goals-half {
+    padding: 60px 40px;
   }
   
   .mission-content h2,

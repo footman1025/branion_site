@@ -211,7 +211,7 @@ function TestimonialsSlider() {
 
   return (
     <div className="t-slider">
-      <div className="t-body">
+      <div className="t-body" key={idx}>
         <div className="t-left">
           <Stars rating={t.rating} />
           <p className="t-review">"{t.review}"</p>

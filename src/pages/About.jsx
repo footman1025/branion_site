@@ -342,11 +342,11 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Interexy */}
+      {/* Why Bravion */}
       <section className="section why-interexy-section">
         <div className="container">
           <span className="expertise-tag">Our expertise</span>
-          <h2 className="expertise-title">Why Interexy?</h2>
+          <h2 className="expertise-title">Why Bravion?</h2>
           <div className="expertise-grid">
             <div className="expertise-item">
               <div className="expertise-icon new-world">

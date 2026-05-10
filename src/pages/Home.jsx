@@ -201,11 +201,11 @@ function TestimonialsSlider() {
   const total = TESTIMONIALS.length;
   const t = TESTIMONIALS[idx];
 
-  // Auto-rotate testimonials every 5 seconds
+  // Auto-rotate testimonials every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setIdx(i => (i + 1) % total);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [total]);
 

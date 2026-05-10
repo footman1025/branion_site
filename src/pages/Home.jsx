@@ -200,18 +200,12 @@ function TestimonialsSlider() {
   const [idx, setIdx] = useState(0);
   const total = TESTIMONIALS.length;
   const t = TESTIMONIALS[idx];
-
-  // Auto-rotate testimonials every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIdx(i => (i + 1) % total);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [total]);
+  const prev = () => setIdx(i => (i - 1 + total) % total);
+  const next = () => setIdx(i => (i + 1) % total);
 
   return (
     <div className="t-slider">
-      <div className="t-body" key={idx}>
+      <div className="t-body">
         <div className="t-left">
           <Stars rating={t.rating} />
           <p className="t-review">"{t.review}"</p>
@@ -227,15 +221,14 @@ function TestimonialsSlider() {
           <a href={t.caseLink} className="t-case-btn">Full case</a>
         </div>
       </div>
-      <div className="t-indicators">
-        {TESTIMONIALS.map((_, i) => (
-          <button
-            key={i}
-            className={`t-indicator ${idx === i ? 'active' : ''}`}
-            onClick={() => setIdx(i)}
-            aria-label={`Testimonial ${i + 1}`}
-          />
-        ))}
+      <div className="t-nav">
+        <button onClick={prev} aria-label="Previous" className="t-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span className="t-counter">{idx + 1} / {total}</span>
+        <button onClick={next} aria-label="Next" className="t-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
       </div>
     </div>
   );

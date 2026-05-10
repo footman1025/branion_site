@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import service2Img from '../assets/service_2.jpg';
+import service2Img from '../assets/service_2.png';
 import './MetaverseDev.css';
 
 export default function MetaverseDev() {

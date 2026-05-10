@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useLang } from '../context/LangContext';
 import homeImg from '../assets/home.png';
-import appImg from '../assets/app_!.jpg';
+import appImg from '../assets/5435.png';
 import app2Img from '../assets/app_2.jpg';
 import app3Img from '../assets/app_3.jpg';
 import app4Img from '../assets/app_4.jpg';

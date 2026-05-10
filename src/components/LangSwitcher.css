@@ -1,0 +1,91 @@
+.lang-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  color: #374151;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.lang-btn:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+/* On transparent navbar (home hero) — white style */
+.navbar.transparent .lang-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+}
+.navbar.transparent .lang-btn:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.5);
+}
+.navbar.transparent .lang-code { color: #fff; }
+.navbar.transparent .lang-chevron { color: #fff; }
+
+.lang-flag { font-size: 14px; line-height: 1; }
+.lang-code { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #374151; }
+.lang-chevron { font-size: 7px; opacity: 0.6; margin-left: 1px; color: #374151; }
+
+/* Dropdown — always white theme */
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  list-style: none;
+  margin: 0;
+  min-width: 160px;
+  padding: 6px 0;
+  z-index: 9999;
+  animation: dropIn 0.12s ease;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  cursor: pointer;
+  color: #374151;
+  font-size: 13px;
+  transition: background 0.12s, color 0.12s;
+}
+
+.lang-option:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.lang-option.active {
+  background: #e0f7ff;
+  color: #00bfff;
+  font-weight: 600;
+}
+
+.lang-label { flex: 1; }

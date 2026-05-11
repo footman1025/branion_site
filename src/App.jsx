@@ -1,29 +1,51 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { LangProvider } from './context/LangContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Products from './pages/Products';
-import Pricing from './pages/Pricing';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import Refer from './pages/Refer';
-import CaseStudies from './pages/CaseStudies';
-import Web3Dev from './pages/Web3Dev';
-import NFTDev from './pages/NFTDev';
-import NFTMarketplace from './pages/NFTMarketplace';
-import CryptoCheckout from './pages/CryptoCheckout';
-import CryptoWallets from './pages/CryptoWallets';
-import RealEstate from './pages/RealEstate';
-import MetaverseDev from './pages/MetaverseDev';
 import CookieBanner from './components/CookieBanner';
+
+// Lazy load pages for code splitting
+const Home = lazy(() => import('./pages/Home'));
+const Services = lazy(() => import('./pages/Services'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Login = lazy(() => import('./pages/Login'));
+const Signup = lazy(() => import('./pages/Signup'));
+const Products = lazy(() => import('./pages/Products'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Refer = lazy(() => import('./pages/Refer'));
+const CaseStudies = lazy(() => import('./pages/CaseStudies'));
+const Web3Dev = lazy(() => import('./pages/Web3Dev'));
+const NFTDev = lazy(() => import('./pages/NFTDev'));
+const NFTMarketplace = lazy(() => import('./pages/NFTMarketplace'));
+const CryptoCheckout = lazy(() => import('./pages/CryptoCheckout'));
+const CryptoWallets = lazy(() => import('./pages/CryptoWallets'));
+const RealEstate = lazy(() => import('./pages/RealEstate'));
+const MetaverseDev = lazy(() => import('./pages/MetaverseDev'));
+const AIRecommendations = lazy(() => import('./pages/AIRecommendations'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+
+// Loading fallback component
+function PageLoader() {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '60vh',
+      color: '#6b7280',
+      fontSize: '14px'
+    }}>
+      Loading...
+    </div>
+  );
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -82,28 +104,33 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        <Route path="/products" element={<Products />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/refer" element={<Refer />} />
-          <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/web3-development" element={<Web3Dev />} />
-          <Route path="/smart-payments" element={<Web3Dev />} />
-          <Route path="/nft-development" element={<NFTDev />} />
-          <Route path="/ai-recommendations" element={<NFTDev />} />
-          <Route path="/nft-marketplace" element={<NFTMarketplace />} />
-          <Route path="/crypto-checkout" element={<CryptoCheckout />} />
-          <Route path="/crypto-wallets" element={<CryptoWallets />} />
-          <Route path="/web3-mvps" element={<CryptoWallets />} />
-          <Route path="/real-estate-tokenization" element={<RealEstate />} />
-          <Route path="/metaverse-development" element={<MetaverseDev />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/refer" element={<Refer />} />
+            <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/web3-development" element={<Web3Dev />} />
+            <Route path="/smart-payments" element={<Web3Dev />} />
+            <Route path="/nft-development" element={<NFTDev />} />
+            <Route path="/ai-recommendations" element={<AIRecommendations />} />
+            <Route path="/nft-marketplace" element={<NFTMarketplace />} />
+            <Route path="/crypto-checkout" element={<CryptoCheckout />} />
+            <Route path="/crypto-wallets" element={<CryptoWallets />} />
+            <Route path="/web3-mvps" element={<CryptoWallets />} />
+            <Route path="/real-estate-tokenization" element={<RealEstate />} />
+            <Route path="/metaverse-development" element={<MetaverseDev />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+          </Routes>
+        </Suspense>
         <Footer />
         <Chatbot />
         <ScrollToTopBtn />

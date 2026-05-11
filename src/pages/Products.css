@@ -250,7 +250,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #00bfff 0%, #818cf8 100%);
+  background: linear-gradient(135deg, #00bfff 0%, #0ea5e9 100%);
   color: #fff;
   box-shadow: 0 4px 20px rgba(0, 191, 255, 0.4);
 }
@@ -713,7 +713,7 @@
 /* ROI Section */
 .products-roi {
   padding: 100px 0;
-  background: #fff;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
 }
 
 .roi-content {
@@ -724,17 +724,18 @@
 }
 
 .roi-example {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: #fff;
+  border: 1px solid #bae6fd;
   border-radius: 16px;
   padding: 32px;
   margin-top: 32px;
+  box-shadow: 0 4px 16px rgba(0, 191, 255, 0.08);
 }
 
 .roi-example h3 {
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: #0f172a;
   margin-bottom: 24px;
 }
 
@@ -750,24 +751,24 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: #fff;
+  background: #f0f9ff;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #bae6fd;
 }
 
 .roi-item.highlight {
   border-color: #00bfff;
-  background: rgba(0, 191, 255, 0.05);
+  background: linear-gradient(135deg, #e0f2fe 0%, #cffafe 100%);
 }
 
 .roi-label {
   font-weight: 600;
-  color: #374151;
+  color: #475569;
 }
 
 .roi-value {
   font-weight: 700;
-  color: #111827;
+  color: #0f172a;
 }
 
 .roi-item.highlight .roi-value {
@@ -779,15 +780,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background: linear-gradient(135deg, #00bfff 0%, #818cf8 100%);
+  background: linear-gradient(135deg, #00bfff 0%, #0ea5e9 100%);
   color: #fff;
   border-radius: 8px;
   font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 191, 255, 0.3);
 }
 
 .roi-note {
   font-size: 12px;
-  color: #6b7280;
+  color: #64748b;
   font-style: italic;
 }
 

@@ -101,17 +101,6 @@ export default function CryptoCheckout() {
         />
       </section>
 
-      {/* Overview */}
-      <section className="cc-section">
-        <div className="cc-container">
-          <span className="cc-label">Crypto Payments</span>
-          <h2 className="cc-title">Crypto Checkout Integration</h2>
-          <p className="cc-overview">
-            We help e-commerce businesses accept crypto payments quickly and securely—without rebuilding their entire platform. Our solutions are designed for smooth checkout experiences, making it easy for customers to pay with digital assets while you receive stable, reliable transactions.
-          </p>
-        </div>
-      </section>
-
       {/* What We Deliver */}
       <section className="cc-section">
         <div className="cc-container">

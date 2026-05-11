@@ -202,7 +202,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <img src={logo} alt="Bravio" className="logo-img" />
+          <img src={logo} alt="Bravion" className="logo-img" />
         </Link>
 
         {/* Desktop Nav */}

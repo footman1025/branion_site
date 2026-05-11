@@ -533,7 +533,7 @@
   display: flex;
   align-items: center;
   padding: 80px 60px;
-  background: linear-gradient(135deg, #f0f8ff 0%, #f5f5ff 100%);
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
 }
 
 .mission-overlay {
@@ -555,14 +555,14 @@
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #111827;
+  color: #0f172a;
   letter-spacing: -0.5px;
 }
 
 .mission-content p {
   font-size: 15px;
   line-height: 1.7;
-  color: #6b7280;
+  color: #475569;
   margin: 0;
 }
 
@@ -572,7 +572,7 @@
   display: flex;
   align-items: center;
   padding: 80px 60px;
-  background: linear-gradient(135deg, #f5f5ff 0%, #f0f8ff 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
 }
 
 .goals-overlay {
@@ -594,14 +594,14 @@
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #111827;
+  color: #0f172a;
   letter-spacing: -0.5px;
 }
 
 .goals-content p {
   font-size: 15px;
   line-height: 1.7;
-  color: #6b7280;
+  color: #475569;
   margin: 0;
 }
 

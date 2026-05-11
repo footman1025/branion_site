@@ -67,24 +67,24 @@ const pricingPlans = [
 
 const faqs = [
   {
-    question: 'Is Bravio really free?',
-    answer: 'Yes! Bravio is completely free and open-source. You only pay for your infrastructure costs (server hosting). There are no transaction fees, monthly fees, or hidden costs.'
+    question: 'Is Bravion really free?',
+    answer: 'Yes! Bravion is completely free and open-source. You only pay for your infrastructure costs (server hosting). There are no transaction fees, monthly fees, or hidden costs.'
   },
   {
     question: 'What cryptocurrencies are supported?',
-    answer: 'Bravio supports 20+ cryptocurrencies including Bitcoin, Ethereum, USDT, USDC, Litecoin, Dogecoin, Monero, Solana, Polygon, and many more across multiple networks.'
+    answer: 'Bravion supports 20+ cryptocurrencies including Bitcoin, Ethereum, USDT, USDC, Litecoin, Dogecoin, Monero, Solana, Polygon, and many more across multiple networks.'
   },
   {
-    question: 'Do I need technical knowledge to set up Bravio?',
+    question: 'Do I need technical knowledge to set up Bravion?',
     answer: 'Basic technical knowledge is helpful, but we provide comprehensive documentation and Docker setup that can get you running in 5-10 minutes. Our community is also very helpful for support.'
   },
   {
-    question: 'Can I customize Bravio for my needs?',
-    answer: 'Absolutely! Bravio is open-source, so you can modify and customize it however you need. We also offer professional services for custom development.'
+    question: 'Can I customize Bravion for my needs?',
+    answer: 'Absolutely! Bravion is open-source, so you can modify and customize it however you need. We also offer professional services for custom development.'
   },
   {
     question: 'What about security and compliance?',
-    answer: 'Bravio is non-custodial, meaning you control your private keys and funds. The code is open-source and auditable. You can implement your own compliance measures as needed.'
+    answer: 'Bravion is non-custodial, meaning you control your private keys and funds. The code is open-source and auditable. You can implement your own compliance measures as needed.'
   },
   {
     question: 'How does support work?',
@@ -195,7 +195,7 @@ export default function Pricing() {
             <span className="section-tag">Cost Comparison</span>
             <h2 className="section-title">See How Much You Can Save</h2>
             <p className="section-subtitle">
-              Compare Bravio with traditional payment processors and see your potential savings
+              Compare Bravion with traditional payment processors and see your potential savings
             </p>
           </div>
           
@@ -231,7 +231,7 @@ export default function Pricing() {
               </div>
               
               <div className="savings-card highlighted">
-                <h4>Bravio</h4>
+                <h4>Bravion</h4>
                 <div className="cost-breakdown">
                   <div className="cost-item">
                     <span>Transaction Fees</span>
@@ -270,7 +270,7 @@ export default function Pricing() {
             <span className="section-tag">FAQ</span>
             <h2 className="section-title">Frequently Asked Questions</h2>
             <p className="section-subtitle">
-              Everything you need to know about Bravio pricing and features
+              Everything you need to know about Bravion pricing and features
             </p>
           </div>
           
@@ -303,13 +303,13 @@ export default function Pricing() {
           <div className="cta-content">
             <h2 className="cta-title">Ready to Get Started?</h2>
             <p className="cta-subtitle">
-              Join thousands of businesses already using Bravio to accept crypto payments with zero fees
+              Join thousands of businesses already using Bravion to accept crypto payments with zero fees
             </p>
             <div className="cta-actions">
               <Link to="/contact" className="btn btn-primary btn-large">
                 Start Free Trial
               </Link>
-              <a href="https://demo.bravio.org" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-large">
+              <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-large">
                 Try Demo
               </a>
             </div>

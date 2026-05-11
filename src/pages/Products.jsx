@@ -112,37 +112,37 @@ const supportedCryptos = [
 const comparisonData = [
   { 
     feature: 'Transaction Fees', 
-    bravio: '0%', 
+    Bravion: '0%', 
     traditional: '2.9% + $0.30'
   },
   { 
     feature: 'Monthly Fees', 
-    bravio: '$0', 
+    Bravion: '$0', 
     traditional: '$0-50'
   },
   { 
     feature: 'Settlement Time', 
-    bravio: 'Instant', 
+    Bravion: 'Instant', 
     traditional: '2-7 days'
   },
   { 
     feature: 'Chargebacks', 
-    bravio: 'Impossible', 
+    Bravion: 'Impossible', 
     traditional: 'Common risk'
   },
   { 
     feature: 'Account Freezing', 
-    bravio: 'Never', 
+    Bravion: 'Never', 
     traditional: 'Possible'
   },
   { 
     feature: 'Self-Hosted', 
-    bravio: 'Yes', 
+    Bravion: 'Yes', 
     traditional: 'No'
   },
   { 
     feature: 'AI Assistant', 
-    bravio: 'Built-in', 
+    Bravion: 'Built-in', 
     traditional: 'No'
   }
 ];
@@ -208,7 +208,7 @@ export default function Products() {
   const handleDownload = () => {
     const a = document.createElement('a');
     a.href = downloadBtn;
-    a.download = 'bravio_download.jpg';
+    a.download = 'Bravion_download.jpg';
     a.click();
   };
 
@@ -235,7 +235,7 @@ export default function Products() {
       {/* Floating Download Button */}
       <img 
         src={downloadBtn} 
-        alt="Download Bravio" 
+        alt="Download Bravion" 
         className="products-download-float" 
         onClick={handleDownload} 
       />
@@ -267,7 +267,7 @@ export default function Products() {
               </div>
             </div>
             <div className="products-hero-actions">
-              <a href="https://demo.bravio.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 Try Live Demo
               </a>
               <Link to="/contact" className="btn btn-outline">
@@ -276,7 +276,7 @@ export default function Products() {
             </div>
           </div>
           <div className="products-hero-visual">
-            <img src={homeImg} alt="Bravio Dashboard" className="products-hero-img" />
+            <img src={homeImg} alt="Bravion Dashboard" className="products-hero-img" />
           </div>
         </div>
       </section>
@@ -286,7 +286,7 @@ export default function Products() {
         <div className="container">
           <div className="section-header">
             <span className="section-tag">Key Features</span>
-            <h2 className="section-title">Why Choose Bravio?</h2>
+            <h2 className="section-title">Why Choose Bravion?</h2>
             <p className="section-subtitle">
               Complete cryptocurrency payment infrastructure that transforms your business
             </p>
@@ -332,9 +332,9 @@ export default function Products() {
         <div className="container">
           <div className="section-header">
             <span className="section-tag">Comparison</span>
-            <h2 className="section-title">Bravio vs Traditional Solutions</h2>
+            <h2 className="section-title">Bravion vs Traditional Solutions</h2>
             <p className="section-subtitle">
-              See how Bravio compares to traditional payment processors and crypto gateways
+              See how Bravion compares to traditional payment processors and crypto gateways
             </p>
           </div>
           <div className="comparison-table-wrapper">
@@ -342,7 +342,7 @@ export default function Products() {
               <thead>
                 <tr>
                   <th>Feature</th>
-                  <th className="highlight">Bravio</th>
+                  <th className="highlight">Bravion</th>
                   <th>Traditional Solutions</th>
                 </tr>
               </thead>
@@ -350,7 +350,7 @@ export default function Products() {
                 {comparisonData.map((row, index) => (
                   <tr key={index}>
                     <td className="feature-name">{row.feature}</td>
-                    <td className="bravio-value">{row.bravio}</td>
+                    <td className="Bravion-value">{row.Bravion}</td>
                     <td className="traditional-value">{row.traditional}</td>
                   </tr>
                 ))}
@@ -367,7 +367,7 @@ export default function Products() {
             <span className="section-tag">Use Cases</span>
             <h2 className="section-title">Perfect for Every Business</h2>
             <p className="section-subtitle">
-              From e-commerce to SaaS, Bravio adapts to your business needs
+              From e-commerce to SaaS, Bravion adapts to your business needs
             </p>
           </div>
           <div className="use-cases-grid">
@@ -395,7 +395,7 @@ export default function Products() {
               <span className="section-tag">ROI Calculator</span>
               <h2 className="section-title">Calculate Your Savings</h2>
               <p className="section-subtitle">
-                See how much you can save by switching to Bravio
+                See how much you can save by switching to Bravion
               </p>
               <div className="roi-example">
                 <h3>Example: $50,000/month processing</h3>
@@ -405,7 +405,7 @@ export default function Products() {
                     <span className="roi-value">$1,465/month</span>
                   </div>
                   <div className="roi-item highlight">
-                    <span className="roi-label">Bravio</span>
+                    <span className="roi-label">Bravion</span>
                     <span className="roi-value">$50/month*</span>
                   </div>
                   <div className="roi-savings">
@@ -423,88 +423,21 @@ export default function Products() {
         </div>
       </section>
 
-      {/* Getting Started */}
-      <section className="products-getting-started">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">Getting Started</span>
-            <h2 className="section-title">Deploy in Minutes</h2>
-            <p className="section-subtitle">
-              Three simple deployment options to get you started quickly
-            </p>
-          </div>
-          <div className="deployment-options">
-            <div className="deployment-card">
-              <div className="deployment-header">
-                <h3>Docker Compose</h3>
-                <span className="deployment-time">5 minutes</span>
-              </div>
-              <p>Perfect for testing and small deployments</p>
-              <div className="deployment-code">
-                <code>
-                  git clone https://github.com/vsys-host/Bravio.git<br/>
-                  cd Bravio<br/>
-                  docker compose up -d
-                </code>
-              </div>
-            </div>
-            <div className="deployment-card featured">
-              <div className="deployment-header">
-                <h3>Kubernetes/Helm</h3>
-                <span className="deployment-time">10 minutes</span>
-              </div>
-              <p>Production-ready with auto-scaling</p>
-              <div className="deployment-code">
-                <code>
-                  helm repo add vsys-host https://vsys-host.github.io/helm-charts<br/>
-                  helm install bravio vsys-host/bravio
-                </code>
-              </div>
-            </div>
-            <div className="deployment-card">
-              <div className="deployment-header">
-                <h3>Cloud Deployment</h3>
-                <span className="deployment-time">15 minutes</span>
-              </div>
-              <p>AWS, GCP, Azure compatible with SSL</p>
-              <div className="deployment-code">
-                <code>
-                  One-click deployment<br/>
-                  Automated SSL setup<br/>
-                  Scalable architecture
-                </code>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="products-cta">
         <div className="container">
           <div className="cta-content">
             <h2 className="cta-title">Ready to Transform Your Payment Processing?</h2>
             <p className="cta-subtitle">
-              Join 500+ businesses already using Bravio to accept crypto payments with zero fees
+              Join 500+ businesses already using Bravion to accept crypto payments with zero fees
             </p>
             <div className="cta-actions">
-              <a href="https://demo.bravio.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-large">
+              <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-large">
                 Try Live Demo
               </a>
               <Link to="/contact" className="btn btn-outline btn-large">
                 Schedule Consultation
               </Link>
-            </div>
-            <div className="cta-links">
-              <a href="https://github.com/vsys-host/Bravio" target="_blank" rel="noopener noreferrer">
-                📚 Documentation
-              </a>
-              <a href="https://t.me/Bravio_updates" target="_blank" rel="noopener noreferrer">
-                💬 Community
-              </a>
-              <a href="mailto:support@v-sys.org">
-                📧 Support
-              </a>
             </div>
           </div>
         </div>

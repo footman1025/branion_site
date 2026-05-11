@@ -154,7 +154,7 @@ function ParticleHero() {
 }
 
 const team = [
-  { name: 'Gabriel Ohno',  role: 'CEO & Co-Founder',     bio: "My mission is to ensure that we, at Bravio, always stick to our values. We have an obsession with our clients' success, laser focus on select few businesses and staying at the forefront of blockchain development.", founder: true, img: ceoImg },
+  { name: 'Gabriel Ohno',  role: 'CEO & Co-Founder',     bio: "My mission is to ensure that we, at Bravion, always stick to our values. We have an obsession with our clients' success, laser focus on select few businesses and staying at the forefront of blockchain development.", founder: true, img: ceoImg },
   { name: 'Emir Jensen',  role: 'Co-Founder & CTO',     bio: 'I am a scientist turned Software Engineer turned Senior IT Consultant and will be the bridge between your business objectives and development strategies. My intention is to become your ultimate development partner.', founder: true, img: ctoImg },
   { name: 'Leonard Erete',  role: 'CFO', img: cfoImg },
   { name: 'Fajar Ikhlaq',    role: 'Partnership Manager',  img: projectManagerImg },
@@ -232,7 +232,7 @@ export default function About() {
           <div className="mission-visual">
             <StatCard raw="2023" label="Founded" />
             <StatCard raw="10+" label="Chains Supported" />
-            <StatCard raw="$2B+" label="TVL Secured" />
+            <StatCard raw="20M+" label="TVL Secured" />
             <StatCard raw="50+" label="Protocols Deployed" />
           </div>
         </div>
@@ -342,11 +342,11 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Bravion */}
+      {/* Why Bravionn */}
       <section className="section why-interexy-section">
         <div className="container">
           <span className="expertise-tag">Our expertise</span>
-          <h2 className="expertise-title">Why Bravion?</h2>
+          <h2 className="expertise-title">Why Bravionn?</h2>
           <div className="expertise-grid">
             <div className="expertise-item">
               <div className="expertise-icon new-world">
@@ -397,46 +397,6 @@ export default function About() {
                 <span className="value-icon">{v.icon}</span>
                 <h3>{v.title}</h3>
                 <p>{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="section">
-        <div className="container">
-          <span className="tag">{t.aboutPage.teamTag}</span>
-          <h2 className="section-title">{t.aboutPage.teamTitle}</h2>
-
-          {/* Founders row */}
-          <div className="team-founders-grid">
-            {team.filter(m => m.founder).map(m => (
-              <div key={m.name} className="team-founder-card">
-                <div className="tfc-info">
-                  <h3>{m.name}</h3>
-                  <p className="tfc-role">{m.role}</p>
-                  <p className="tfc-bio">{m.bio}</p>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="tfc-linkedin" aria-label="LinkedIn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                  </a>
-                </div>
-                <div className="tfc-img-wrap">
-                  <img src={m.img} alt={m.name} className="tfc-img" />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Rest of team */}
-          <div className="team-members-grid">
-            {team.filter(m => !m.founder).map(m => (
-              <div key={m.name} className="team-member-card">
-                <img src={m.img} alt={m.name} className="tmc-img" />
-                <div className="tmc-bar">
-                  <span className="tmc-name">{m.name}</span>
-                  <span className="tmc-role">{m.role}</span>
-                </div>
               </div>
             ))}
           </div>

@@ -2,20 +2,20 @@ import { useState, useRef, useEffect } from 'react';
 import './Chatbot.css';
 import iconImg from '../assets/icon.png';
 
-const BOT_NAME = 'Bravio AI';
+const BOT_NAME = 'Bravion AI';
 
 const rules = [
   {
     match: ['hello', 'hi there', 'hey there', 'greetings', 'good morning', 'good evening', 'howdy'],
-    reply: 'Hey there! 👋 Welcome to Bravio. I can help you with our services, pricing, team, or anything else. What would you like to know?'
+    reply: 'Hey there! 👋 Welcome to Bravion. I can help you with our services, pricing, team, or anything else. What would you like to know?'
   },
   {
     match: ['role', "site's role", 'purpose', 'what is this site', 'what does this site do', 'mission', 'goal'],
-    reply: 'Bravio\'s role is to be your end-to-end technology partner. We design, build, and secure digital products — from web and mobile apps to blockchain and AI solutions — helping businesses launch faster, scale confidently, and stay secure.'
+    reply: 'Bravion\'s role is to be your end-to-end technology partner. We design, build, and secure digital products — from web and mobile apps to blockchain and AI solutions — helping businesses launch faster, scale confidently, and stay secure.'
   },
   {
-    match: ['about', 'know about', 'tell me', 'what is', 'who are', 'this site', 'this company', 'Bravio', 'your company'],
-    reply: 'Bravio is a global software development company founded in 2018. We have 12+ engineers across 10+ countries and have delivered 150+ projects. We build web, mobile, blockchain, and AI-powered products for startups and enterprises worldwide.'
+    match: ['about', 'know about', 'tell me', 'what is', 'who are', 'this site', 'this company', 'Bravion', 'your company'],
+    reply: 'Bravion is a global software development company founded in 2018. We have 12+ engineers across 10+ countries and have delivered 150+ projects. We build web, mobile, blockchain, and AI-powered products for startups and enterprises worldwide.'
   },
   {
     match: ['service', 'services', 'offer', 'what do you do', 'what can you do', 'capabilities'],
@@ -83,7 +83,7 @@ const rules = [
   },
   {
     match: ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cheers'],
-    reply: 'Thanks for chatting with Bravio AI! 🚀 Feel free to come back anytime. Have a great day!'
+    reply: 'Thanks for chatting with Bravion AI! 🚀 Feel free to come back anytime. Have a great day!'
   },
 ];
 
@@ -112,7 +112,7 @@ function getBotReply(input) {
   return "I'm not sure about that specifically, but our team can help! You can reach us at dreamtech1025@gmail.com or visit the Contact page for a free consultation. 😊";
 }
 
-const suggestions = ['Our Services', 'Pricing', 'Contact Us', 'About Bravio', 'Get a Quote'];
+const suggestions = ['Our Services', 'Pricing', 'Contact Us', 'About Bravion', 'Get a Quote'];
 
 const EMOJIS = [
   '😀','😂','😍','🥰','😎','🤔','👍','👋','🙏','🔥',

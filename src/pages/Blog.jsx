@@ -31,7 +31,7 @@ export default function Blog() {
         <div className="blog-hero-overlay" />
         <img className="blog-hero-bg" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1600&auto=format&fit=crop&q=80" alt="" aria-hidden="true" />
         <div className="blog-hero-content">
-          <h1>Bravio Blog:<br />Expert Insights &amp; Guides</h1>
+          <h1>Bravion Blog:<br />Expert Insights &amp; Guides</h1>
           <p>New product features, the latest in technology, solutions and updates.</p>
           <div className="blog-subscribe">
             {subscribed ? (

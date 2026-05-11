@@ -12,7 +12,7 @@ export default function MetaverseDev() {
             <h1>Metaverse Development<br />Services</h1>
             <p>
               Metaverse is a buzzword and for a good reason. It offers a potential to
-              enter various fields and cover numerous use cases. Bravio is a pioneer in
+              enter various fields and cover numerous use cases. Bravion is a pioneer in
               the metaverse development with in-depth expertise in the industry and
               related technologies.
             </p>

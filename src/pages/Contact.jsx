@@ -55,7 +55,7 @@ const DIALCODES = ['+1','+44','+1','+61','+49','+33','+91','+971','+65'];
 const TESTIMONIALS = [
   {
     rating: 4.5,
-    review: "In less than three months, Bravio successfully delivered a stable application. External stakeholders gave overall positive feedback, and the client was impressed with the team's project management. They communicated effectively through Slack, video meetings, Confluence, and Jira.",
+    review: "In less than three months, Bravion successfully delivered a stable application. External stakeholders gave overall positive feedback, and the client was impressed with the team's project management. They communicated effectively through Slack, video meetings, Confluence, and Jira.",
     name: 'Marcus Eng',
     role: 'CEO, Anatomia (PhysAct)',
     project: 'Project',
@@ -64,7 +64,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "Bravio delivered our blockchain platform on time and within budget. The smart contracts were thoroughly audited and the team was proactive in suggesting improvements. Highly recommend for any Web3 project.",
+    review: "Bravion delivered our blockchain platform on time and within budget. The smart contracts were thoroughly audited and the team was proactive in suggesting improvements. Highly recommend for any Web3 project.",
     name: 'Sarah Chen',
     role: 'CTO, ChainVault',
     project: 'Project',
@@ -73,7 +73,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "The team exceeded our expectations at every stage. From discovery to launch, communication was seamless and the final product was polished and performant. We will definitely work with Bravio again.",
+    review: "The team exceeded our expectations at every stage. From discovery to launch, communication was seamless and the final product was polished and performant. We will definitely work with Bravion again.",
     name: 'James Rivera',
     role: 'Founder, NexusAI',
     project: 'Project',
@@ -82,7 +82,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 4.5,
-    review: "Professional, fast, and detail-oriented. Bravio built our cross-platform mobile app in React Native and it works flawlessly on both iOS and Android. The code quality was excellent.",
+    review: "Professional, fast, and detail-oriented. Bravion built our cross-platform mobile app in React Native and it works flawlessly on both iOS and Android. The code quality was excellent.",
     name: 'Priya Patel',
     role: 'Product Manager, MediTrack',
     project: 'Project',
@@ -91,7 +91,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "We hired Bravio for a security audit and penetration test. They found critical vulnerabilities we had missed and provided clear remediation steps. Our platform is now SOC2 compliant thanks to their work.",
+    review: "We hired Bravion for a security audit and penetration test. They found critical vulnerabilities we had missed and provided clear remediation steps. Our platform is now SOC2 compliant thanks to their work.",
     name: 'Alex Morgan',
     role: 'CEO, CloudShield',
     project: 'Project',

@@ -295,6 +295,33 @@
 .btn-full-width {
   width: 100%;
   justify-content: center;
+  background: linear-gradient(135deg, #00bfff 0%, #0ea5e9 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 191, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-full-width:hover {
+  background: linear-gradient(135deg, #33ccff 0%, #00d4ff 100%);
+  box-shadow: 0 8px 24px rgba(0, 191, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-full-width.btn-outline {
+  background: transparent;
+  color: #00bfff;
+  border: 1.5px solid #00bfff;
+  box-shadow: none;
+}
+
+.btn-full-width.btn-outline:hover {
+  background: rgba(0, 191, 255, 0.08);
+  border-color: #0ea5e9;
+  box-shadow: 0 4px 16px rgba(0, 191, 255, 0.2);
 }
 
 /* Cost Comparison */

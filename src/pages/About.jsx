@@ -238,33 +238,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Mission & Goals Split Section */}
-      <section className="mission-goals-split-section">
-        {/* Our Mission - Top Half */}
-        <div className="mission-half">
-          <div className="mission-overlay">
-            <div className="container">
-              <div className="mission-content">
-                <h2>Our mission</h2>
-                <p>Help bridge the gap in communication and reduce the distance between businesses and clients. Ensure conditions to feel independent and comfortable in a digital environment even without opportunities to interact with clients directly.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Our Goals - Bottom Half */}
-        <div className="goals-half">
-          <div className="goals-overlay">
-            <div className="container">
-              <div className="goals-content">
-                <h2>Our goals</h2>
-                <p>Help businesses digitize their processes and improve customer experience through mobile apps and provide end-to-end services with a strong network of partners to build the products from scratch.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Our Values */}
       <section className="section our-values-section">
         <div className="container">
@@ -346,7 +319,7 @@ export default function About() {
       <section className="section why-interexy-section">
         <div className="container">
           <span className="expertise-tag">Our expertise</span>
-          <h2 className="expertise-title">Why Bravionn?</h2>
+          <h2 className="expertise-title">Why Bravion?</h2>
           <div className="expertise-grid">
             <div className="expertise-item">
               <div className="expertise-icon new-world">

@@ -66,10 +66,10 @@ export default async function handler(req, res) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from:     'Bravion Careers <careers@defigate.org>',
-      to:       ['gabriel@defigate.org'],
-      reply_to: email,
-      subject:  `New Application: ${role_title} — ${full_name}`,
+      from:    'Bravion Careers <careers@defigate.org>',
+      to:      ['gabriel@defigate.org'],
+      replyTo: email || 'noreply@defigate.org',
+      subject: `New Application: ${role_title} — ${full_name}`,
       html,
     });
 

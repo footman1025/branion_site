@@ -30,6 +30,9 @@ const AIRecommendations = lazy(() => import('./pages/AIRecommendations'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const Careers = lazy(() => import('./pages/Careers'));
+const JobDetail = lazy(() => import('./pages/JobDetail'));
+const JobApply = lazy(() => import('./pages/JobApply'));
 
 // Loading fallback component
 function PageLoader() {
@@ -129,6 +132,9 @@ export default function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/careers/:slug" element={<JobDetail />} />
+            <Route path="/careers/:slug/apply" element={<JobApply />} />
           </Routes>
         </Suspense>
         <Footer />

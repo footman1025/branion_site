@@ -1,0 +1,588 @@
+.ja-page {
+  background: #f0f4f8;
+  min-height: 100vh;
+  color: #1e293b;
+  padding-bottom: 80px;
+}
+
+/* ── Top bar ── */
+.ja-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 40px 0;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.ja-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0ea5e9;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.ja-back-link:hover {
+  color: #0284c7;
+}
+
+.ja-role-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* ── Container ── */
+.ja-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 40px;
+}
+
+/* ── Progress ── */
+.ja-progress-bar {
+  margin-bottom: 32px;
+}
+
+.ja-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.ja-progress-track {
+  height: 6px;
+  background: #cbd5e1;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.ja-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.ja-step-labels {
+  display: flex;
+  gap: 0;
+}
+
+.ja-step-label {
+  flex: 1;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #94a3b8;
+  text-align: center;
+  transition: color 0.2s;
+}
+
+.ja-step-label.active {
+  color: #0ea5e9;
+  font-weight: 700;
+}
+
+.ja-step-label.done {
+  color: #22c55e;
+}
+
+/* ── Intro banner ── */
+.ja-intro-banner {
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: 0.875rem;
+  color: #0c4a6e;
+  line-height: 1.7;
+}
+
+.ja-intro-banner p {
+  margin: 0 0 8px;
+}
+
+.ja-intro-banner p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Form card ── */
+.ja-form-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-bottom: 24px;
+}
+
+.ja-form-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 28px;
+}
+
+.ja-card-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.65;
+  margin: -16px 0 24px;
+}
+
+/* ── Fields ── */
+.ja-field {
+  margin-bottom: 20px;
+}
+
+.ja-field:last-child {
+  margin-bottom: 0;
+}
+
+.ja-field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.ja-req {
+  color: #ef4444;
+}
+
+.ja-field input,
+.ja-field select,
+.ja-field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1e293b;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ja-field input::placeholder,
+.ja-field textarea::placeholder {
+  color: #94a3b8;
+}
+
+.ja-field input:focus,
+.ja-field select:focus,
+.ja-field textarea:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+
+.ja-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.ja-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ── Navigation ── */
+.ja-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.ja-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0ea5e9;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.ja-submit-btn:hover {
+  background: #0284c7;
+  transform: translateY(-1px);
+}
+
+.ja-submit-btn--disabled,
+.ja-submit-btn--disabled:hover {
+  background: #93c5fd;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+
+/* ── Success screen ── */
+.ja-success {
+  max-width: 520px;
+  margin: 80px auto;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.ja-success-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(14,165,233,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.ja-success h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+
+.ja-success p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  margin: 0 0 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .ja-topbar,
+  .ja-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .ja-form-card {
+    padding: 20px;
+  }
+
+  .ja-step-labels {
+    display: none;
+  }
+}
+
+/* ── Navigation with Previous ── */
+.ja-prev-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.ja-prev-btn:hover {
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+}
+
+/* ── Radio groups ── */
+.ja-radio-group {
+  margin-bottom: 28px;
+}
+
+.ja-radio-question {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.ja-radio-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ja-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  color: #475569;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ja-radio-label input[type="radio"] {
+  display: none;
+}
+
+.ja-radio-custom {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.ja-radio-label input[type="radio"]:checked + .ja-radio-custom {
+  border-color: #0ea5e9;
+}
+
+.ja-radio-label input[type="radio"]:checked + .ja-radio-custom::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0ea5e9;
+  position: absolute;
+}
+
+/* ── Rating grid ── */
+.ja-rating-section {
+  margin-top: 8px;
+}
+
+.ja-rating-hint {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 4px 0 16px;
+}
+
+.ja-rating-grid {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ja-rating-header,
+.ja-rating-row {
+  display: grid;
+  grid-template-columns: 180px repeat(10, 36px);
+  align-items: center;
+  gap: 0;
+}
+
+.ja-rating-header {
+  margin-bottom: 6px;
+}
+
+.ja-rating-num {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.ja-rating-row {
+  border-top: 1px solid #f1f5f9;
+  padding: 8px 0;
+}
+
+.ja-rating-row:last-child {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ja-rating-tech-col {
+  font-size: 0.83rem;
+  color: #334155;
+  font-weight: 500;
+  padding-right: 12px;
+}
+
+.ja-rating-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ja-rating-cell input[type="radio"] {
+  display: none;
+}
+
+.ja-rating-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  display: block;
+  transition: border-color 0.15s;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ja-rating-cell input[type="radio"]:checked + .ja-rating-radio {
+  border-color: #0ea5e9;
+  background: #0ea5e9;
+}
+
+.ja-rating-cell input[type="radio"]:checked + .ja-rating-radio::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 640px) {
+  .ja-rating-header,
+  .ja-rating-row {
+    grid-template-columns: 130px repeat(10, 28px);
+  }
+
+  .ja-rating-tech-col {
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Success Modal ── */
+.ja-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.ja-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px 40px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.88) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ja-modal-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9, #22c55e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.ja-modal-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+
+.ja-modal-sub {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0 0 32px;
+}
+
+.ja-modal-sub strong {
+  color: #0f172a;
+}
+
+.ja-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #0ea5e9;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.ja-modal-btn:hover {
+  background: #0284c7;
+  transform: translateY(-1px);
+}
+
+/* ── Nav right group ── */
+.ja-nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.ja-send-error {
+  font-size: 0.8rem;
+  color: #ef4444;
+  margin: 0;
+}
+
+/* ── Spinner ── */
+.ja-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

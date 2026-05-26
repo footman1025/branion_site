@@ -197,7 +197,7 @@ export default function Navbar() {
     setMobileExpanded(prev => ({ ...prev, [key]: !prev[key] }));
 
   return (
-    <nav className={`navbar ${scrolled || (pathname !== '/' && pathname !== '/about' && pathname !== '/contact' && pathname !== '/products' && pathname !== '/pricing') ? 'scrolled' : 'transparent'}`}>
+    <nav className={`navbar ${scrolled || (pathname !== '/' && pathname !== '/about' && pathname !== '/contact' && pathname !== '/products' && pathname !== '/pricing' && pathname !== '/careers') ? 'scrolled' : 'transparent'}`}>
       <div className="navbar-inner">
 
         {/* Logo */}
@@ -253,6 +253,13 @@ export default function Navbar() {
             </Link>
           </li>
 
+          {/* Careers */}
+          <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
+            <Link to="/careers" className={`nav-link ${pathname === '/careers' ? 'active' : ''}`}>
+              Careers
+            </Link>
+          </li>
+
           {/* Contact */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
             <Link to="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>
@@ -303,6 +310,7 @@ export default function Navbar() {
         <Link to="/pricing" className="mob-top-link">Pricing</Link>
 
         <Link to="/about" className="mob-top-link">About Us</Link>
+        <Link to="/careers" className="mob-top-link">Careers</Link>
         <Link to="/contact" className="mob-top-link">Contact</Link>
 
         <div className="mob-footer">

@@ -30,7 +30,10 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:5000'
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      }
     },
     headers: {
       'Content-Security-Policy': "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: ws: wss: http: https:"

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import TransitionLink from './TransitionLink';
 import { useLang } from '../context/LangContext';
 import logo from '../assets/logo.png';
 import './Footer.css';
@@ -11,34 +11,34 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <Link to="/" className="logo-footer">
+          <TransitionLink to="/" className="logo-footer">
             <img src={logo} alt="Bravion" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
-          </Link>
+          </TransitionLink>
           <p>Bravion is a global software development company building production-grade blockchain infrastructure, Web3 solutions, and AI-powered applications for startups and enterprises worldwide.</p>
         </div>
 
         <div className="footer-links">
           <h4>Services</h4>
           <ul>
-            <li><Link to="/smart-payments">Smart Payments</Link></li>
-            <li><Link to="/ai-recommendations">AI Recommendations</Link></li>
-            <li><Link to="/crypto-checkout">Crypto Checkout</Link></li>
-            <li><Link to="/web3-mvps">Web3 MVPs</Link></li>
+            <li><TransitionLink to="/smart-payments">Smart Payments</TransitionLink></li>
+            <li><TransitionLink to="/ai-recommendations">AI Recommendations</TransitionLink></li>
+            <li><TransitionLink to="/crypto-checkout">Crypto Checkout</TransitionLink></li>
+            <li><TransitionLink to="/web3-mvps">Web3 MVPs</TransitionLink></li>
           </ul>
         </div>
 
         <div className="footer-links">
           <h4>{f.company}</h4>
           <ul>
-            <li><Link to="/about">{f.aboutUs}</Link></li>
-            <li><Link to="/contact">{f.contact}</Link></li>
+            <li><TransitionLink to="/about">{f.aboutUs}</TransitionLink></li>
+            <li><TransitionLink to="/contact">{f.contact}</TransitionLink></li>
           </ul>
         </div>
 
         <div className="footer-links">
           <h4>{f.contact}</h4>
           <ul>
-            <li><a href="mailto:support@Bravion.com">support@Bravion.com</a></li>
+            <li><a href="mailto:support@defigate.org">support@defigate.org</a></li>
           </ul>
         </div>
       </div>

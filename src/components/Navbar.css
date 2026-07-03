@@ -12,10 +12,11 @@
   transition: background 0.3s, box-shadow 0.3s;
 }
 .navbar.scrolled {
-  background: rgba(255,255,255,0.95);
-  border-bottom: 1px solid rgba(99,102,241,0.1);
-  box-shadow: 0 2px 32px rgba(99,102,241,0.1);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.96);
+  border-bottom: 1px solid rgba(0,191,255,0.12);
+  box-shadow: 0 2px 24px rgba(0,191,255,0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 .navbar.transparent {
   background: transparent;
@@ -517,3 +518,39 @@
   .navbar-inner { padding: 0 20px; }
   .logo-img     { height: 38px; }
 }
+
+/* ═══════════════════════════════════════
+   VISUAL ENHANCEMENTS (appended)
+═══════════════════════════════════════ */
+
+/* Sharper scrolled state */
+.navbar.scrolled {
+  background: rgba(255,255,255,0.96);
+  border-bottom: 1px solid rgba(0,191,255,0.12);
+  box-shadow: 0 2px 24px rgba(0,191,255,0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Nav links — sharper active state */
+.navbar.scrolled .nav-link.active,
+.navbar.scrolled .nav-link-btn.active {
+  color: #00bfff;
+}
+
+/* CTA button — stronger glow */
+.nav-contact-btn {
+  box-shadow: 0 0 20px rgba(0,191,255,0.40), 0 4px 14px rgba(0,191,255,0.25);
+}
+.nav-contact-btn:hover {
+  box-shadow: 0 0 28px rgba(0,191,255,0.60), 0 6px 20px rgba(0,191,255,0.38);
+}
+
+/* Mega menu — crisper shadow */
+.mega-menu {
+  border: 1px solid rgba(0,191,255,0.14);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,191,255,0.06);
+}
+
+/* Mobile drawer — smooth open */
+.mobile-drawer.open { max-height: 620px; }

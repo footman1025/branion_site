@@ -4,7 +4,7 @@
   height: 440px;
   overflow: hidden;
   margin: 0;
-  margin-top: -68px;
+  margin-top: -72px;
   border-radius: 0;
 }
 
@@ -20,7 +20,8 @@
 .services-hero .hero-banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(5,10,30,0.80) 0%, rgba(5,10,30,0.35) 60%, rgba(5,10,30,0.05) 100%);
+  background: rgba(4, 10, 28, 0.72);
+  z-index: 1;
 }
 
 .services-hero .hero-banner-content {
@@ -133,3 +134,43 @@
 .check { color: var(--primary); font-weight: 700; }
 
 @media (max-width: 768px) { .services-detail-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════
+   VISUAL ENHANCEMENTS (appended)
+═══════════════════════════════════════ */
+
+/* ── Hero margin fix to match 72px navbar ── */
+.services-hero { margin-top: -72px; }
+
+/* ── Hero overlay — stronger left gradient ── */
+.services-hero .hero-banner-overlay {
+  background: linear-gradient(to right,
+    rgba(4,12,34,0.88) 0%,
+    rgba(4,12,34,0.42) 55%,
+    rgba(4,12,34,0.08) 100%);
+}
+
+/* ── Service detail cards — hover lift ── */
+.service-detail-card {
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 20px;
+  transition: box-shadow 0.22s, transform 0.22s;
+}
+.service-detail-card:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+  border-color: rgba(0,191,255,0.18);
+}
+
+/* ── Check icon — sky blue ── */
+.check { color: #00bfff; }
+
+/* ── CTA button — sky blue ── */
+.service-detail-card .btn-outline {
+  color: #00bfff;
+  border-color: #00bfff;
+}
+.service-detail-card .btn-outline:hover {
+  background: rgba(0,191,255,0.06);
+}

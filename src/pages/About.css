@@ -21,7 +21,8 @@
 .hero-banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(5,10,30,0.80) 0%, rgba(5,10,30,0.35) 60%, rgba(5,10,30,0.05) 100%);
+  background: rgba(4, 10, 28, 0.72);
+  z-index: 1;
 }
 
 .hero-banner-content {
@@ -860,3 +861,60 @@
     padding: 24px 20px;
   }
 }
+
+/* ═══════════════════════════════════════
+   VISUAL ENHANCEMENTS (appended)
+═══════════════════════════════════════ */
+
+/* ── Mission stat cards ── */
+.mission-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  transition: box-shadow 0.22s, transform 0.22s;
+}
+.mission-card:hover { box-shadow: 0 12px 36px rgba(0,191,255,0.12); transform: translateY(-3px); }
+.mc-stat { color: #00bfff; }
+
+/* ── Values grid items ── */
+.value-item {
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.value-item:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+
+/* ── Expertise items ── */
+.expertise-item {
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.expertise-item:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+
+/* ── Particle hero — deeper overlay ── */
+.particle-hero::before { background: rgba(2,13,31,0.70); }
+
+/* ── Hero btn glow ── */
+.particle-hero-btn:hover {
+  box-shadow: 0 8px 36px rgba(0,191,255,0.65);
+  transform: translateY(-3px);
+}
+
+/* ── Team member card bar — sky blue ── */
+.tmc-bar { background: linear-gradient(135deg, #00bfff, #0099cc); }
+
+/* ── Founder card hover ── */
+.team-founder-card:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+  transform: translateY(-4px);
+}
+
+/* ── Value cards (What Drives Us section) ── */
+.value-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.value-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }

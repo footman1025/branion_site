@@ -21,7 +21,7 @@
 }
 
 .pricing-hero-overlay {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(4, 10, 28, 0.72);
   position: absolute;
   top: 0;
   left: 0;
@@ -30,6 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .pricing-hero-content {

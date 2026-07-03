@@ -1,6 +1,8 @@
-import { Link, useSearchParams } from 'react-router-dom';
+﻿import { Link, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import SEO from '../components/SEO';
 import './Careers.css';
+import careersHero from '../assets/careers.png';
 
 export const openRoles = [
   {
@@ -118,7 +120,7 @@ export const openRoles = [
     responsibilities: [
       'Source, qualify, and close new business opportunities.',
       'Build and manage a pipeline of Web3 protocol and enterprise prospects.',
-      'Represent Bravion at industry events and conferences.',
+      'Represent DefiGate at industry events and conferences.',
       'Collaborate with the product team to align offerings with market demand.',
       'Negotiate and structure partnership agreements.',
     ],
@@ -239,6 +241,11 @@ export default function Careers() {
 
   return (
     <main className="careers-page">
+      <SEO
+        title="Careers"
+        description="Join DefiGate — a remote-first blockchain product company. Explore open roles in engineering, design, security, and growth."
+        path="/careers"
+      />
 
       {/* Success toast */}
       {showToast && (
@@ -262,7 +269,7 @@ export default function Careers() {
       )}
 
       {/* Hero */}
-      <section className="careers-hero">
+      <section className="careers-hero" style={{ backgroundImage: `url(${careersHero})` }}>
         <div className="careers-hero-inner">
           <span className="careers-tag">Join the Team</span>
           <h1>Build the Future of<br />Web3 With Us</h1>
@@ -274,8 +281,8 @@ export default function Careers() {
       {/* Perks */}
       <section className="careers-section">
         <div className="careers-container">
-          <span className="careers-tag">Why Bravion</span>
-          <h2 className="careers-section-title">Life at Bravion</h2>
+          <span className="careers-tag">Why DefiGate</span>
+          <h2 className="careers-section-title">Life at DefiGate</h2>
           <div className="perks-grid">
             {perks.map(p => (
               <div key={p.title} className="perk-card">

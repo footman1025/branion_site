@@ -242,3 +242,32 @@
   .footer-inner { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
 }
+
+/* ═══════════════════════════════════════
+   VISUAL ENHANCEMENTS (appended)
+═══════════════════════════════════════ */
+
+/* Crisper top border */
+.footer { border-top: 1px solid #e5e7eb; }
+
+/* Brand description tighter max-width */
+.footer-brand p { max-width: 280px; line-height: 1.78; }
+
+/* Link hover — slide indent */
+.footer-links a {
+  display: inline-block;
+  transition: color 0.15s, padding-left 0.15s;
+}
+.footer-links a:hover { color: #00bfff; padding-left: 4px; }
+
+/* Bottom bar — center all items */
+.footer-bottom { gap: 24px; }
+
+/* Social icon — lift on hover */
+.fsb-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: background 0.16s, color 0.16s, transform 0.16s;
+}
+.fsb-icon:hover { transform: translateY(-2px); }

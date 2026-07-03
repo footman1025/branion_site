@@ -1,8 +1,8 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ethers } from 'ethers';
 import './WalletPay.css';
 
-// Bravion receiving wallet — replace with your actual address
+// DefiGate receiving wallet — replace with your actual address
 const RECEIVER = '0x742d35Cc6634C0532925a3b8D4C9B7e5e3F1a2b3';
 
 // ETH price per plan (monthly) — adjust to match real ETH value

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Blog.css';
 
@@ -29,9 +29,9 @@ export default function Blog() {
     <div className="blog-page">
       <section className="blog-hero">
         <div className="blog-hero-overlay" />
-        <img className="blog-hero-bg" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1600&auto=format&fit=crop&q=80" alt="" aria-hidden="true" />
+        <img loading="lazy" className="blog-hero-bg" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1600&auto=format&fit=crop&q=80" alt="" aria-hidden="true" />
         <div className="blog-hero-content">
-          <h1>Bravion Blog:<br />Expert Insights &amp; Guides</h1>
+          <h1>DefiGate Blog:<br />Expert Insights &amp; Guides</h1>
           <p>New product features, the latest in technology, solutions and updates.</p>
           <div className="blog-subscribe">
             {subscribed ? (
@@ -70,7 +70,7 @@ export default function Blog() {
             {filtered.map(p => (
               <div key={p._id} className="blog-card">
                 <div className="blog-card-img">
-                  <img src={p.img} alt={p.title} />
+                  <img loading="lazy" src={p.img} alt={p.title} />
                 </div>
                 <div className="blog-card-body">
                   <span className="blog-card-tag">{p.category}</span>

@@ -8,8 +8,7 @@ export default function AIRecommendations() {
       {/* Hero Section */}
       <section className="ai-hero">
         <div className="ai-hero-right">
-          <img
-            src={landingService2}
+          <img loading="lazy" src={landingService2}
             alt="AI Recommendations"
             className="ai-hero-img"
           />
@@ -29,38 +28,41 @@ export default function AIRecommendations() {
             <div className="ai-deliver-right">
               <div className="ai-benefit-card">
                 <div className="ai-benefit-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
                   </svg>
                 </div>
                 <div className="ai-benefit-content">
                   <h3>Higher conversions</h3>
                   <p>Show customers exactly what they want before they search for it.</p>
                 </div>
+                <span className="ai-benefit-num">01</span>
               </div>
 
               <div className="ai-benefit-card">
                 <div className="ai-benefit-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                   </svg>
                 </div>
                 <div className="ai-benefit-content">
                   <h3>Increased order value</h3>
                   <p>Bundle suggestions and upsells that feel natural, not pushy.</p>
                 </div>
+                <span className="ai-benefit-num">02</span>
               </div>
 
               <div className="ai-benefit-card">
                 <div className="ai-benefit-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
                   </svg>
                 </div>
                 <div className="ai-benefit-content">
                   <h3>Smarter experience</h3>
                   <p>Every visit feels personal — customers come back because it just works.</p>
                 </div>
+                <span className="ai-benefit-num">03</span>
               </div>
             </div>
           </div>

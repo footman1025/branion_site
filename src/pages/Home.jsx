@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
+﻿import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../context/LangContext';
+import SEO from '../components/SEO';
 import './Home.css';
 import achivementImg from '../assets/achivement.jpg';
 import introductionImg from '../assets/introduction.png';
@@ -42,7 +43,7 @@ import landingProductImg from '../assets/landing_product.jpg';
 const TESTIMONIALS = [
   {
     rating: 5,
-    review: "In less than three months, Bravion successfully delivered a stable application. External stakeholders gave overall positive feedback, and the client was impressed with the team's project management. They communicated effectively through Slack, video meetings, Confluence, and Jira.",
+    review: "In less than three months, DefiGate successfully delivered a stable application. External stakeholders gave overall positive feedback, and the client was impressed with the team's project management. They communicated effectively through Slack, video meetings, Confluence, and Jira.",
     name: 'Marcus Eng',
     role: 'CEO, Anatomia (PhysAct)',
     project: 'Project',
@@ -51,7 +52,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "Bravion delivered our blockchain platform on time and within budget. The smart contracts were thoroughly audited and the team was proactive in suggesting improvements. Highly recommend for any Web3 project.",
+    review: "DefiGate delivered our blockchain platform on time and within budget. The smart contracts were thoroughly audited and the team was proactive in suggesting improvements. Highly recommend for any Web3 project.",
     name: 'Sarah Chen',
     role: 'CTO, ChainVault',
     project: 'Project',
@@ -60,7 +61,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "The team exceeded our expectations at every stage. From discovery to launch, communication was seamless and the final product was polished and performant. We will definitely work with Bravion again.",
+    review: "The team exceeded our expectations at every stage. From discovery to launch, communication was seamless and the final product was polished and performant. We will definitely work with DefiGate again.",
     name: 'James Rivera',
     role: 'Founder, NexusAI',
     project: 'Project',
@@ -69,7 +70,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "Professional, fast, and detail-oriented. Bravion built our cross-platform mobile app in React Native and it works flawlessly on both iOS and Android. The code quality was excellent.",
+    review: "Professional, fast, and detail-oriented. DefiGate built our cross-platform mobile app in React Native and it works flawlessly on both iOS and Android. The code quality was excellent.",
     name: 'Priya Patel',
     role: 'Product Manager, MediTrack',
     project: 'Project',
@@ -78,7 +79,7 @@ const TESTIMONIALS = [
   },
   {
     rating: 5,
-    review: "We hired Bravion for a security audit and penetration test. They found critical vulnerabilities we had missed and provided clear remediation steps. Our platform is now SOC2 compliant thanks to their work.",
+    review: "We hired DefiGate for a security audit and penetration test. They found critical vulnerabilities we had missed and provided clear remediation steps. Our platform is now SOC2 compliant thanks to their work.",
     name: 'Alex Morgan',
     role: 'CEO, CloudShield',
     project: 'Project',
@@ -139,7 +140,7 @@ const SERVICES_DATA = [
 
 const heroSlides = [
   { label: 'Self-Hosted Payments',   tag: 'ZERO FEES',   img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1600&h=900&q=90' },
-  { label: 'Crypto Payment Processor', tag: 'Bravion', img: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1600&h=900&q=90' },
+  { label: 'Crypto Payment Processor', tag: 'DefiGate', img: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1600&h=900&q=90' },
   { label: 'AI-Powered Dashboard',     tag: 'ANALYTICS',     img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&h=900&q=90' },
   { label: 'Multi-Chain Support', tag: 'BTC, ETH, SOLANA',      img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=1600&h=900&q=90' },
 ];
@@ -169,8 +170,8 @@ const techStackData = {
 };
 
 const homeTeam = [
-  { name: 'Gabriel Ohno',  role: 'CEO & Co-Founder',     bio: "Leading Bravion to revolutionize cryptocurrency payments. My mission is to eliminate payment processing fees and give businesses complete control over their funds.", founder: true, img: ceoImg },
-  { name: 'Emir Jensen',  role: 'Co-Founder & CTO',     bio: 'Architecting the Bravion payment infrastructure. I focus on building secure, scalable, and user-friendly solutions for accepting crypto payments without intermediaries.', founder: true, img: ctoImg },
+  { name: 'Gabriel Ohno',  role: 'CEO & Co-Founder',     bio: "Leading DefiGate to revolutionize cryptocurrency payments. My mission is to eliminate payment processing fees and give businesses complete control over their funds.", founder: true, img: ceoImg },
+  { name: 'Emir Jensen',  role: 'Co-Founder & CTO',     bio: 'Architecting the DefiGate payment infrastructure. I focus on building secure, scalable, and user-friendly solutions for accepting crypto payments without intermediaries.', founder: true, img: ctoImg },
   { name: 'Leonard Erete',  role: 'CFO & Business Lead', img: cfoImg },
   { name: 'Fajar Ikhlaq',    role: 'Partnerships Director',  img: projectManagerImg },
   { name: 'Rebeka Galic',    role: 'Community Manager', img: recruiterImg },
@@ -269,7 +270,7 @@ function ServicesSlider({ services, serviceImages, t }) {
               {services.map((s) => (
                 <div key={`first-${s.id}`} className="service-card">
                   <div className="service-card-img-wrap">
-                    <img src={serviceImages[s.icon]} alt={s.title} className="service-img" />
+                    <img loading="lazy" src={serviceImages[s.icon]} alt={s.title} className="service-img" />
                   </div>
                   <div className="service-card-body">
                     <h3 className="service-card-title">{s.title}</h3>
@@ -281,7 +282,7 @@ function ServicesSlider({ services, serviceImages, t }) {
               {services.map((s) => (
                 <div key={`second-${s.id}`} className="service-card">
                   <div className="service-card-img-wrap">
-                    <img src={serviceImages[s.icon]} alt={s.title} className="service-img" />
+                    <img loading="lazy" src={serviceImages[s.icon]} alt={s.title} className="service-img" />
                   </div>
                   <div className="service-card-body">
                     <h3 className="service-card-title">{s.title}</h3>
@@ -346,8 +347,7 @@ function ExpertiseAccordion() {
         {/* Left: Service Image */}
         <div className="expertise-left">
           <div className="service-image-display">
-            <img 
-              key={expandedIdx}
+            <img loading="lazy" key={expandedIdx}
               src={expertiseAreas[expandedIdx].image} 
               alt={expertiseAreas[expandedIdx].title} 
               className="service-display-img" 
@@ -398,7 +398,7 @@ function PlatformSection() {
           <span className="platform-tag">SELF-HOSTED PAYMENT GATEWAY</span>
           <h2 className="platform-title">Accept Crypto Payments with Zero Fees.</h2>
           <p className="platform-description">
-            Bravion is a self-hosted cryptocurrency payment gateway designed specifically for e-commerce businesses. Accept 20+ cryptocurrencies with zero transaction fees, instant settlement, and complete control over your funds. No intermediaries, no chargebacks, no account freezing.
+            DefiGate is a self-hosted cryptocurrency payment gateway designed specifically for e-commerce businesses. Accept 20+ cryptocurrencies with zero transaction fees, instant settlement, and complete control over your funds. No intermediaries, no chargebacks, no account freezing.
           </p>
           
           <div className="platform-features">
@@ -444,7 +444,7 @@ function PlatformSection() {
           </div>
           
           <div className="platform-actions">
-            <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            <a href="https://demo.DefiGate.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               Try Live Demo
             </a>
             <Link to="/contact" className="btn btn-outline">
@@ -455,7 +455,7 @@ function PlatformSection() {
         
         {/* Right: Dashboard Image */}
         <div className="platform-right">
-          <img src={homeImg} alt="Bravion Dashboard" className="platform-image" />
+          <img loading="lazy" src={homeImg} alt="DefiGate Dashboard" className="platform-image" />
         </div>
       </div>
     </section>
@@ -472,7 +472,7 @@ function HomeContact() {
   const fileRef = useRef(null);
 
   const steps = [
-    'Install Bravion in 5 minutes using Docker Compose or Kubernetes.',
+    'Install DefiGate in 5 minutes using Docker Compose or Kubernetes.',
     'Enable the cryptocurrencies you want to accept (BTC, ETH, USDT, etc.).',
     'Generate API keys and configure webhooks for payment notifications.',
     'Integrate with your store using ready-made plugins or REST API.',
@@ -507,12 +507,28 @@ function HomeContact() {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setStatus('loading');
-    setTimeout(() => {
+
+    try {
+      const formData = new FormData();
+      formData.append('name',    form.name);
+      formData.append('email',   form.email);
+      formData.append('country', form.country);
+      formData.append('phone',   form.phone);
+      formData.append('message', form.message);
+      if (file) formData.append('file', file);
+
+      const res  = await fetch('/api/contact', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to send');
+
       setStatus('success');
       setForm({ name: '', email: '', country: '', phone: '', message: '' });
       setFile(null);
       setErrors({});
-    }, 800);
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
   };
 
   return (
@@ -520,7 +536,7 @@ function HomeContact() {
       <div className="home-contact-container">
         <div className="hc-left">
           <h2 className="hc-title">Ready to accept crypto payments with zero fees?</h2>
-          <p className="hc-sub">Deploy Bravion in 5 minutes. Complete control over your funds. Start accepting 20+ cryptocurrencies today.</p>
+          <p className="hc-sub">Deploy DefiGate in 5 minutes. Complete control over your funds. Start accepting 20+ cryptocurrencies today.</p>
           <h3 className="hc-next-title">How we get started:</h3>
           <div className="hc-steps">
             {steps.map((s, i) => (
@@ -627,7 +643,7 @@ function HomeTeam() {
           {homeTeam.filter(m => m.founder).map(m => (
             <div key={m.name} className="team-founder-card">
               <div className="tfc-img-wrap">
-                <img src={m.img} alt={m.name} className="tfc-img" />
+                <img loading="lazy" src={m.img} alt={m.name} className="tfc-img" />
               </div>
               <div className="tfc-info">
                 <p className="tfc-role">{m.role}</p>
@@ -646,7 +662,7 @@ function HomeTeam() {
         <div className="team-members-grid">
           {homeTeam.filter(m => !m.founder).map(m => (
             <div key={m.name} className="team-member-card">
-              <img src={m.img} alt={m.name} className="tmc-img" />
+              <img loading="lazy" src={m.img} alt={m.name} className="tmc-img" />
               <div className="tmc-overlay">
                 <span className="tmc-name">{m.name}</span>
                 <span className="tmc-role">{m.role}</span>
@@ -710,10 +726,14 @@ export default function Home() {
 
   return (
     <main>
+      <SEO
+        title="Blockchain & Web3 Product Company"
+        description="DefiGate combines blockchain and AI to power the future of e-commerce. DeFi protocols, smart contracts, Web3 wallets, and AI-powered products built for scale."
+        path="/"
+      />
       {/* Hero */}
       <section className="hero">
-        <img
-          className="hero-image"
+        <img loading="eager" className="hero-image"
           src={introductionImg}
           alt="Blockchain Infrastructure"
         />

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLang } from '../context/LangContext';
 import LangSwitcher from './LangSwitcher';
+import TransitionLink from './TransitionLink';
 import './Navbar.css';
 import logo from '../assets/logo.png';
 import service1 from '../assets/service_1.png';
@@ -94,7 +95,7 @@ function ServicesPanel({ onClose }) {
       <div className="svc-panel-left">
         <p className="svc-panel-label">SERVICES</p>
         {SERVICES_MENU.map(item => (
-          <Link
+          <TransitionLink
             key={item.key}
             to={item.route}
             className={`svc-panel-item ${active.key === item.key ? 'active' : ''}`}
@@ -108,7 +109,7 @@ function ServicesPanel({ onClose }) {
                 <path d="M1.5 1.5L6.5 6L1.5 10.5" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             )}
-          </Link>
+          </TransitionLink>
         ))}
       </div>
       <div className="svc-panel-right">
@@ -201,9 +202,9 @@ export default function Navbar() {
       <div className="navbar-inner">
 
         {/* Logo */}
-        <Link to="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <TransitionLink to="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logo} alt="Bravion" className="logo-img" />
-        </Link>
+        </TransitionLink>
 
         {/* Desktop Nav */}
         <ul className="nav-links-desktop" ref={navRef}>
@@ -234,37 +235,37 @@ export default function Navbar() {
 
           {/* Products */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
-            <Link to="/products" className={`nav-link ${pathname === '/products' ? 'active' : ''}`}>
+            <TransitionLink to="/products" className={`nav-link ${pathname === '/products' ? 'active' : ''}`}>
               Products
-            </Link>
+            </TransitionLink>
           </li>
 
           {/* Pricing */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
-            <Link to="/pricing" className={`nav-link ${pathname === '/pricing' ? 'active' : ''}`}>
+            <TransitionLink to="/pricing" className={`nav-link ${pathname === '/pricing' ? 'active' : ''}`}>
               Pricing
-            </Link>
+            </TransitionLink>
           </li>
 
           {/* About Us */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
-            <Link to="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>
+            <TransitionLink to="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>
               About Us
-            </Link>
+            </TransitionLink>
           </li>
 
           {/* Careers */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
-            <Link to="/careers" className={`nav-link ${pathname === '/careers' ? 'active' : ''}`}>
+            <TransitionLink to="/careers" className={`nav-link ${pathname === '/careers' ? 'active' : ''}`}>
               Careers
-            </Link>
+            </TransitionLink>
           </li>
 
           {/* Contact */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
-            <Link to="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>
+            <TransitionLink to="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>
               Contact
-            </Link>
+            </TransitionLink>
           </li>
 
         </ul>
@@ -272,7 +273,7 @@ export default function Navbar() {
         {/* Right */}
         <div className="navbar-right">
           <LangSwitcher />
-          <Link to="/contact" className="nav-contact-btn">{t.nav?.contact || 'Get Started'}</Link>
+          <TransitionLink to="/contact" className="nav-contact-btn">{t.nav?.contact || 'Get Started'}</TransitionLink>
           <button
             className={`hamburger ${mobileOpen ? 'is-open' : ''}`}
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -297,26 +298,24 @@ export default function Navbar() {
           {mobileExpanded.services && (
             <div className="mob-sub">
               {SERVICES_MENU.map(item => (
-                <Link key={item.key} to={item.route} className="mob-link">
+                <TransitionLink key={item.key} to={item.route} className="mob-link">
                   {item.label}
-                </Link>
+                </TransitionLink>
               ))}
             </div>
           )}
         </div>
 
-        <Link to="/products" className="mob-top-link">Products</Link>
-
-        <Link to="/pricing" className="mob-top-link">Pricing</Link>
-
-        <Link to="/about" className="mob-top-link">About Us</Link>
-        <Link to="/careers" className="mob-top-link">Careers</Link>
-        <Link to="/contact" className="mob-top-link">Contact</Link>
+        <TransitionLink to="/products" className="mob-top-link">Products</TransitionLink>
+        <TransitionLink to="/pricing" className="mob-top-link">Pricing</TransitionLink>
+        <TransitionLink to="/about" className="mob-top-link">About Us</TransitionLink>
+        <TransitionLink to="/careers" className="mob-top-link">Careers</TransitionLink>
+        <TransitionLink to="/contact" className="mob-top-link">Contact</TransitionLink>
 
         <div className="mob-footer">
-          <Link to="/contact" className="nav-contact-btn" style={{ width: '100%', justifyContent: 'center' }}>
+          <TransitionLink to="/contact" className="nav-contact-btn" style={{ width: '100%', justifyContent: 'center' }}>
             Contact us
-          </Link>
+          </TransitionLink>
         </div>
       </div>
     </nav>

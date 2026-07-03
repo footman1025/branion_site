@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, lazy, Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { LangProvider } from './context/LangContext';
+import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import CookieBanner from './components/CookieBanner';
+import PageProgress from './components/PageProgress';
 
 // Lazy load pages for code splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -59,6 +62,24 @@ function ScrollToTop() {
   return null;
 }
 
+/* Fades page content in after navigation completes */
+function PageContent({ children }) {
+  const { isRunning } = useNavigation();
+  return (
+    <div
+      style={{
+        opacity:       isRunning ? 0 : 1,
+        transform:     isRunning ? 'translateY(10px)' : 'translateY(0)',
+        transition:    isRunning ? 'none' : 'opacity 0.28s ease, transform 0.28s ease',
+        pointerEvents: isRunning ? 'none' : 'auto',
+        willChange:    'opacity, transform',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function ScrollToTopBtn() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -103,11 +124,15 @@ function ScrollToTopBtn() {
 
 export default function App() {
   return (
-    <LangProvider>
-      <BrowserRouter>
+    <HelmetProvider>
+      <LangProvider>
+        <BrowserRouter>
+        <NavigationProvider>
+        <PageProgress />
         <Navbar />
         <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
+          <PageContent>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
@@ -136,12 +161,15 @@ export default function App() {
             <Route path="/careers/:slug" element={<JobDetail />} />
             <Route path="/careers/:slug/apply" element={<JobApply />} />
           </Routes>
+          </PageContent>
         </Suspense>
         <Footer />
         <Chatbot />
         <ScrollToTopBtn />
         <CookieBanner />
+        </NavigationProvider>
       </BrowserRouter>
     </LangProvider>
+    </HelmetProvider>
   );
 }

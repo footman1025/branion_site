@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://defigate.org/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://defigate.org/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://defigate.org/products</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://defigate.org/pricing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://defigate.org/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://defigate.org/careers</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://defigate.org/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://defigate.org/smart-payments</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/ai-recommendations</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/crypto-checkout</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/crypto-wallets</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/nft-development</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/nft-marketplace</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/case-studies</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://defigate.org/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://defigate.org/terms-of-service</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://defigate.org/cookie-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

@@ -1,10 +1,12 @@
-require('dotenv').config();
+﻿require('dotenv').config();
 const express = require('express');
 const cors    = require('cors');
+const multer  = require('multer');
 const { Resend } = require('resend');
 
 const app    = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 app.use(cors());
 app.use(express.json());
@@ -52,7 +54,7 @@ app.post('/api/send-application', async (req, res) => {
       </table>
       ${block('Project Description',d.project_desc)}
       ${block('Most Proud Of',d.proud_of)}
-      ${block('Why Bravion',d.why_fit)}
+      ${block('Why DefiGate',d.why_fit)}
       <h2 style="color:#0ea5e9;font-size:16px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;margin-top:24px">Final Questions</h2>
       <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
         ${row('Start Date',d.start_date)}${row('Salary Expectation',d.salary)}
@@ -66,7 +68,7 @@ app.post('/api/send-application', async (req, res) => {
 
   try {
     const { data, error } = await resend.emails.send({
-      from:     'Bravion Careers <careers@defigate.org>',
+      from:     'DefiGate Careers <careers@defigate.org>',
       to:       ['gabriel@defigate.org'],
       reply_to: d.email,
       subject:  `New Application: ${d.role_title} — ${d.full_name}`,
@@ -82,6 +84,54 @@ app.post('/api/send-application', async (req, res) => {
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Server error:', err);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// ── Contact / Project Vision form ──
+app.post('/api/contact', upload.single('file'), async (req, res) => {
+  const { name, email, country, phone, message } = req.body;
+  const file = req.file;
+
+  const attachments = file ? [{
+    filename: file.originalname,
+    content:  file.buffer.toString('base64'),
+  }] : [];
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+      <div style="background:#0ea5e9;padding:24px 32px;border-radius:10px 10px 0 0">
+        <h1 style="color:#fff;margin:0;font-size:20px">New Project Inquiry</h1>
+        <p style="color:#e0f2fe;margin:6px 0 0;font-size:14px">Via "Share Your Project's Vision" form</p>
+      </div>
+      <div style="background:#f8fafc;padding:28px 32px;border-radius:0 0 10px 10px;border:1px solid #e2e8f0">
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px">
+          <tr><td style="padding:6px 12px 6px 0;font-size:13px;font-weight:600;color:#64748b;width:120px">Name</td><td style="font-size:13px;color:#1e293b">${name || '—'}</td></tr>
+          <tr><td style="padding:6px 12px 6px 0;font-size:13px;font-weight:600;color:#64748b">Email</td><td style="font-size:13px;color:#1e293b">${email || '—'}</td></tr>
+          <tr><td style="padding:6px 12px 6px 0;font-size:13px;font-weight:600;color:#64748b">Country</td><td style="font-size:13px;color:#1e293b">${country || '—'}</td></tr>
+          <tr><td style="padding:6px 12px 6px 0;font-size:13px;font-weight:600;color:#64748b">Phone</td><td style="font-size:13px;color:#1e293b">${phone || '—'}</td></tr>
+        </table>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;font-size:13px;color:#1e293b;white-space:pre-wrap;line-height:1.6">
+          <strong style="display:block;margin-bottom:8px;color:#64748b">Message:</strong>${message || '—'}
+        </div>
+        ${file ? `<p style="margin-top:16px;font-size:13px;color:#64748b">📎 Attached file: <strong>${file.originalname}</strong> (${(file.size/1024).toFixed(1)} KB)</p>` : ''}
+      </div>
+    </div>`;
+
+  try {
+    const { error } = await resend.emails.send({
+      from:        'DefiGate Contact <careers@defigate.org>',
+      to:          ['gabriel@defigate.org'],
+      replyTo:     email,
+      subject:     `New Project Inquiry from ${name}`,
+      html,
+      attachments,
+    });
+
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Contact form error:', err);
     return res.status(500).json({ error: err.message });
   }
 });

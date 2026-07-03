@@ -1,5 +1,5 @@
 {
-  "name": "dreamtech-client",
+  "name": "defigate-client",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -14,10 +14,12 @@
     "axios": "^1.4.0",
     "ethers": "^6.16.0",
     "framer-motion": "^10.12.18",
+    "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.5.7",
     "react-google-recaptcha": "^3.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.1",
     "resend": "^3.5.0"

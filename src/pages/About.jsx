@@ -1,6 +1,7 @@
-import { useLang } from '../context/LangContext';
+﻿import { useLang } from '../context/LangContext';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import './About.css';
 import ceoImg from '../assets/CEO.png';
 import ctoImg from '../assets/CTO.png';
@@ -154,7 +155,7 @@ function ParticleHero() {
 }
 
 const team = [
-  { name: 'Gabriel Ohno',  role: 'CEO & Co-Founder',     bio: "My mission is to ensure that we, at Bravion, always stick to our values. We have an obsession with our clients' success, laser focus on select few businesses and staying at the forefront of blockchain development.", founder: true, img: ceoImg },
+  { name: 'Gabriel Ohno',  role: 'CEO & Co-Founder',     bio: "My mission is to ensure that we, at DefiGate, always stick to our values. We have an obsession with our clients' success, laser focus on select few businesses and staying at the forefront of blockchain development.", founder: true, img: ceoImg },
   { name: 'Emir Jensen',  role: 'Co-Founder & CTO',     bio: 'I am a scientist turned Software Engineer turned Senior IT Consultant and will be the bridge between your business objectives and development strategies. My intention is to become your ultimate development partner.', founder: true, img: ctoImg },
   { name: 'Leonard Erete',  role: 'CFO', img: cfoImg },
   { name: 'Fajar Ikhlaq',    role: 'Partnership Manager',  img: projectManagerImg },
@@ -218,6 +219,11 @@ export default function About() {
   const { t } = useLang();
   return (
     <main style={{ paddingTop: 0 }}>
+      <SEO
+        title="About Us"
+        description="DefiGate is a blockchain product company building DeFi protocols, NFT platforms, and Web3 infrastructure used by thousands of users across 10+ chains."
+        path="/about"
+      />
       <ParticleHero />
 
       {/* Mission */}
@@ -315,11 +321,11 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Bravionn */}
+      {/* Why DefiGate */}
       <section className="section why-interexy-section">
         <div className="container">
           <span className="expertise-tag">Our expertise</span>
-          <h2 className="expertise-title">Why Bravion?</h2>
+          <h2 className="expertise-title">Why DefiGate?</h2>
           <div className="expertise-grid">
             <div className="expertise-item">
               <div className="expertise-icon new-world">

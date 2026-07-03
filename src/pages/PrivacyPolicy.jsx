@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import './PrivacyPolicy.css';
 
 export default function PrivacyPolicy() {
@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
           <section className="policy-section">
             <h2>1. Introduction</h2>
             <p>
-              Bravion ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our cryptocurrency payment gateway services.
+              DefiGate ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our cryptocurrency payment gateway services.
             </p>
           </section>
 
@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
             <ul>
               <li><strong>By Law or to Protect Rights:</strong> If required by law or if we believe in good faith that disclosure is necessary</li>
               <li><strong>Third-Party Service Providers:</strong> We may share your information with vendors, consultants, and other service providers who need access to such information to carry out work on our behalf</li>
-              <li><strong>Business Transfers:</strong> If Bravion is involved in a merger, acquisition, or sale of assets, your information may be transferred</li>
+              <li><strong>Business Transfers:</strong> If DefiGate is involved in a merger, acquisition, or sale of assets, your information may be transferred</li>
             </ul>
           </section>
 
@@ -65,8 +65,8 @@ export default function PrivacyPolicy() {
               If you have questions or comments about this Privacy Policy, please contact us at:
             </p>
             <p>
-              <strong>Email:</strong> support@Bravion.com<br />
-              <strong>Address:</strong> Bravion LLC, Cryptocurrency Payment Solutions
+              <strong>Email:</strong> support@DefiGate.com<br />
+              <strong>Address:</strong> DefiGate LLC, Cryptocurrency Payment Solutions
             </p>
           </section>
         </div>

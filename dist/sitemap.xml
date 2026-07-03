@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://bravion.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://bravion.com/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bravion.com/products</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bravion.com/pricing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bravion.com/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bravion.com/careers</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bravion.com/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bravion.com/smart-payments</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/ai-recommendations</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/crypto-checkout</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/crypto-wallets</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/nft-development</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/nft-marketplace</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/case-studies</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bravion.com/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://bravion.com/terms-of-service</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://bravion.com/cookie-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

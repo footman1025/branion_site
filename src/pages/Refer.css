@@ -38,7 +38,7 @@
 .refer-hero-left { max-width: 580px; }
 
 .refer-hero-left h1 {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: clamp(36px, 5vw, 62px);
   font-weight: 800;
   color: #fff;

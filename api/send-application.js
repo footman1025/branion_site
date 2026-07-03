@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+﻿import { Resend } from 'resend';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
         </table>
         ${block('Project Description', project_desc)}
         ${block('Most Proud Of', proud_of)}
-        ${block('Why Bravion', why_fit)}
+        ${block('Why DefiGate', why_fit)}
         <h2 style="color:#0ea5e9;font-size:16px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;margin-top:24px">Final Questions</h2>
         <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
           ${row('Start Date', start_date)}${row('Salary Expectation', salary)}
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from:    'Bravion Careers <careers@defigate.org>',
+      from:    'DefiGate Careers <careers@defigate.org>',
       to:      ['gabriel@defigate.org'],
       replyTo: email || 'noreply@defigate.org',
       subject: `New Application: ${role_title} — ${full_name}`,

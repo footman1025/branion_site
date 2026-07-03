@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useLang } from '../context/LangContext';
 import homeImg from '../assets/home.png';
@@ -112,37 +112,37 @@ const supportedCryptos = [
 const comparisonData = [
   { 
     feature: 'Transaction Fees', 
-    Bravion: '0%', 
+    DefiGate: '0%', 
     traditional: '2.9% + $0.30'
   },
   { 
     feature: 'Monthly Fees', 
-    Bravion: '$0', 
+    DefiGate: '$0', 
     traditional: '$0-50'
   },
   { 
     feature: 'Settlement Time', 
-    Bravion: 'Instant', 
+    DefiGate: 'Instant', 
     traditional: '2-7 days'
   },
   { 
     feature: 'Chargebacks', 
-    Bravion: 'Impossible', 
+    DefiGate: 'Impossible', 
     traditional: 'Common risk'
   },
   { 
     feature: 'Account Freezing', 
-    Bravion: 'Never', 
+    DefiGate: 'Never', 
     traditional: 'Possible'
   },
   { 
     feature: 'Self-Hosted', 
-    Bravion: 'Yes', 
+    DefiGate: 'Yes', 
     traditional: 'No'
   },
   { 
     feature: 'AI Assistant', 
-    Bravion: 'Built-in', 
+    DefiGate: 'Built-in', 
     traditional: 'No'
   }
 ];
@@ -208,7 +208,7 @@ export default function Products() {
   const handleDownload = () => {
     const a = document.createElement('a');
     a.href = downloadBtn;
-    a.download = 'Bravion_download.jpg';
+    a.download = 'DefiGate_download.jpg';
     a.click();
   };
 
@@ -233,9 +233,8 @@ export default function Products() {
   return (
     <main className="products-main">
       {/* Floating Download Button */}
-      <img 
-        src={downloadBtn} 
-        alt="Download Bravion" 
+      <img loading="lazy" src={downloadBtn} 
+        alt="Download DefiGate" 
         className="products-download-float" 
         onClick={handleDownload} 
       />
@@ -267,7 +266,7 @@ export default function Products() {
               </div>
             </div>
             <div className="products-hero-actions">
-              <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              <a href="https://demo.DefiGate.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 Try Live Demo
               </a>
               <Link to="/contact" className="btn btn-outline">
@@ -276,7 +275,7 @@ export default function Products() {
             </div>
           </div>
           <div className="products-hero-visual">
-            <img src={homeImg} alt="Bravion Dashboard" className="products-hero-img" />
+            <img loading="lazy" src={homeImg} alt="DefiGate Dashboard" className="products-hero-img" />
           </div>
         </div>
       </section>
@@ -286,7 +285,7 @@ export default function Products() {
         <div className="container">
           <div className="section-header">
             <span className="section-tag">Key Features</span>
-            <h2 className="section-title">Why Choose Bravion?</h2>
+            <h2 className="section-title">Why Choose DefiGate?</h2>
             <p className="section-subtitle">
               Complete cryptocurrency payment infrastructure that transforms your business
             </p>
@@ -332,9 +331,9 @@ export default function Products() {
         <div className="container">
           <div className="section-header">
             <span className="section-tag">Comparison</span>
-            <h2 className="section-title">Bravion vs Traditional Solutions</h2>
+            <h2 className="section-title">DefiGate vs Traditional Solutions</h2>
             <p className="section-subtitle">
-              See how Bravion compares to traditional payment processors and crypto gateways
+              See how DefiGate compares to traditional payment processors and crypto gateways
             </p>
           </div>
           <div className="comparison-table-wrapper">
@@ -342,7 +341,7 @@ export default function Products() {
               <thead>
                 <tr>
                   <th>Feature</th>
-                  <th className="highlight">Bravion</th>
+                  <th className="highlight">DefiGate</th>
                   <th>Traditional Solutions</th>
                 </tr>
               </thead>
@@ -350,7 +349,7 @@ export default function Products() {
                 {comparisonData.map((row, index) => (
                   <tr key={index}>
                     <td className="feature-name">{row.feature}</td>
-                    <td className="Bravion-value">{row.Bravion}</td>
+                    <td className="DefiGate-value">{row.DefiGate}</td>
                     <td className="traditional-value">{row.traditional}</td>
                   </tr>
                 ))}
@@ -367,14 +366,14 @@ export default function Products() {
             <span className="section-tag">Use Cases</span>
             <h2 className="section-title">Perfect for Every Business</h2>
             <p className="section-subtitle">
-              From e-commerce to SaaS, Bravion adapts to your business needs
+              From e-commerce to SaaS, DefiGate adapts to your business needs
             </p>
           </div>
           <div className="use-cases-grid">
             {useCases.map((useCase, index) => (
               <div key={index} className="use-case-card fade-in">
                 <div className="use-case-image">
-                  <img src={useCase.image} alt={useCase.title} />
+                  <img loading="lazy" src={useCase.image} alt={useCase.title} />
                   <div className="use-case-icon">{useCase.icon}</div>
                 </div>
                 <div className="use-case-content">
@@ -395,7 +394,7 @@ export default function Products() {
               <span className="section-tag">ROI Calculator</span>
               <h2 className="section-title">Calculate Your Savings</h2>
               <p className="section-subtitle">
-                See how much you can save by switching to Bravion
+                See how much you can save by switching to DefiGate
               </p>
               <div className="roi-example">
                 <h3>Example: $50,000/month processing</h3>
@@ -405,7 +404,7 @@ export default function Products() {
                     <span className="roi-value">$1,465/month</span>
                   </div>
                   <div className="roi-item highlight">
-                    <span className="roi-label">Bravion</span>
+                    <span className="roi-label">DefiGate</span>
                     <span className="roi-value">$50/month*</span>
                   </div>
                   <div className="roi-savings">
@@ -417,7 +416,7 @@ export default function Products() {
               </div>
             </div>
             <div className="roi-right">
-              <img src={app7Img} alt="ROI Visualization" className="roi-image" />
+              <img loading="lazy" src={app7Img} alt="ROI Visualization" className="roi-image" />
             </div>
           </div>
         </div>
@@ -429,10 +428,10 @@ export default function Products() {
           <div className="cta-content">
             <h2 className="cta-title">Ready to Transform Your Payment Processing?</h2>
             <p className="cta-subtitle">
-              Join 500+ businesses already using Bravion to accept crypto payments with zero fees
+              Join 500+ businesses already using DefiGate to accept crypto payments with zero fees
             </p>
             <div className="cta-actions">
-              <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-large">
+              <a href="https://demo.DefiGate.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-large">
                 Try Live Demo
               </a>
               <Link to="/contact" className="btn btn-outline btn-large">

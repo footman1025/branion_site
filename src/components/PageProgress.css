@@ -1,0 +1,34 @@
+.page-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 99999;
+  border-radius: 0 2px 2px 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #00bfff, #00d4ff, #0ea5e9);
+  box-shadow:
+    0 0 8px rgba(0,191,255,0.80),
+    0 0 4px rgba(0,191,255,0.50);
+  transition: width 0.08s linear;
+}
+
+/* Leading-edge glow dot */
+.page-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -1px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00d4ff;
+  box-shadow:
+    0 0 8px 3px rgba(0,212,255,0.80),
+    0 0 4px 2px rgba(0,191,255,0.60);
+}
+
+.page-progress-bar.is-complete {
+  transition: width 0.15s ease-out;
+}
+

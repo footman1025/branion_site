@@ -1,6 +1,7 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Pricing.css';
+import SEO from '../components/SEO';
 import pricingBg from '../assets/pricing.jpg';
 
 const pricingPlans = [
@@ -67,24 +68,24 @@ const pricingPlans = [
 
 const faqs = [
   {
-    question: 'Is Bravion really free?',
-    answer: 'Yes! Bravion is completely free and open-source. You only pay for your infrastructure costs (server hosting). There are no transaction fees, monthly fees, or hidden costs.'
+    question: 'Is DefiGate really free?',
+    answer: 'Yes! DefiGate is completely free and open-source. You only pay for your infrastructure costs (server hosting). There are no transaction fees, monthly fees, or hidden costs.'
   },
   {
     question: 'What cryptocurrencies are supported?',
-    answer: 'Bravion supports 20+ cryptocurrencies including Bitcoin, Ethereum, USDT, USDC, Litecoin, Dogecoin, Monero, Solana, Polygon, and many more across multiple networks.'
+    answer: 'DefiGate supports 20+ cryptocurrencies including Bitcoin, Ethereum, USDT, USDC, Litecoin, Dogecoin, Monero, Solana, Polygon, and many more across multiple networks.'
   },
   {
-    question: 'Do I need technical knowledge to set up Bravion?',
+    question: 'Do I need technical knowledge to set up DefiGate?',
     answer: 'Basic technical knowledge is helpful, but we provide comprehensive documentation and Docker setup that can get you running in 5-10 minutes. Our community is also very helpful for support.'
   },
   {
-    question: 'Can I customize Bravion for my needs?',
-    answer: 'Absolutely! Bravion is open-source, so you can modify and customize it however you need. We also offer professional services for custom development.'
+    question: 'Can I customize DefiGate for my needs?',
+    answer: 'Absolutely! DefiGate is open-source, so you can modify and customize it however you need. We also offer professional services for custom development.'
   },
   {
     question: 'What about security and compliance?',
-    answer: 'Bravion is non-custodial, meaning you control your private keys and funds. The code is open-source and auditable. You can implement your own compliance measures as needed.'
+    answer: 'DefiGate is non-custodial, meaning you control your private keys and funds. The code is open-source and auditable. You can implement your own compliance measures as needed.'
   },
   {
     question: 'How does support work?',
@@ -102,6 +103,11 @@ export default function Pricing() {
 
   return (
     <main className="pricing-main">
+      <SEO
+        title="Pricing"
+        description="Simple, transparent pricing for blockchain and Web3 development. Choose the plan that fits your business needs with no hidden fees."
+        path="/pricing"
+      />
       {/* Hero Section */}
       <section className="pricing-hero" style={{backgroundImage: `url(${pricingBg})`}}>
         <div className="pricing-hero-overlay">
@@ -195,7 +201,7 @@ export default function Pricing() {
             <span className="section-tag">Cost Comparison</span>
             <h2 className="section-title">See How Much You Can Save</h2>
             <p className="section-subtitle">
-              Compare Bravion with traditional payment processors and see your potential savings
+              Compare DefiGate with traditional payment processors and see your potential savings
             </p>
           </div>
           
@@ -231,7 +237,7 @@ export default function Pricing() {
               </div>
               
               <div className="savings-card highlighted">
-                <h4>Bravion</h4>
+                <h4>DefiGate</h4>
                 <div className="cost-breakdown">
                   <div className="cost-item">
                     <span>Transaction Fees</span>
@@ -270,7 +276,7 @@ export default function Pricing() {
             <span className="section-tag">FAQ</span>
             <h2 className="section-title">Frequently Asked Questions</h2>
             <p className="section-subtitle">
-              Everything you need to know about Bravion pricing and features
+              Everything you need to know about DefiGate pricing and features
             </p>
           </div>
           
@@ -303,13 +309,13 @@ export default function Pricing() {
           <div className="cta-content">
             <h2 className="cta-title">Ready to Get Started?</h2>
             <p className="cta-subtitle">
-              Join thousands of businesses already using Bravion to accept crypto payments with zero fees
+              Join thousands of businesses already using DefiGate to accept crypto payments with zero fees
             </p>
             <div className="cta-actions">
               <Link to="/contact" className="btn btn-primary btn-large">
                 Start Free Trial
               </Link>
-              <a href="https://demo.Bravion.org" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-large">
+              <a href="https://demo.DefiGate.org" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-large">
                 Try Demo
               </a>
             </div>

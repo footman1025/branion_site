@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Auth.css';
 
@@ -22,7 +22,7 @@ export default function Login() {
     <main className="auth-page">
       <div className="auth-container">
         <div className="auth-card">
-          <h1>Login to Bravion</h1>
+          <h1>Login to DefiGate</h1>
           <p className="auth-subtitle">Access your payment dashboard</p>
 
           {submitted && <div className="auth-success">Login successful! Redirecting...</div>}

@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
-    // Optimize chunk splitting
     rollupOptions: {
       output: {
         manualChunks: {
@@ -13,18 +12,15 @@ export default defineConfig({
         }
       }
     },
-    // Use esbuild for minification (built-in, no extra dependency)
     minify: 'esbuild',
-    // Optimize CSS
     cssCodeSplit: true,
-    // Source maps only in dev
     sourcemap: false,
-    // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
-    // Optimize assets - inline small assets
-    assetsInlineLimit: 4096,
-    // Report compressed size
+    // Inline assets smaller than 8KB as base64
+    assetsInlineLimit: 8192,
     reportCompressedSize: true,
+    // Target modern browsers for smaller output
+    target: 'es2020',
   },
   server: {
     host: '0.0.0.0',

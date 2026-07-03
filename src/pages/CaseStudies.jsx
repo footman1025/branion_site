@@ -30,8 +30,7 @@ export default function CaseStudies() {
       {/* Hero */}
       <section className="cs-hero">
         <div className="cs-hero-overlay" />
-        <img
-          className="cs-hero-bg"
+        <img loading="lazy" className="cs-hero-bg"
           src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1600&auto=format&fit=crop&q=80"
           alt=""
           aria-hidden="true"
@@ -65,7 +64,7 @@ export default function CaseStudies() {
               {filtered.map(p => (
                 <div className="cs-card" key={p._id}>
                   <div className="cs-img-wrap">
-                    <img src={p.image} alt={p.name} className="cs-img" />
+                    <img loading="lazy" src={p.image} alt={p.name} className="cs-img" />
                     <span className="cs-category">{p.category}</span>
                     {p.featured && <span className="cs-featured-badge">Featured</span>}
                   </div>

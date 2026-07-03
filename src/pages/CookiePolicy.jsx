@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import './CookiePolicy.css';
 
 export default function CookiePolicy() {
@@ -60,8 +60,8 @@ export default function CookiePolicy() {
               If you have questions about our use of cookies, please contact us at:
             </p>
             <p>
-              <strong>Email:</strong> support@Bravion.com<br />
-              <strong>Address:</strong> Bravion LLC, Cryptocurrency Payment Solutions
+              <strong>Email:</strong> support@DefiGate.com<br />
+              <strong>Address:</strong> DefiGate LLC, Cryptocurrency Payment Solutions
             </p>
           </section>
         </div>

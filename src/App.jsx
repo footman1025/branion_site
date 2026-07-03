@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { LangProvider } from './context/LangContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
@@ -62,18 +62,19 @@ function ScrollToTop() {
   return null;
 }
 
-/* Fades page content in after navigation completes */
+/* New page fades in after bar completes — old page was visible the whole time */
 function PageContent({ children }) {
-  const { isRunning } = useNavigation();
+  const { isNewPage } = useNavigation();
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (isNewPage) setAnimKey(k => k + 1);
+  }, [isNewPage]);
+
   return (
     <div
-      style={{
-        opacity:       isRunning ? 0 : 1,
-        transform:     isRunning ? 'translateY(10px)' : 'translateY(0)',
-        transition:    isRunning ? 'none' : 'opacity 0.28s ease, transform 0.28s ease',
-        pointerEvents: isRunning ? 'none' : 'auto',
-        willChange:    'opacity, transform',
-      }}
+      key={animKey}
+      style={{ animation: animKey > 0 ? 'pageFadeIn 0.28s ease both' : undefined }}
     >
       {children}
     </div>

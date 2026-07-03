@@ -59,6 +59,9 @@ body {
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* Prevent white flash during navigation */
+  min-height: 100vh;
+  background-color: var(--bg, #f0fbff);
 }
 
 a { text-decoration: none; color: inherit; }
@@ -602,4 +605,10 @@ body.light-theme .btn-cancel {
   border-color: rgba(255,255,255,0.1);
   color: #94a3b8;
   background: transparent;
+}
+
+/* Page fade-in after navigation */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

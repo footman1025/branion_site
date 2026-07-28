@@ -37,7 +37,7 @@
 }
 
 .metaverse-hero-left h1 {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: clamp(32px, 4vw, 52px);
   font-weight: 800;
   color: #ffffff;

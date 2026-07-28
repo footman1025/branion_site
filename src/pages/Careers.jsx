@@ -1,8 +1,9 @@
 ﻿import { Link, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SEO from '../components/SEO';
+import { useLang } from '../context/LangContext';
 import './Careers.css';
-import careersHero from '../assets/careers.png';
+import careersHero from '../assets/careers.jpg';
 
 export const openRoles = [
   {
@@ -229,21 +230,24 @@ const perks = [
 ];
 
 export default function Careers() {
+  const { t } = useLang();
+  const c = t.careersPage;
   const [searchParams] = useSearchParams();
   const [showToast, setShowToast] = useState(searchParams.get('applied') === '1');
+  const heroTitleLines = c.heroTitle.split('\n');
 
   useEffect(() => {
     if (showToast) {
-      const t = setTimeout(() => setShowToast(false), 6000);
-      return () => clearTimeout(t);
+      const timer = setTimeout(() => setShowToast(false), 6000);
+      return () => clearTimeout(timer);
     }
   }, [showToast]);
 
   return (
     <main className="careers-page">
       <SEO
-        title="Careers"
-        description="Join DefiGate — a remote-first blockchain product company. Explore open roles in engineering, design, security, and growth."
+        title={c.seoTitle}
+        description={c.seoDescription}
         path="/careers"
       />
 
@@ -257,10 +261,10 @@ export default function Careers() {
             </svg>
           </div>
           <div>
-            <p className="careers-toast-title">Application Submitted!</p>
-            <p className="careers-toast-sub">We'll review your application and get back to you within 5 business days.</p>
+            <p className="careers-toast-title">{c.toastTitle}</p>
+            <p className="careers-toast-sub">{c.toastSub}</p>
           </div>
-          <button className="careers-toast-close" onClick={() => setShowToast(false)} aria-label="Dismiss">
+          <button className="careers-toast-close" onClick={() => setShowToast(false)} aria-label={c.dismissAria}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
@@ -269,12 +273,28 @@ export default function Careers() {
       )}
 
       {/* Hero */}
-      <section className="careers-hero" style={{ backgroundImage: `url(${careersHero})` }}>
-        <div className="careers-hero-inner">
-          <span className="careers-tag">Join the Team</span>
-          <h1>Build the Future of<br />Web3 With Us</h1>
-          <p>We are a remote-first blockchain product company. If you love hard problems, decentralized systems, and shipping things that matter — you will fit right in.</p>
-          <a href="#open-roles" className="careers-hero-btn">See Open Roles</a>
+      <section
+        className="careers-hero"
+        style={{ backgroundImage: `url(${careersHero})` }}
+      >
+        <div className="careers-hero-overlay" aria-hidden="true" />
+        <div className="careers-hero-container">
+          <div className="careers-hero-content">
+            <p className="careers-hero-brand">DefiGate</p>
+            <h1 className="careers-hero-title">
+              {heroTitleLines.map((line) => (
+                <span key={line} className="careers-hero-title-line">
+                  {line}
+                </span>
+              ))}
+            </h1>
+            <p className="careers-hero-sub">{c.heroSubtitle}</p>
+            <div className="careers-hero-actions">
+              <a href="#open-roles" className="careers-hero-btn">
+                {c.heroBtn}
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -321,11 +341,17 @@ export default function Careers() {
       </section>
 
       {/* CTA */}
-      <section className="careers-cta-section">
+      <section className="careers-cta">
+        <div className="careers-cta-glow" aria-hidden="true" />
         <div className="careers-container careers-cta-inner">
-          <h2>Don't see your role?</h2>
-          <p>We are always looking for exceptional people. Send us your CV and tell us how you can contribute.</p>
-          <Link to="/contact" className="careers-hero-btn">Get in Touch</Link>
+          <p className="careers-cta-brand">DefiGate</p>
+          <h2 className="careers-cta-title">{c.ctaTitle}</h2>
+          <p className="careers-cta-sub">{c.ctaSubtitle}</p>
+          <div className="careers-cta-actions">
+            <Link to="/contact" className="careers-cta-btn">
+              {c.ctaBtn}
+            </Link>
+          </div>
         </div>
       </section>
 

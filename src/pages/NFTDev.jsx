@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './NFTDev.css';
-import heroImg from '../assets/service_2.png';
+import heroImg from '../assets/service_2.jpg';
 
 const features = [
   {

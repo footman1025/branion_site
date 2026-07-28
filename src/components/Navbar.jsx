@@ -5,10 +5,10 @@ import LangSwitcher from './LangSwitcher';
 import TransitionLink from './TransitionLink';
 import './Navbar.css';
 import logo from '../assets/logo.png';
-import service1 from '../assets/service_1.png';
-import service2 from '../assets/service_2.png';
-import service3 from '../assets/service_3.png';
-import service4 from '../assets/service_4.png';
+import service1 from '../assets/service_1.jpg';
+import service2 from '../assets/service_2.jpg';
+import service3 from '../assets/service_3.jpg';
+import service4 from '../assets/service_4.jpg';
 
 const SERVICE_ROUTES = {
   'DeFi Protocol Development': '/web3-development',
@@ -89,17 +89,23 @@ const SERVICES_MENU = [
 ];
 
 function ServicesPanel({ onClose }) {
-  const [active, setActive] = useState(SERVICES_MENU[0]);
+  const { t } = useLang();
+  const [activeKey, setActiveKey] = useState(SERVICES_MENU[0].key);
+  const menu = SERVICES_MENU.map(item => {
+    const localized = t.servicesMenu?.find(service => service.key === item.key);
+    return localized ? { ...item, label: localized.label, preview: { ...item.preview, title: localized.title, desc: localized.desc, tags: localized.tags } } : item;
+  });
+  const active = menu.find(item => item.key === activeKey) || menu[0];
   return (
     <div className="svc-panel">
       <div className="svc-panel-left">
-        <p className="svc-panel-label">SERVICES</p>
-        {SERVICES_MENU.map(item => (
+        <p className="svc-panel-label">{t.nav.servicesLabel}</p>
+        {menu.map(item => (
           <TransitionLink
             key={item.key}
             to={item.route}
             className={`svc-panel-item ${active.key === item.key ? 'active' : ''}`}
-            onMouseEnter={() => setActive(item)}
+            onMouseEnter={() => setActiveKey(item.key)}
             onClick={onClose}
           >
             <span className="svc-panel-icon">{item.icon}</span>
@@ -203,7 +209,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <TransitionLink to="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <img src={logo} alt="Bravion" className="logo-img" />
+          <img src={logo} alt="DefiGate" className="logo-img" />
         </TransitionLink>
 
         {/* Desktop Nav */}
@@ -233,38 +239,35 @@ export default function Navbar() {
             )}
           </li>
 
-          {/* Products */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
             <TransitionLink to="/products" className={`nav-link ${pathname === '/products' ? 'active' : ''}`}>
-              Products
+              {t.nav.products}
             </TransitionLink>
           </li>
 
           {/* Pricing */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
             <TransitionLink to="/pricing" className={`nav-link ${pathname === '/pricing' ? 'active' : ''}`}>
-              Pricing
+              {t.nav.pricing}
             </TransitionLink>
           </li>
 
-          {/* About Us */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
             <TransitionLink to="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>
-              About Us
+              {t.nav.about}
             </TransitionLink>
           </li>
 
-          {/* Careers */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
             <TransitionLink to="/careers" className={`nav-link ${pathname === '/careers' ? 'active' : ''}`}>
-              Careers
+              {t.nav.careers}
             </TransitionLink>
           </li>
 
           {/* Contact */}
           <li className="nav-item" onMouseEnter={(e) => updateIndicator(e.currentTarget.querySelector('.nav-link'))}>
             <TransitionLink to="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>
-              Contact
+              {t.nav.contactUs}
             </TransitionLink>
           </li>
 
@@ -273,7 +276,7 @@ export default function Navbar() {
         {/* Right */}
         <div className="navbar-right">
           <LangSwitcher />
-          <TransitionLink to="/contact" className="nav-contact-btn">{t.nav?.contact || 'Get Started'}</TransitionLink>
+          <TransitionLink to="/contact" className="nav-contact-btn">{t.nav.getStarted}</TransitionLink>
           <button
             className={`hamburger ${mobileOpen ? 'is-open' : ''}`}
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -290,31 +293,34 @@ export default function Navbar() {
         {/* Services */}
         <div className="mob-section">
           <button className="mob-section-btn" onClick={() => toggleMobileSection('services')}>
-            Services
+            {t.nav.services}
             <svg className={`nav-chevron ${mobileExpanded.services ? 'rotated' : ''}`} width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
           {mobileExpanded.services && (
             <div className="mob-sub">
-              {SERVICES_MENU.map(item => (
+              {SERVICES_MENU.map(item => {
+                const localized = t.servicesMenu?.find(service => service.key === item.key);
+                return (
                 <TransitionLink key={item.key} to={item.route} className="mob-link">
-                  {item.label}
+                  {localized?.label || item.label}
                 </TransitionLink>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
 
-        <TransitionLink to="/products" className="mob-top-link">Products</TransitionLink>
-        <TransitionLink to="/pricing" className="mob-top-link">Pricing</TransitionLink>
-        <TransitionLink to="/about" className="mob-top-link">About Us</TransitionLink>
-        <TransitionLink to="/careers" className="mob-top-link">Careers</TransitionLink>
-        <TransitionLink to="/contact" className="mob-top-link">Contact</TransitionLink>
+        <TransitionLink to="/products" className="mob-top-link">{t.nav.products}</TransitionLink>
+        <TransitionLink to="/pricing" className="mob-top-link">{t.nav.pricing}</TransitionLink>
+        <TransitionLink to="/about" className="mob-top-link">{t.nav.about}</TransitionLink>
+        <TransitionLink to="/careers" className="mob-top-link">{t.nav.careers}</TransitionLink>
+        <TransitionLink to="/contact" className="mob-top-link">{t.nav.contactUs}</TransitionLink>
 
         <div className="mob-footer">
           <TransitionLink to="/contact" className="nav-contact-btn" style={{ width: '100%', justifyContent: 'center' }}>
-            Contact us
+            {t.nav.getStarted}
           </TransitionLink>
         </div>
       </div>

@@ -1,63 +1,240 @@
-﻿import { useState } from 'react';
-import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
-import { openRoles } from './Careers';
+﻿import { useState, useEffect, useRef } from 'react';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
+import { useLang } from '../context/LangContext';
 import './JobApply.css';
 
 const TOTAL_STEPS = 4;
-const STEP_LABELS = ['Personal Info', 'Experience', 'Skills & Portfolio', 'Final Questions'];
+
+const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+function toISODate(d) {
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+}
+
+function parseISODate(value) {
+  if (!value) return null;
+  const [y, m, day] = value.split('-').map(Number);
+  if (!y || !m || !day) return null;
+  return new Date(y, m - 1, day);
+}
+
+function formatDisplayDate(value) {
+  const d = parseISODate(value);
+  if (!d) return '';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function DatePicker({ value, onChange, invalid, placeholder = 'Select date' }) {
+  const rootRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const selected = parseISODate(value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const initialView = selected || today;
+  const [viewYear, setViewYear] = useState(initialView.getFullYear());
+  const [viewMonth, setViewMonth] = useState(initialView.getMonth());
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDoc = (e) => {
+      if (rootRef.current && !rootRef.current.contains(e.target)) setOpen(false);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (selected) {
+      setViewYear(selected.getFullYear());
+      setViewMonth(selected.getMonth());
+    }
+  }, [value]);
+
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const startWeekday = new Date(viewYear, viewMonth, 1).getDay();
+  const cells = [];
+  for (let i = 0; i < startWeekday; i += 1) cells.push(null);
+  for (let day = 1; day <= daysInMonth; day += 1) cells.push(day);
+
+  const shiftMonth = (delta) => {
+    const next = new Date(viewYear, viewMonth + delta, 1);
+    setViewYear(next.getFullYear());
+    setViewMonth(next.getMonth());
+  };
+
+  const pickDay = (day) => {
+    const iso = toISODate(new Date(viewYear, viewMonth, day));
+    onChange(iso);
+    setOpen(false);
+  };
+
+  const isSameDay = (day) => {
+    if (!selected || !day) return false;
+    return (
+      selected.getFullYear() === viewYear &&
+      selected.getMonth() === viewMonth &&
+      selected.getDate() === day
+    );
+  };
+
+  const isToday = (day) => {
+    if (!day) return false;
+    return (
+      today.getFullYear() === viewYear &&
+      today.getMonth() === viewMonth &&
+      today.getDate() === day
+    );
+  };
+
+  return (
+    <div className={`ja-datepicker${open ? ' is-open' : ''}`} ref={rootRef}>
+      <button
+        type="button"
+        className={`ja-datepicker-trigger${invalid ? ' ja-input-invalid' : ''}${!value ? ' is-placeholder' : ''}`}
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+      >
+        <span>{value ? formatDisplayDate(value) : placeholder}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="ja-datepicker-panel" role="dialog" aria-label="Choose date">
+          <div className="ja-datepicker-head">
+            <button type="button" className="ja-datepicker-nav" onClick={() => shiftMonth(-1)} aria-label="Previous month">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+            </button>
+            <p className="ja-datepicker-month">{MONTHS[viewMonth]} {viewYear}</p>
+            <button type="button" className="ja-datepicker-nav" onClick={() => shiftMonth(1)} aria-label="Next month">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+            </button>
+          </div>
+
+          <div className="ja-datepicker-weekdays">
+            {WEEKDAYS.map((d) => (
+              <span key={d}>{d}</span>
+            ))}
+          </div>
+
+          <div className="ja-datepicker-grid">
+            {cells.map((day, i) => (
+              day ? (
+                <button
+                  key={`${viewYear}-${viewMonth}-${day}`}
+                  type="button"
+                  className={`ja-datepicker-day${isSameDay(day) ? ' is-selected' : ''}${isToday(day) ? ' is-today' : ''}`}
+                  onClick={() => pickDay(day)}
+                >
+                  {day}
+                </button>
+              ) : (
+                <span key={`empty-${i}`} className="ja-datepicker-empty" />
+              )
+            ))}
+          </div>
+
+          <div className="ja-datepicker-foot">
+            <button
+              type="button"
+              className="ja-datepicker-foot-btn"
+              onClick={() => {
+                onChange('');
+                setOpen(false);
+              }}
+            >
+              Clear
+            </button>
+            <button
+              type="button"
+              className="ja-datepicker-foot-btn is-accent"
+              onClick={() => {
+                onChange(toISODate(today));
+                setViewYear(today.getFullYear());
+                setViewMonth(today.getMonth());
+                setOpen(false);
+              }}
+            >
+              Today
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ─── Validation helpers ─── */
 const isValidEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 const isValidUrl   = v => { try { new URL(v); return true; } catch { return false; } };
 
-function validateStep1(d) {
+function validateStep1(d, v) {
   const e = {};
-  if (!d.fullName.trim())          e.fullName  = 'Full name is required.';
-  if (!d.gender)                   e.gender    = 'Please select your gender.';
-  if (!d.email.trim())             e.email     = 'Email address is required.';
-  else if (!isValidEmail(d.email)) e.email     = 'Please enter a valid email address.';
-  if (!d.location.trim())          e.location  = 'City and country are required.';
-  if (!d.linkedin.trim())          e.linkedin  = 'LinkedIn profile URL is required.';
-  else if (!isValidUrl(d.linkedin))e.linkedin  = 'Please enter a valid URL (starting with https://).';
-  if (!d.github.trim())            e.github    = 'GitHub profile URL is required.';
-  else if (!isValidUrl(d.github))  e.github    = 'Please enter a valid URL (starting with https://).';
-  if (!d.referral.trim())          e.referral  = 'Please tell us how you heard about this role.';
+  if (!d.fullName.trim())          e.fullName  = v.fullNameRequired;
+  if (!d.gender)                   e.gender    = v.genderRequired;
+  if (!d.email.trim())             e.email     = v.emailRequired;
+  else if (!isValidEmail(d.email)) e.email     = v.emailInvalid;
+  if (!d.location.trim())          e.location  = v.locationRequired;
+  if (!d.linkedin.trim())          e.linkedin  = v.linkedinRequired;
+  else if (!isValidUrl(d.linkedin))e.linkedin  = v.linkedinInvalid;
+  if (!d.github.trim())            e.github    = v.githubRequired;
+  else if (!isValidUrl(d.github))  e.github    = v.githubInvalid;
+  if (!d.referral.trim())          e.referral  = v.referralRequired;
   return e;
 }
 
-function validateStep2(d) {
+function validateStep2(d, v, ratingTechs) {
   const e = {};
-  if (!d.expSolidity)       e.expSolidity       = 'Please select your Solidity experience.';
-  if (!d.expSmartContracts) e.expSmartContracts  = 'Please select your Smart Contracts experience.';
-  if (!d.expDeFi)           e.expDeFi            = 'Please select your DeFi experience.';
-  const unrated = RATING_TECHS.filter(t => !d.ratings?.[t]);
-  if (unrated.length > 0)   e.ratings = `Please rate all technologies. Missing: ${unrated.join(', ')}.`;
+  if (!d.expSolidity)       e.expSolidity       = v.expSolidityRequired;
+  if (!d.expSmartContracts) e.expSmartContracts  = v.expSmartContractsRequired;
+  if (!d.expDeFi)           e.expDeFi            = v.expDeFiRequired;
+  const unrated = ratingTechs.filter(t => !d.ratings?.[t]);
+  if (unrated.length > 0)   e.ratings = v.ratingsRequired.replace('{missing}', unrated.join(', '));
   return e;
 }
 
-function validateStep3(d) {
+function validateStep3(d, v) {
   const e = {};
-  if (!d.skills.trim())        e.skills      = 'Please list your key technical skills.';
-  if (!d.projectLink.trim())   e.projectLink = 'A project link is required.';
-  else if (!isValidUrl(d.projectLink)) e.projectLink = 'Please enter a valid URL.';
-  if (!d.projectDesc.trim())   e.projectDesc = 'Please describe your project.';
-  if (!d.cvLink.trim())        e.cvLink      = 'A CV/Resume link is required.';
-  else if (!isValidUrl(d.cvLink)) e.cvLink   = 'Please enter a valid URL.';
-  if (!d.proudOf.trim())       e.proudOf     = 'Please answer this question.';
-  if (!d.whyFit.trim())        e.whyFit      = 'Please answer this question.';
+  if (!d.skills.trim())        e.skills      = v.skillsRequired;
+  if (!d.projectLink.trim())   e.projectLink = v.projectLinkRequired;
+  else if (!isValidUrl(d.projectLink)) e.projectLink = v.projectLinkInvalid;
+  if (!d.projectDesc.trim())   e.projectDesc = v.projectDescRequired;
+  if (!d.cvLink.trim())        e.cvLink      = v.cvLinkRequired;
+  else if (!isValidUrl(d.cvLink)) e.cvLink   = v.cvLinkInvalid;
+  if (!d.proudOf.trim())       e.proudOf     = v.proudOfRequired;
+  if (!d.whyFit.trim())        e.whyFit      = v.whyFitRequired;
   return e;
 }
 
-function validateStep4(d) {
+function validateStep4(d, v) {
   const e = {};
-  if (!d.startDate)           e.startDate          = 'Please select your available start date.';
-  if (!d.salary.trim())       e.salary             = 'Please state your salary expectation.';
-  if (!d.assessment)          e.assessment         = 'Please select an option.';
-  if (!d.availability)        e.availability       = 'Please select your availability.';
-  if (!d.hoursPerWeek)        e.hoursPerWeek       = 'Please select hours per week.';
-  if (!d.startImmediately)    e.startImmediately   = 'Please select an option.';
-  if (!d.legallyAuthorized)   e.legallyAuthorized  = 'Please select an option.';
-  if (!d.visaSponsorship)     e.visaSponsorship    = 'Please select an option.';
+  if (!d.startDate)           e.startDate          = v.startDateRequired;
+  if (!d.salary.trim())       e.salary             = v.salaryRequired;
+  if (!d.assessment)          e.assessment         = v.assessmentRequired;
+  if (!d.availability)        e.availability       = v.availabilityRequired;
+  if (!d.hoursPerWeek)        e.hoursPerWeek       = v.hoursPerWeekRequired;
+  if (!d.startImmediately)    e.startImmediately   = v.startImmediatelyRequired;
+  if (!d.legallyAuthorized)   e.legallyAuthorized  = v.legallyAuthorizedRequired;
+  if (!d.visaSponsorship)     e.visaSponsorship    = v.visaSponsorshipRequired;
   return e;
 }
 
@@ -75,7 +252,8 @@ function FieldError({ msg }) {
 }
 
 /* ─── Step 1: Personal Information ─── */
-function StepPersonal({ data, onChange, errors }) {
+function StepPersonal({ data, onChange, errors, ja }) {
+  const s = ja.steps.personal;
   const inp = (field, type = 'text', placeholder = '') => (
     <input
       type={type}
@@ -87,43 +265,43 @@ function StepPersonal({ data, onChange, errors }) {
   );
   return (
     <div className="ja-form-card">
-      <h2 className="ja-form-card-title">Personal Information</h2>
+      <h2 className="ja-form-card-title">{s.title}</h2>
       <div className="ja-field">
-        <label>Full Name <span className="ja-req">*</span></label>
-        {inp('fullName', 'text', 'Your full name')}
+        <label>{s.fullName} <span className="ja-req">*</span></label>
+        {inp('fullName', 'text', s.fullNamePlaceholder)}
         <FieldError msg={errors.fullName} />
       </div>
       <div className="ja-field">
-        <label>Gender <span className="ja-req">*</span></label>
+        <label>{s.gender} <span className="ja-req">*</span></label>
         <select value={data.gender} onChange={e => onChange('gender', e.target.value)} className={errors.gender ? 'ja-input-invalid' : ''}>
-          <option value="">Select gender</option>
-          <option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option>
+          <option value="">{s.selectGender}</option>
+          {ja.genderOptions.map(opt => <option key={opt}>{opt}</option>)}
         </select>
         <FieldError msg={errors.gender} />
       </div>
       <div className="ja-field">
-        <label>Email Address <span className="ja-req">*</span></label>
-        {inp('email', 'email', 'you@example.com')}
+        <label>{s.email} <span className="ja-req">*</span></label>
+        {inp('email', 'email', s.emailPlaceholder)}
         <FieldError msg={errors.email} />
       </div>
       <div className="ja-field">
-        <label>City, Country <span className="ja-req">*</span></label>
-        {inp('location', 'text', 'e.g. New York, USA')}
+        <label>{s.location} <span className="ja-req">*</span></label>
+        {inp('location', 'text', s.locationPlaceholder)}
         <FieldError msg={errors.location} />
       </div>
       <div className="ja-field">
-        <label>LinkedIn Profile <span className="ja-req">*</span></label>
-        {inp('linkedin', 'url', 'https://linkedin.com/in/yourprofile')}
+        <label>{s.linkedin} <span className="ja-req">*</span></label>
+        {inp('linkedin', 'url', s.linkedinPlaceholder)}
         <FieldError msg={errors.linkedin} />
       </div>
       <div className="ja-field">
-        <label>GitHub Profile <span className="ja-req">*</span></label>
-        {inp('github', 'url', 'https://github.com/yourusername')}
+        <label>{s.github} <span className="ja-req">*</span></label>
+        {inp('github', 'url', s.githubPlaceholder)}
         <FieldError msg={errors.github} />
       </div>
       <div className="ja-field">
-        <label>How did you hear about this opportunity, and who referred you? <span className="ja-req">*</span></label>
-        {inp('referral', 'text', 'e.g. LinkedIn, referred by John Doe')}
+        <label>{s.referral} <span className="ja-req">*</span></label>
+        {inp('referral', 'text', s.referralPlaceholder)}
         <FieldError msg={errors.referral} />
       </div>
     </div>
@@ -131,26 +309,12 @@ function StepPersonal({ data, onChange, errors }) {
 }
 
 /* ─── Step 2: Experience ─── */
-const EXP_YEARS = ['1-3 years', '3-5 years', '5+ years'];
-
-const RADIO_QUESTIONS = [
-  { key: 'expSolidity',       label: 'How many years of experience do you have in Solidity?' },
-  { key: 'expSmartContracts', label: 'How many years of experience do you have with Smart Contracts?' },
-  { key: 'expDeFi',           label: 'How many years of experience do you have with DeFi Protocols?' },
-];
-
-const RATING_TECHS = [
-  'Solidity', 'Ethereum', 'Smart Contracts', 'Web3.js / ethers.js',
-  'Hardhat / Foundry', 'IPFS', 'DeFi Protocols', 'ERC Standards (ERC-20, ERC-721)',
-  'NFTs', 'DeFi (Uniswap, GMX, dYdX)', 'Git',
-];
-
-function RadioGroup({ question, name, value, onChange, error }) {
+function RadioGroup({ question, name, value, onChange, error, options }) {
   return (
     <div className="ja-radio-group">
       <p className="ja-radio-question">{question} <span className="ja-req">*</span></p>
       <div className="ja-radio-options">
-        {EXP_YEARS.map(opt => (
+        {options.map(opt => (
           <label key={opt} className="ja-radio-label">
             <input type="radio" name={name} value={opt} checked={value === opt} onChange={() => onChange(opt)} />
             <span className="ja-radio-custom" />
@@ -163,18 +327,18 @@ function RadioGroup({ question, name, value, onChange, error }) {
   );
 }
 
-function RatingGrid({ ratings, onChange, error }) {
+function RatingGrid({ ratings, onChange, error, ja }) {
   const cols = [1,2,3,4,5,6,7,8,9,10];
   return (
     <div className="ja-rating-section">
-      <p className="ja-radio-question">Rate your proficiency (0–10) <span className="ja-req">*</span></p>
-      <p className="ja-rating-hint">0 = No experience &nbsp;|&nbsp; 10 = Expert level</p>
+      <p className="ja-radio-question">{ja.ratingQuestion} <span className="ja-req">*</span></p>
+      <p className="ja-rating-hint">{ja.ratingHint}</p>
       <div className="ja-rating-grid">
         <div className="ja-rating-header">
           <div className="ja-rating-tech-col" />
           {cols.map(n => <div key={n} className="ja-rating-num">{n}</div>)}
         </div>
-        {RATING_TECHS.map(tech => (
+        {ja.ratingTechs.map(tech => (
           <div key={tech} className={`ja-rating-row ${!ratings[tech] && error ? 'ja-rating-row--missing' : ''}`}>
             <div className="ja-rating-tech-col">{tech}</div>
             {cols.map(n => (
@@ -191,79 +355,82 @@ function RatingGrid({ ratings, onChange, error }) {
   );
 }
 
-function StepExperience({ data, onChange, errors }) {
+function StepExperience({ data, onChange, errors, ja }) {
   return (
     <div className="ja-form-card">
-      <h2 className="ja-form-card-title">Previous Experience</h2>
-      {RADIO_QUESTIONS.map(q => (
+      <h2 className="ja-form-card-title">{ja.steps.experience.title}</h2>
+      {Object.entries(ja.expQuestions).map(([key, label]) => (
         <RadioGroup
-          key={q.key} question={q.label} name={q.key}
-          value={data[q.key] || ''} onChange={val => onChange(q.key, val)}
-          error={errors[q.key]}
+          key={key} question={label} name={key}
+          value={data[key] || ''} onChange={val => onChange(key, val)}
+          error={errors[key]}
+          options={ja.expYears}
         />
       ))}
       <RatingGrid
         ratings={data.ratings || {}}
         onChange={(tech, val) => onChange('ratings', { ...(data.ratings || {}), [tech]: val })}
         error={errors.ratings}
+        ja={ja}
       />
     </div>
   );
 }
 
 /* ─── Step 3: Skills & Portfolio ─── */
-function StepSkills({ data, onChange, errors }) {
+function StepSkills({ data, onChange, errors, ja }) {
+  const s = ja.steps.skills;
   return (
     <>
       <div className="ja-form-card">
-        <h2 className="ja-form-card-title">Skills &amp; Portfolio</h2>
+        <h2 className="ja-form-card-title">{s.title}</h2>
         <div className="ja-field">
-          <label>Key Technical Skills <span className="ja-req">*</span></label>
-          <input type="text" placeholder="e.g. Solidity, Rust, React, Python (comma-separated)"
+          <label>{s.skills} <span className="ja-req">*</span></label>
+          <input type="text" placeholder={s.skillsPlaceholder}
             value={data.skills} onChange={e => onChange('skills', e.target.value)}
             className={errors.skills ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.skills} />
         </div>
         <div className="ja-field">
-          <label>Portfolio / Personal Website <span style={{color:'#94a3b8',fontWeight:400}}>(optional)</span></label>
-          <input type="url" placeholder="https://yourportfolio.com"
+          <label>{s.portfolio} <span style={{color:'#94a3b8',fontWeight:400}}>{s.optional}</span></label>
+          <input type="url" placeholder={s.portfolioPlaceholder}
             value={data.portfolio} onChange={e => onChange('portfolio', e.target.value)} />
         </div>
         <div className="ja-field">
-          <label>Link to a Relevant Project or Work Sample <span className="ja-req">*</span></label>
-          <input type="url" placeholder="https://github.com/yourproject or deployed URL"
+          <label>{s.projectLink} <span className="ja-req">*</span></label>
+          <input type="url" placeholder={s.projectLinkPlaceholder}
             value={data.projectLink} onChange={e => onChange('projectLink', e.target.value)}
             className={errors.projectLink ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.projectLink} />
         </div>
         <div className="ja-field">
-          <label>Describe the project briefly <span className="ja-req">*</span></label>
-          <textarea rows={5} placeholder="What did you build, what was your role, and what was the impact?"
+          <label>{s.projectDesc} <span className="ja-req">*</span></label>
+          <textarea rows={5} placeholder={s.projectDescPlaceholder}
             value={data.projectDesc} onChange={e => onChange('projectDesc', e.target.value)}
             className={errors.projectDesc ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.projectDesc} />
         </div>
         <div className="ja-field">
-          <label>CV / Resume Link <span className="ja-req">*</span></label>
-          <input type="url" placeholder="Google Drive, Dropbox, or direct PDF link"
+          <label>{s.cvLink} <span className="ja-req">*</span></label>
+          <input type="url" placeholder={s.cvLinkPlaceholder}
             value={data.cvLink} onChange={e => onChange('cvLink', e.target.value)}
             className={errors.cvLink ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.cvLink} />
         </div>
       </div>
       <div className="ja-form-card">
-        <h2 className="ja-form-card-title">Tell Us About Yourself</h2>
-        <p className="ja-card-subtitle">Please share openly — we read every answer carefully.</p>
+        <h2 className="ja-form-card-title">{s.aboutTitle}</h2>
+        <p className="ja-card-subtitle">{s.aboutSubtitle}</p>
         <div className="ja-field">
-          <label>What are you most proud of accomplishing in your previous role? <span className="ja-req">*</span></label>
-          <textarea rows={6} placeholder="Share your experience and achievements..."
+          <label>{s.proudOf} <span className="ja-req">*</span></label>
+          <textarea rows={6} placeholder={s.proudOfPlaceholder}
             value={data.proudOf} onChange={e => onChange('proudOf', e.target.value)}
             className={errors.proudOf ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.proudOf} />
         </div>
         <div className="ja-field">
-          <label>Why do you think you're a great fit for DefiGate? <span className="ja-req">*</span></label>
-          <textarea rows={6} placeholder="Tell us what excites you about this opportunity..."
+          <label>{s.whyFit} <span className="ja-req">*</span></label>
+          <textarea rows={6} placeholder={s.whyFitPlaceholder}
             value={data.whyFit} onChange={e => onChange('whyFit', e.target.value)}
             className={errors.whyFit ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.whyFit} />
@@ -274,13 +441,14 @@ function StepSkills({ data, onChange, errors }) {
 }
 
 /* ─── Step 4: Final Questions ─── */
-function StepFinal({ data, onChange, errors }) {
+function StepFinal({ data, onChange, errors, ja }) {
+  const s = ja.steps.final;
   const sel = (field, label, opts, req = true) => (
     <div className="ja-field">
       <label>{label} {req && <span className="ja-req">*</span>}</label>
       <select value={data[field]} onChange={e => onChange(field, e.target.value)}
         className={errors[field] ? 'ja-input-invalid' : ''}>
-        <option value="">Select...</option>
+        <option value="">{s.selectOption}</option>
         {opts.map(o => <option key={o}>{o}</option>)}
       </select>
       <FieldError msg={errors[field]} />
@@ -306,45 +474,38 @@ function StepFinal({ data, onChange, errors }) {
   return (
     <>
       <div className="ja-form-card">
-        <h2 className="ja-form-card-title">Final Questions</h2>
+        <h2 className="ja-form-card-title">{s.title}</h2>
         <div className="ja-field">
-          <label>Earliest Available Start Date <span className="ja-req">*</span></label>
-          <input type="date" value={data.startDate} onChange={e => onChange('startDate', e.target.value)}
-            className={errors.startDate ? 'ja-input-invalid' : ''} />
+          <label>{s.startDate} <span className="ja-req">*</span></label>
+          <DatePicker
+            value={data.startDate}
+            onChange={(v) => onChange('startDate', v)}
+            invalid={Boolean(errors.startDate)}
+            placeholder="mm/dd/yyyy"
+          />
           <FieldError msg={errors.startDate} />
         </div>
         <div className="ja-field">
-          <label>Salary Expectation (USD / month) <span className="ja-req">*</span></label>
-          <input type="text" placeholder="e.g. $5,000 – $7,000" value={data.salary}
+          <label>{s.salary} <span className="ja-req">*</span></label>
+          <input type="text" placeholder={s.salaryPlaceholder} value={data.salary}
             onChange={e => onChange('salary', e.target.value)}
             className={errors.salary ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.salary} />
         </div>
-        {sel('assessment', 'Are you open to a technical assessment?', [
-          'Yes, happy to complete one',
-          'Yes, but with a time limit',
-          'No, I prefer other evaluation methods',
-        ])}
+        {sel('assessment', s.assessment, ja.assessmentOptions)}
         <div className="ja-field">
-          <label>Anything else you'd like us to know? <span style={{color:'#94a3b8',fontWeight:400}}>(optional)</span></label>
-          <textarea rows={5} placeholder="Additional context, questions, or anything you'd like to share..."
+          <label>{s.extra} <span style={{color:'#94a3b8',fontWeight:400}}>{ja.steps.skills.optional}</span></label>
+          <textarea rows={5} placeholder={s.extraPlaceholder}
             value={data.extra} onChange={e => onChange('extra', e.target.value)} />
         </div>
       </div>
       <div className="ja-form-card">
-        <h2 className="ja-form-card-title">Availability</h2>
-        {sel('availability', 'What is your current availability?', [
-          'Full-time (40 hrs/week)', 'Part-time (20 hrs/week)', 'Contract / Freelance', 'Open to discussion',
-        ])}
-        {sel('hoursPerWeek', 'How many hours per week can you commit?', [
-          'Less than 10 hours', '10–20 hours', '20–30 hours', '30–40 hours', '40+ hours',
-        ])}
-        {radioGroup('startImmediately', 'Are you available to start immediately if selected?',
-          ['Yes', 'No', 'Within 2 weeks', 'Within 1 month'])}
-        {radioGroup('legallyAuthorized', 'Are you legally authorized to work in your current location?',
-          ['Yes', 'No'])}
-        {radioGroup('visaSponsorship', 'Will you require visa/work permit sponsorship?',
-          ['Yes', 'No', 'Not sure'])}
+        <h2 className="ja-form-card-title">{s.availabilityTitle}</h2>
+        {sel('availability', s.availability, ja.availabilityOptions)}
+        {sel('hoursPerWeek', s.hoursPerWeek, ja.hoursOptions)}
+        {radioGroup('startImmediately', s.startImmediately, ja.startImmediatelyOptions)}
+        {radioGroup('legallyAuthorized', s.legallyAuthorized, ja.yesNoOptions)}
+        {radioGroup('visaSponsorship', s.visaSponsorship, ja.visaOptions)}
       </div>
     </>
   );
@@ -362,7 +523,9 @@ function block(label, value) {
 export default function JobApply() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const role = openRoles.find(r => r.slug === slug);
+  const { t } = useLang();
+  const ja = t.jobApply;
+  const role = t.jobs?.[slug];
 
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
@@ -381,11 +544,12 @@ export default function JobApply() {
   const updateField = setter => (key, val) => setter(prev => ({ ...prev, [key]: val }));
 
   const validate = () => {
+    const v = ja.validation;
     switch (step) {
-      case 1: return validateStep1(personal);
-      case 2: return validateStep2(experience);
-      case 3: return validateStep3(skills);
-      case 4: return validateStep4(final);
+      case 1: return validateStep1(personal, v);
+      case 2: return validateStep2(experience, v, ja.ratingTechs);
+      case 3: return validateStep3(skills, v);
+      case 4: return validateStep4(final, v);
       default: return {};
     }
   };
@@ -394,7 +558,6 @@ export default function JobApply() {
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
-      // Scroll to first error
       setTimeout(() => {
         const el = document.querySelector('.ja-input-invalid, .ja-field-error, .ja-rating-row--missing');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -411,7 +574,7 @@ export default function JobApply() {
 
     setSending(true);
     setSendError('');
-    const ratingsText = Object.entries(experience.ratings || {}).map(([t,s]) => `${t}: ${s}/10`).join('\n');
+    const ratingsText = Object.entries(experience.ratings || {}).map(([t, s]) => `${t}: ${s}/10`).join('\n');
     try {
       const res = await fetch('/api/send-application', {
         method: 'POST',
@@ -435,7 +598,7 @@ export default function JobApply() {
       if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
       setShowModal(true);
     } catch (err) {
-      setSendError(err.message || 'Failed to send. Please try again.');
+      setSendError(err.message || ja.sendFailed);
     } finally {
       setSending(false);
     }
@@ -452,7 +615,7 @@ export default function JobApply() {
       <div className="ja-topbar">
         <button className="ja-back-link" onClick={handleBack}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          {step === 1 ? 'Back to Job' : 'Back'}
+          {step === 1 ? ja.backToJob : ja.back}
         </button>
         <span className="ja-role-name">{role.title}</span>
       </div>
@@ -460,14 +623,14 @@ export default function JobApply() {
       <div className="ja-container">
         <div className="ja-progress-bar">
           <div className="ja-progress-meta">
-            <span>Step {step} of {TOTAL_STEPS}</span>
-            <span>{pct}% complete</span>
+            <span>{ja.stepOf.replace('{step}', step).replace('{total}', TOTAL_STEPS)}</span>
+            <span>{ja.pctComplete.replace('{pct}', pct)}</span>
           </div>
           <div className="ja-progress-track">
             <div className="ja-progress-fill" style={{ width: `${pct}%` }} />
           </div>
           <div className="ja-step-labels">
-            {STEP_LABELS.map((label, i) => (
+            {ja.stepLabels.map((label, i) => (
               <span key={label} className={`ja-step-label ${i+1===step?'active':''} ${i+1<step?'done':''}`}>{label}</span>
             ))}
           </div>
@@ -475,36 +638,36 @@ export default function JobApply() {
 
         {step === 1 && (
           <div className="ja-intro-banner">
-            <p><strong>Thank you for your interest in joining DefiGate as a {role.title}.</strong></p>
-            <p>Please complete the form with accurate and detailed information about your background.</p>
-            <p>Fields marked with <span style={{color:'#ef4444'}}>*</span> are required.</p>
+            <p><strong>{ja.introTitle.replace('{role}', role.title)}</strong></p>
+            <p>{ja.introP1}</p>
+            <p>{ja.introP2} <span style={{color:'#ef4444'}}>*</span> {ja.requiredNote}</p>
           </div>
         )}
 
         {Object.keys(errors).length > 0 && (
           <div className="ja-errors-banner">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Please fix the errors below before continuing.
+            {ja.fixErrors}
           </div>
         )}
 
-        {step === 1 && <StepPersonal   data={personal}   onChange={updateField(setPersonal)}   errors={errors} />}
-        {step === 2 && <StepExperience data={experience} onChange={updateField(setExperience)} errors={errors} />}
-        {step === 3 && <StepSkills     data={skills}     onChange={updateField(setSkills)}     errors={errors} />}
-        {step === 4 && <StepFinal      data={final}      onChange={updateField(setFinal)}      errors={errors} />}
+        {step === 1 && <StepPersonal   data={personal}   onChange={updateField(setPersonal)}   errors={errors} ja={ja} />}
+        {step === 2 && <StepExperience data={experience} onChange={updateField(setExperience)} errors={errors} ja={ja} />}
+        {step === 3 && <StepSkills     data={skills}     onChange={updateField(setSkills)}     errors={errors} ja={ja} />}
+        {step === 4 && <StepFinal      data={final}      onChange={updateField(setFinal)}      errors={errors} ja={ja} />}
 
         <div className="ja-nav">
           {step > 1 ? (
             <button className="ja-prev-btn" onClick={handleBack}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-              Previous
+              {ja.previous}
             </button>
           ) : <span />}
           <div className="ja-nav-right">
             {sendError && <p className="ja-send-error">{sendError}</p>}
             <button className={`ja-submit-btn ${sending ? 'ja-submit-btn--disabled' : ''}`} onClick={handleNext} disabled={sending}>
-              {sending ? <><span className="ja-spinner" /> Sending...</> : (
-                <>{step === TOTAL_STEPS ? 'Submit Application' : 'Continue'}
+              {sending ? <><span className="ja-spinner" /> {ja.sending}</> : (
+                <>{step === TOTAL_STEPS ? ja.submitApplication : ja.continue}
                 {step < TOTAL_STEPS && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>}</>
               )}
             </button>
@@ -513,34 +676,28 @@ export default function JobApply() {
       </div>
 
       {showModal && (
-        <div className="ja-modal-overlay">
-          <div className="ja-modal">
+        <div className="ja-modal-overlay" role="presentation">
+          <div className="ja-modal" role="dialog" aria-modal="true" aria-labelledby="ja-modal-title">
+            <p className="ja-modal-brand">DefiGate</p>
 
-            <div className="ja-modal-accent" />
-
-            <div className="ja-modal-icon-wrap">
-              <div className="ja-modal-icon-ring" />
-              <div className="ja-modal-icon">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                  <polyline points="22 4 12 14.01 9 11.01"/>
-                </svg>
-              </div>
+            <div className="ja-modal-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
             </div>
 
-            <div className="ja-modal-body">
-              <h2 className="ja-modal-title">Application Submitted!</h2>
-              <p className="ja-modal-sub">
-                Thank you for applying for <strong>{role.title}</strong> at DefiGate.<br />
-                We'll review your application and get back to you within 5 business days.
-              </p>
-            </div>
+            <h2 id="ja-modal-title" className="ja-modal-title">{ja.modalTitle}</h2>
+            <p className="ja-modal-sub">
+              {ja.modalSub.replace('{role}', role.title)}
+            </p>
 
-            <button className="ja-modal-btn" onClick={() => navigate('/careers')}>
-              Return to Job List
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <button type="button" className="ja-modal-btn" onClick={() => navigate('/careers')}>
+              {ja.returnToList}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </button>
-
           </div>
         </div>
       )}

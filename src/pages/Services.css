@@ -103,7 +103,7 @@
 .sdc-img { width: 100%; height: 100%; object-fit: cover; }
 
 .sdc-header h2 {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 20px;
   font-weight: 700;
   color: var(--text);

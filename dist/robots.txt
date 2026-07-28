@@ -1,4 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 
-Sitemap: https://bravion.com/sitemap.xml
+Sitemap: https://defigate.org/sitemap.xml

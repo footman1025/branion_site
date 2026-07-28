@@ -1,106 +1,23 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { useLang } from '../context/LangContext';
 import './Chatbot.css';
 import iconImg from '../assets/icon.png';
 
-const BOT_NAME = 'DefiGate AI';
-
-const rules = [
-  {
-    match: ['hello', 'hi there', 'hey there', 'greetings', 'good morning', 'good evening', 'howdy'],
-    reply: 'Hey there! 👋 Welcome to DefiGate. I can help you with our services, pricing, team, or anything else. What would you like to know?'
-  },
-  {
-    match: ['role', "site's role", 'purpose', 'what is this site', 'what does this site do', 'mission', 'goal'],
-    reply: 'DefiGate\'s role is to be your end-to-end technology partner. We design, build, and secure digital products — from web and mobile apps to blockchain and AI solutions — helping businesses launch faster, scale confidently, and stay secure.'
-  },
-  {
-    match: ['about', 'know about', 'tell me', 'what is', 'who are', 'this site', 'this company', 'DefiGate', 'your company'],
-    reply: 'DefiGate is a global software development company founded in 2018. We have 12+ engineers across 10+ countries and have delivered 150+ projects. We build web, mobile, blockchain, and AI-powered products for startups and enterprises worldwide.'
-  },
-  {
-    match: ['service', 'services', 'offer', 'what do you do', 'what can you do', 'capabilities'],
-    reply: 'We offer 6 core services:\n\n🌐 Web Development\n📱 Mobile Apps\n⛓️ Blockchain & Web3\n🤖 AI Integration\n☁️ Cloud & DevOps\n🔒 Cybersecurity\n\nWhich one would you like to know more about?'
-  },
-  {
-    match: ['web', 'website', 'web development', 'web app', 'frontend', 'backend', 'fullstack'],
-    reply: 'Our Web Development team builds enterprise-grade apps using React, Next.js, Node.js, and MongoDB. We handle everything from UI/UX design to deployment. Want to start a project?'
-  },
-  {
-    match: ['mobile', 'app', 'android', 'ios', 'react native', 'flutter', 'phone'],
-    reply: 'We build cross-platform iOS & Android apps using React Native. Our apps are fast, offline-capable, and production-ready. We\'ve shipped apps with 100K+ downloads.'
-  },
-  {
-    match: ['blockchain', 'web3', 'smart contract', 'nft', 'defi', 'crypto', 'solidity', 'ethereum'],
-    reply: 'We develop audited smart contracts, DeFi protocols, NFT platforms, and Web3 wallet integrations. Our blockchain team has launched projects with $2M+ TVL.'
-  },
-  {
-    match: ['ai', 'artificial intelligence', 'machine learning', 'ml', 'chatbot', 'gpt', 'llm', 'automation'],
-    reply: 'We integrate AI/ML into your products — LLMs like GPT-4, computer vision, NLP pipelines, and predictive analytics. We can build custom AI features tailored to your business.'
-  },
-  {
-    match: ['cloud', 'devops', 'aws', 'docker', 'kubernetes', 'ci/cd', 'infrastructure', 'hosting', 'deployment'],
-    reply: 'Our DevOps team handles CI/CD pipelines, Docker & Kubernetes containerization, and cloud infrastructure on AWS, GCP, and Azure. We ensure your app scales reliably.'
-  },
-  {
-    match: ['security', 'cybersecurity', 'pentest', 'compliance', 'gdpr', 'soc2', 'hack', 'vulnerability'],
-    reply: 'Our security experts perform penetration testing, SOC2 compliance audits, GDPR readiness assessments, and security hardening. We make sure your product is audit-ready from day one.'
-  },
-  {
-    match: ['price', 'cost', 'pricing', 'how much', 'quote', 'budget', 'rate', 'charge', 'fee'],
-    reply: 'Pricing depends on project scope and complexity. We offer flexible engagement models — fixed price, time & material, or dedicated teams. Fill out our Contact form and we\'ll send a free detailed estimate within 1 hour!'
-  },
-  {
-    match: ['contact', 'reach', 'email', 'talk', 'speak', 'get in touch', 'call', 'phone'],
-    reply: 'You can reach us at:\n📧 dreamtech1025@gmail.com\n📞 +1 (856) 896-4552\n\nOr visit our Contact page to send a message directly. We respond within 1 hour.'
-  },
-  {
-    match: ['team', 'engineers', 'developers', 'staff', 'employees', 'people', 'founder', 'ceo'],
-    reply: 'Our leadership team includes Alex Morgan (CEO), Sarah Chen (CTO), James Rivera (Head of Design), and Priya Patel (Lead Blockchain Dev). We have 12+ engineers globally.'
-  },
-  {
-    match: ['project', 'portfolio', 'case study', 'work', 'clients', 'examples', 'built'],
-    reply: 'We\'ve built projects like FinFlow Dashboard (Fintech), ChainVault (Blockchain), MediTrack Mobile (Healthcare), and NexusAI Platform (AI/SaaS). Check the Case Studies section on our homepage!'
-  },
-  {
-    match: ['process', 'how do you work', 'methodology', 'steps', 'workflow', 'approach'],
-    reply: 'Our process has 4 steps:\n\n1️⃣ Discovery — understand your goals\n2️⃣ Design — wireframes & prototypes\n3️⃣ Build — agile sprints with weekly updates\n4️⃣ Launch & Scale — deployment + ongoing support'
-  },
-  {
-    match: ['time', 'timeline', 'how long', 'duration', 'deadline', 'delivery'],
-    reply: 'Timelines vary by project. A typical MVP takes 6–12 weeks. Enterprise projects can take 3–6 months. We\'ll give you a detailed timeline after the discovery call.'
-  },
-  {
-    match: ['location', 'where', 'country', 'office', 'based', 'headquarters'],
-    reply: 'Our headquarters is in Toronto, Ontario, Canada. We have remote teams across 30+ countries and serve clients globally.'
-  },
-  {
-    match: ['signup', 'sign up', 'register', 'create account', 'join'],
-    reply: 'You can create a free account by clicking "Sign Up" in the top navigation bar. It only takes a minute!'
-  },
-  {
-    match: ['login', 'log in', 'sign in', 'account'],
-    reply: 'Click "Login" in the navbar to access your account. If you don\'t have one yet, click "Sign Up" to register for free.'
-  },
-  {
-    match: ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cheers'],
-    reply: 'Thanks for chatting with DefiGate AI! 🚀 Feel free to come back anytime. Have a great day!'
-  },
+const EMOJIS = [
+  '😀','😂','😍','🥰','😎','🤔','👍','👋','🙏','🔥',
+  '💯','✅','❤️','🚀','💡','🎉','😊','😅','🤝','💪',
+  '😢','😮','🤩','😴','🥳','👏','🌟','💬','📱','⚡',
 ];
 
-function getBotReply(input) {
+function getBotReply(input, rules, fallback) {
   const lower = input.toLowerCase().trim();
-
-  // Score each rule by how many keywords match
   let bestRule = null;
   let bestScore = 0;
 
   for (const rule of rules) {
     let score = 0;
     for (const k of rule.match) {
-      if (lower.includes(k)) {
-        // Longer keyword = more specific = higher score
-        score += k.length;
-      }
+      if (lower.includes(k)) score += k.length;
     }
     if (score > bestScore) {
       bestScore = score;
@@ -109,22 +26,14 @@ function getBotReply(input) {
   }
 
   if (bestRule && bestScore > 0) return bestRule.reply;
-  return "I'm not sure about that specifically, but our team can help! You can reach us at dreamtech1025@gmail.com or visit the Contact page for a free consultation. 😊";
+  return fallback;
 }
 
-const suggestions = ['Our Services', 'Pricing', 'Contact Us', 'About DefiGate', 'Get a Quote'];
-
-const EMOJIS = [
-  '😀','😂','😍','🥰','😎','🤔','👍','👋','🙏','🔥',
-  '💯','✅','❤️','🚀','💡','🎉','😊','😅','🤝','💪',
-  '😢','😮','🤩','😴','🥳','👏','🌟','💬','📱','⚡',
-];
-
 export default function Chatbot() {
+  const { t, lang } = useLang();
+  const cb = t.chatbot;
   const [open, setOpen]           = useState(false);
-  const [messages, setMessages]   = useState([
-    { from: 'bot', text: 'Hi, my name is Dream. I am the AI assistant that can get you where you want to go 🤖', time: now() }
-  ]);
+  const [messages, setMessages]   = useState([]);
   const [input, setInput]         = useState('');
   const [typing, setTyping]       = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
@@ -133,6 +42,18 @@ export default function Chatbot() {
   const fileRef   = useRef(null);
   const bottomRef = useRef(null);
   const recTimer  = useRef(null);
+
+  const isOnlyGreeting = useCallback((msgs) =>
+    msgs.length === 1 && msgs[0].from === 'bot', []);
+
+  useEffect(() => {
+    setMessages(prev => {
+      if (prev.length === 0 || isOnlyGreeting(prev)) {
+        return [{ from: 'bot', text: cb.greeting, time: now() }];
+      }
+      return prev;
+    });
+  }, [lang, cb.greeting, isOnlyGreeting]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -147,7 +68,11 @@ export default function Chatbot() {
     setTyping(true);
     setTimeout(() => {
       setTyping(false);
-      setMessages(prev => [...prev, { from: 'bot', text: getBotReply(msg), time: now() }]);
+      setMessages(prev => [...prev, {
+        from: 'bot',
+        text: getBotReply(msg, cb.rules, cb.fallback),
+        time: now(),
+      }]);
     }, 900);
   };
 
@@ -172,7 +97,7 @@ export default function Chatbot() {
       setTyping(false);
       setMessages(prev => [...prev, {
         from: 'bot',
-        text: `Thanks for sharing "${file.name}"! Our team will review it. You can also email us directly at dreamtech1025@gmail.com.`,
+        text: cb.fileThanks.replace('{name}', file.name),
         time: now(),
       }]);
     }, 900);
@@ -186,7 +111,7 @@ export default function Chatbot() {
       setRecSeconds(0);
       setMessages(prev => [...prev, {
         from: 'user',
-        text: `🎤 Voice message (${secs}s)`,
+        text: `🎤 ${cb.voiceMessage} (${secs}s)`,
         time: now(),
       }]);
       setTyping(true);
@@ -194,7 +119,7 @@ export default function Chatbot() {
         setTyping(false);
         setMessages(prev => [...prev, {
           from: 'bot',
-          text: "I received your voice message! Unfortunately I can't process audio yet, but our team will get back to you. You can also type your question here. 😊",
+          text: cb.voiceReply,
           time: now(),
         }]);
       }, 900);
@@ -207,52 +132,57 @@ export default function Chatbot() {
 
   return (
     <>
-      <button className="chat-fab" onClick={() => setOpen(!open)} aria-label="Open chat">
+      <button className="chat-fab" onClick={() => setOpen(!open)} aria-label={open ? cb.closeChat : cb.openChat}>
         {open ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
         ) : (
-          <img src={iconImg} alt="Chat assistant" className="chat-fab-avatar" />
+          <img src={iconImg} alt={cb.assistantName} className="chat-fab-avatar" />
         )}
       </button>
 
       {open && (
         <div className="chat-window">
-          {/* Top bar */}
           <div className="chat-topbar">
             <div className="chat-topbar-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              Messages
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+              </svg>
+              {cb.messagesTitle}
             </div>
-            <button className="chat-topbar-close" onClick={() => setOpen(false)}>⌄</button>
+            <button className="chat-topbar-close" onClick={() => setOpen(false)} aria-label={cb.minimizeChat}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
           </div>
 
-          {/* Agent header */}
           <div className="chat-header">
             <div className="chat-header-left">
               <div className="chat-avatar">
-                <img src={iconImg} alt="Dream" />
+                <img src={iconImg} alt={cb.assistantName} />
                 <span className="chat-avatar-online" />
               </div>
               <div className="chat-header-info">
-                <strong>{BOT_NAME}</strong>
+                <strong>{cb.botName}</strong>
+                <span className="chat-header-sub">{cb.headerSub}</span>
               </div>
-              <button className="chat-header-chevron" style={{display:'none'}}>⌄</button>
             </div>
           </div>
 
-          {/* Messages */}
           <div className="chat-body">
             {messages.map((m, i) => (
               <div key={i} className={`chat-msg ${m.from}`}>
                 {m.from === 'bot' && (
                   <div className="msg-avatar">
-                    <img src={iconImg} alt="Dream" />
+                    <img src={iconImg} alt={cb.assistantName} />
                   </div>
                 )}
                 <div className="msg-content">
                   {m.from === 'bot' && (
                     <div className="msg-sender">
-                      {BOT_NAME} <span className="msg-bot-tag">Bot</span>
+                      {cb.assistantName} <span className="msg-bot-tag">{cb.botTag}</span>
                     </div>
                   )}
                   <div className={`chat-bubble ${m.from}`}>
@@ -262,7 +192,14 @@ export default function Chatbot() {
                   </div>
                   <div className="msg-meta">
                     <span className="msg-time">{m.time}</span>
-                    {m.from === 'user' && <span className="msg-read">✔✔ Read</span>}
+                    {m.from === 'user' && (
+                      <span className="msg-read" aria-label={cb.read}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M18 6 7 17l-5-5" />
+                          <path d="m22 6-11 11-2-2" />
+                        </svg>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -270,7 +207,7 @@ export default function Chatbot() {
             {typing && (
               <div className="chat-msg bot">
                 <div className="msg-avatar">
-                  <img src={iconImg} alt="Dream" />
+                  <img src={iconImg} alt={cb.assistantName} />
                 </div>
                 <div className="msg-content">
                   <div className="chat-bubble bot typing">
@@ -282,56 +219,68 @@ export default function Chatbot() {
             <div ref={bottomRef} />
           </div>
 
-          {/* Input */}
           <div className="chat-footer">
-            {/* Emoji picker */}
             {showEmoji && (
               <div className="emoji-picker">
                 {EMOJIS.map(e => (
-                  <button key={e} className="emoji-btn" onClick={() => insertEmoji(e)}>{e}</button>
+                  <button key={e} type="button" className="emoji-btn" onClick={() => insertEmoji(e)}>{e}</button>
                 ))}
               </div>
             )}
 
             <div className="chat-footer-box">
-              {/* Recording indicator */}
               {recording ? (
                 <div className="rec-indicator">
                   <span className="rec-dot" />
-                  Recording… {recSeconds}s
+                  {cb.recording} {recSeconds}s
                 </div>
               ) : (
                 <input
                   type="text"
-                  placeholder="Compose your message..."
+                  placeholder={cb.placeholder}
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={handleKey}
-                  aria-label="Chat input"
+                  aria-label={cb.placeholder}
                 />
               )}
 
               <div className="chat-footer-bottom">
                 <div className="chat-footer-icons">
-                  {/* Emoji */}
-                  <button className={`footer-icon-btn ${showEmoji ? 'active' : ''}`} onClick={() => setShowEmoji(v => !v)} aria-label="Emoji" title="Emoji">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                  <button type="button" className={`footer-icon-btn ${showEmoji ? 'active' : ''}`} onClick={() => setShowEmoji(v => !v)} aria-label={cb.emoji} title={cb.emoji}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M8.5 14.5c.9 1.1 2.1 1.7 3.5 1.7s2.6-.6 3.5-1.7" />
+                      <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none" />
+                      <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none" />
+                    </svg>
                   </button>
-                  {/* Attach */}
-                  <button className="footer-icon-btn" onClick={() => fileRef.current.click()} aria-label="Attach file" title="Attach file">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                  <button type="button" className="footer-icon-btn" onClick={() => fileRef.current.click()} aria-label={cb.attachFile} title={cb.attachFile}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                    </svg>
                   </button>
                   <input ref={fileRef} type="file" style={{ display: 'none' }} onChange={handleFileChange} />
-                  {/* Voice */}
-                  <button className={`footer-icon-btn ${recording ? 'recording' : ''}`} onClick={toggleRecording} aria-label={recording ? 'Stop recording' : 'Voice message'} title={recording ? 'Stop' : 'Voice message'}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="12" x2="4" y2="12"/><line x1="8" y1="8" x2="8" y2="16"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="16" y1="8" x2="16" y2="16"/><line x1="20" y1="12" x2="20" y2="12"/></svg>
+                  <button type="button" className={`footer-icon-btn ${recording ? 'recording' : ''}`} onClick={toggleRecording} aria-label={recording ? cb.stopRecording : cb.voice} title={recording ? cb.stop : cb.voice}>
+                    {recording ? (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none" />
+                      </svg>
+                    ) : (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                        <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
+                        <path d="M12 18v4" />
+                        <path d="M8 22h8" />
+                      </svg>
+                    )}
                   </button>
                 </div>
 
-                <button className="chat-send-btn" onClick={() => sendMessage()} aria-label="Send">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"/>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2" fill="currentColor" stroke="none"/>
+                <button type="button" className="chat-send-btn" onClick={() => sendMessage()} aria-label={cb.send}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
                   </svg>
                 </button>
               </div>

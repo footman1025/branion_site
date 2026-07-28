@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   } = req.body || {};
 
   const html = `
-    <div style="font-family:Arial,sans-serif;max-width:700px;margin:0 auto;color:#1e293b">
+    <div style="font-family:'Roboto',Arial,sans-serif;max-width:700px;margin:0 auto;color:#1e293b">
       <div style="background:#0ea5e9;padding:24px 32px;border-radius:10px 10px 0 0">
         <h1 style="color:#fff;margin:0;font-size:22px">New Job Application</h1>
         <p style="color:#e0f2fe;margin:6px 0 0;font-size:15px">Role: <strong>${role_title}</strong></p>

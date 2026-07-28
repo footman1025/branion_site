@@ -26,7 +26,6 @@ export default function LangSwitcher() {
         aria-expanded={open}
         aria-label="Select language"
       >
-        <span className="lang-flag">{current.flag}</span>
         <span className="lang-code">{current.code.toUpperCase()}</span>
         <span className="lang-chevron">{open ? '▲' : '▼'}</span>
       </button>

@@ -1,6 +1,11 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  /* ── Typography ── */
+  --font-sans: 'Roboto', 'Segoe UI', sans-serif;
+  --font-display: 'Roboto', 'Segoe UI', sans-serif;
+  --font-mono: 'Roboto', 'Segoe UI', sans-serif;
+
   /* ── Bright Sky Blue color palette ── */
   --primary:        #00bfff;   /* bright sky blue */
   --primary-light:  #33ccff;
@@ -50,18 +55,39 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 130%;
+  font-size: 100%;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
+  letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   /* Prevent white flash during navigation */
   min-height: 100vh;
   background-color: var(--bg, #f0fbff);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  letter-spacing: inherit;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -82,12 +108,13 @@ a { text-decoration: none; color: inherit; }
   gap: 8px;
   padding: 12px 26px;
   border-radius: 10px;
+  font-family: inherit;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
   border: none;
   transition: all 0.25s ease;
-  letter-spacing: 0.1px;
+  letter-spacing: 0.01em;
   position: relative;
   overflow: hidden;
 }
@@ -134,12 +161,13 @@ a { text-decoration: none; color: inherit; }
 .section { padding: 96px 0; }
 
 .section-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(28px, 3.5vw, 42px);
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
-  margin-bottom: 14px;  color: var(--text);
-  letter-spacing: -0.5px;
+  margin-bottom: 14px;
+  color: var(--text);
+  letter-spacing: -0.035em;
   line-height: 1.15;
 }
 
@@ -223,7 +251,7 @@ body.light-theme .form-group input,
 body.light-theme .form-group select,
 body.light-theme .form-group textarea { background: #0f1729; border-color: rgba(59,130,246,0.2); color: #e8f0fe; }
 body.light-theme .form-group label { color: #94a3b8; }
-body.light-theme .section-title { color: #e8f0fe; font-family: 'Outfit', sans-serif; }
+body.light-theme .section-title { color: #e8f0fe; }
 body.light-theme .tag { background: rgba(59,130,246,0.12); color: #93c5fd; border-color: rgba(59,130,246,0.2); }
 body.light-theme .stat-card h3 { color: #60a5fa; }
 body.light-theme .stat-card p { color: #94a3b8; }

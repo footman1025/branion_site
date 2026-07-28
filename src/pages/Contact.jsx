@@ -1,4 +1,5 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Contact.css';
 import SEO from '../components/SEO';
 import contactBg from '../assets/contact.jpg';
@@ -53,153 +54,127 @@ function StarField() {
 const COUNTRIES = ['United States','United Kingdom','Canada','Australia','Germany','France','India','UAE','Singapore','Other'];
 const DIALCODES = ['+1','+44','+1','+61','+49','+33','+91','+971','+65'];
 
-const TESTIMONIALS = [
-  {
-    rating: 4.5,
-    review: "In less than three months, DefiGate successfully delivered a stable application. External stakeholders gave overall positive feedback, and the client was impressed with the team's project management. They communicated effectively through Slack, video meetings, Confluence, and Jira.",
-    name: 'Marcus Eng',
-    role: 'CEO, Anatomia (PhysAct)',
-    project: 'Project',
-    projectDesc: 'PhysAct is a mobile app for patients combined with a web platform for doctors that works as a bridge between doctors and patients struggling with depression. Our goal was to develop a product that will successfully launch, attract an audience and help people fight mild depression.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "DefiGate delivered our blockchain platform on time and within budget. The smart contracts were thoroughly audited and the team was proactive in suggesting improvements. Highly recommend for any Web3 project.",
-    name: 'Sarah Chen',
-    role: 'CTO, ChainVault',
-    project: 'Project',
-    projectDesc: 'ChainVault is a DeFi lending protocol built on Ethereum. The platform allows users to deposit collateral and borrow stablecoins with competitive interest rates and full on-chain transparency.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "The team exceeded our expectations at every stage. From discovery to launch, communication was seamless and the final product was polished and performant. We will definitely work with DefiGate again.",
-    name: 'James Rivera',
-    role: 'Founder, NexusAI',
-    project: 'Project',
-    projectDesc: 'NexusAI is an AI-powered SaaS platform that automates customer support workflows using large language models. The platform integrates with existing CRM tools and reduces support ticket volume by up to 60%.',
-    caseLink: '#',
-  },
-  {
-    rating: 4.5,
-    review: "Professional, fast, and detail-oriented. DefiGate built our cross-platform mobile app in React Native and it works flawlessly on both iOS and Android. The code quality was excellent.",
-    name: 'Priya Patel',
-    role: 'Product Manager, MediTrack',
-    project: 'Project',
-    projectDesc: 'MediTrack is a healthcare mobile application that allows patients to track medications, schedule appointments, and communicate securely with their healthcare providers.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "We hired DefiGate for a security audit and penetration test. They found critical vulnerabilities we had missed and provided clear remediation steps. Our platform is now SOC2 compliant thanks to their work.",
-    name: 'Alex Morgan',
-    role: 'CEO, CloudShield',
-    project: 'Project',
-    projectDesc: 'CloudShield is a cybersecurity platform offering automated vulnerability scanning, compliance reporting, and real-time threat monitoring for cloud-native applications.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "Outstanding work on our NFT marketplace. The team handled everything from smart contract development to the frontend UI. Launch day was smooth with zero critical issues.",
-    name: 'Liam Chen',
-    role: 'Co-Founder, NFTForge',
-    project: 'Project',
-    projectDesc: 'NFTForge is a multi-chain NFT marketplace supporting ERC-721 and ERC-1155 tokens. The platform features lazy minting, royalty management, and a curated discovery feed.',
-    caseLink: '#',
-  },
-];
-
 function Stars({ rating }) {
   return (
     <div className="t-stars">
-      <span className="t-rating">{rating}</span>
-      {[1,2,3,4,5].map(i => (
-        <svg key={i} width="16" height="16" viewBox="0 0 24 24"
-          fill={i <= Math.floor(rating) ? '#ef4444' : i - 0.5 === rating ? 'url(#half)' : '#e5e7eb'}
-          xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="half"><stop offset="50%" stopColor="#ef4444"/><stop offset="50%" stopColor="#e5e7eb"/></linearGradient>
-          </defs>
-          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-        </svg>
-      ))}
+      <span className="t-rating">{rating.toFixed(1)}</span>
+      <div className="t-stars-icons" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill={i <= rating ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        ))}
+      </div>
     </div>
   );
 }
 
 function TestimonialsSlider() {
+  const { t: lang } = useLang();
   const [idx, setIdx] = useState(0);
-  const total = TESTIMONIALS.length;
-  const t = TESTIMONIALS[idx];
-  const prev = () => setIdx(i => (i - 1 + total) % total);
-  const next = () => setIdx(i => (i + 1) % total);
+  const [paused, setPaused] = useState(false);
+  const items = lang.home?.testimonials || [];
+  const total = items.length;
+  const item = items[idx] || {};
+  const initials = (item.name || '').split(' ').map((n) => n[0]).join('').slice(0, 2);
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+  const next = () => setIdx((i) => (i + 1) % total);
+
+  useEffect(() => {
+    if (paused || total === 0) return undefined;
+    const interval = setInterval(() => {
+      setIdx((i) => (i + 1) % total);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [total, paused, idx]);
+
+  if (!total) return null;
 
   return (
-    <div className="t-slider">
-      <div className="t-body">
+    <div
+      className="t-slider"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="t-progress" aria-hidden="true">
+        <span key={idx} className={`t-progress-bar ${paused ? 'is-paused' : ''}`} />
+      </div>
+
+      <div className="t-body" key={idx}>
         <div className="t-left">
-          <Stars rating={t.rating} />
-          <p className="t-review">"{t.review}"</p>
+          <div className="t-quote-mark" aria-hidden="true">“</div>
+          <Stars rating={item.rating} />
+          <p className="t-review">{item.review}</p>
           <div className="t-author">
-            <strong>{t.name}</strong>
-            <span>{t.role}</span>
+            <div className="t-avatar" aria-hidden="true">{initials}</div>
+            <div className="t-author-text">
+              <strong>{item.name}</strong>
+              <span>{item.role}</span>
+            </div>
           </div>
         </div>
-        <div className="t-divider" />
+
         <div className="t-right">
-          <h4>{t.project}</h4>
-          <p>{t.projectDesc}</p>
-          <a href={t.caseLink} className="t-case-btn">Full case</a>
+          <span className="t-project-label">{lang.home?.caseStudy || 'Case study'}</span>
+          <h4>{item.project}</h4>
+          <p>{item.projectDesc}</p>
+          <Link to={item.caseLink || '/case-studies'} className="t-case-btn">
+            {lang.home?.fullCase || 'Full case'}
+            <span className="btn-arrow" aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
+
       <div className="t-nav">
-        <button onClick={prev} aria-label="Previous" className="t-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <button type="button" onClick={prev} aria-label="Previous review" className="t-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
         </button>
-        <span className="t-counter">{idx + 1} / {total}</span>
-        <button onClick={next} aria-label="Next" className="t-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <div className="t-dots" role="tablist" aria-label="Reviews">
+          {items.map((review, i) => (
+            <button
+              key={review.name}
+              type="button"
+              role="tab"
+              aria-selected={idx === i}
+              aria-label={`Review from ${review.name}`}
+              className={`t-dot ${idx === i ? 'is-active' : ''}`}
+              onClick={() => setIdx(i)}
+            />
+          ))}
+        </div>
+        <span className="t-counter">{String(idx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+        <button type="button" onClick={next} aria-label="Next review" className="t-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
         </button>
       </div>
     </div>
   );
 }
 
-const features = [
-  {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-    ),
-    title: 'How we start working together',
-    desc: "Fill out the short form below. We'll sign an NDA immediately to protect your idea.",
-  },
-  {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-    ),
-    title: 'Free consultation',
-    desc: 'One of our experts will contact you during 2–5 minutes to talk about your goals, requirements, and technical needs.',
-  },
-  {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-      </svg>
-    ),
-    title: 'Detailed proposal',
-    desc: "See exactly what you'll get: timelines, costs, and the people behind the project. And you're under no obligation to move forward.",
-  },
+const featureIcons = [
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+    </svg>
+  ),
 ];
 
 export default function Contact() {
   const { t } = useLang();
   const cp = t.contactPage;
+  const h = t.home || {};
+  const contactFeatures = cp.features || [];
   const [form, setForm] = useState({
     name: '', email: '', country: '', phone: '', message: '',
   });
@@ -214,20 +189,21 @@ export default function Contact() {
   };
 
   const validate = () => {
+    const v = h.validation || {};
     const errs = {};
-    if (!form.name.trim()) errs.name = 'Name is required';
+    if (!form.name.trim()) errs.name = v.nameRequired || 'Name is required';
     if (!form.email.trim()) {
-      errs.email = 'Email is required';
+      errs.email = v.emailRequired || 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      errs.email = 'Enter a valid email';
+      errs.email = v.emailInvalid || 'Enter a valid email';
     }
-    if (!form.country) errs.country = 'Please select a country';
+    if (!form.country) errs.country = v.countryRequired || 'Please select a country';
     if (!form.phone.trim()) {
-      errs.phone = 'Phone number is required';
+      errs.phone = v.phoneRequired || 'Phone number is required';
     } else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone)) {
-      errs.phone = 'Enter a valid phone number';
+      errs.phone = v.phoneInvalid || 'Enter a valid phone number';
     }
-    if (!form.message.trim()) errs.message = 'Please describe your project';
+    if (!form.message.trim()) errs.message = v.messageRequired || 'Please describe your project';
     return errs;
   };
 
@@ -276,16 +252,15 @@ export default function Contact() {
         <div className="contact-left">
           <div className="contact-left-card">
             <h1 className="contact-headline">
-              Let's Build Your Scalable<br />Software Solution
+              {cp.headline || "Let's Build Your Scalable Software Solution"}
             </h1>
             <p className="contact-sub">
-              Give us a few details about your project. We'll reach out for a friendly
-              conversation, then put together a proposal that fits your timeline and budget.
+              {cp.sub || "Give us a few details about your project. We'll reach out for a friendly conversation, then put together a proposal that fits your timeline and budget."}
             </p>
             <div className="contact-features-row">
-              {features.map(f => (
+              {contactFeatures.map((f, i) => (
                 <div className="cf-card-box" key={f.title}>
-                  <span className="cf-icon">{f.icon}</span>
+                  <span className="cf-icon">{featureIcons[i]}</span>
                   <h4>{f.title}</h4>
                   <p>{f.desc}</p>
                 </div>
@@ -297,12 +272,18 @@ export default function Contact() {
         {/* ── Right: Form card ── */}
         <div className="contact-right">
           <div className="contact-card">
-            <h2>Share Your Project's Vision</h2>
+            <div className="contact-card-header">
+              <span className="contact-card-eyebrow">{h.getStartedTag || 'Get Started'}</span>
+              <h2 className="contact-card-title">{h.formTitle || "Share Your Project's Vision"}</h2>
+              <p className="contact-card-sub">{h.formSub || "Tell us what you're building — we'll reply within 24 hours."}</p>
+            </div>
 
-            <form onSubmit={handleSubmit} noValidate>
+            <form className="contact-form" onSubmit={handleSubmit} noValidate>
               <div className="cf-row">
                 <div className="cf-field">
+                  <label className="cf-label" htmlFor="cf-name">{h.nameLabel || 'Name'}</label>
                   <input
+                    id="cf-name"
                     name="name" type="text" placeholder={cp.namePlaceholder}
                     value={form.name} onChange={handleChange}
                     className={errors.name ? 'cf-input-error' : ''}
@@ -310,7 +291,9 @@ export default function Contact() {
                   {errors.name && <span className="cf-err-msg">{errors.name}</span>}
                 </div>
                 <div className="cf-field">
+                  <label className="cf-label" htmlFor="cf-email">{h.emailLabel || 'Email'}</label>
                   <input
+                    id="cf-email"
                     name="email" type="email" placeholder={cp.emailPlaceholder}
                     value={form.email} onChange={handleChange}
                     className={errors.email ? 'cf-input-error' : ''}
@@ -321,16 +304,22 @@ export default function Contact() {
 
               <div className="cf-row">
                 <div className="cf-field">
-                  <select name="country" value={form.country} onChange={handleChange}
-                    className={errors.country ? 'cf-input-error' : ''}>
-                    <option value="">Country</option>
+                  <label className="cf-label" htmlFor="cf-country">{h.countryLabel || 'Country'}</label>
+                  <select
+                    id="cf-country"
+                    name="country" value={form.country} onChange={handleChange}
+                    className={errors.country ? 'cf-input-error' : ''}
+                  >
+                    <option value="">{h.selectCountry || 'Select country'}</option>
                     {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                   {errors.country && <span className="cf-err-msg">{errors.country}</span>}
                 </div>
                 <div className="cf-field">
+                  <label className="cf-label" htmlFor="cf-phone">{h.phoneLabel || 'Phone'}</label>
                   <input
-                    name="phone" type="tel" placeholder="Phone Number"
+                    id="cf-phone"
+                    name="phone" type="tel" placeholder={h.phonePlaceholder || 'Phone Number'}
                     value={form.phone} onChange={handleChange}
                     className={errors.phone ? 'cf-input-error' : ''}
                   />
@@ -339,7 +328,9 @@ export default function Contact() {
               </div>
 
               <div className="cf-field">
+                <label className="cf-label" htmlFor="cf-message">{h.messageLabel || 'Project details'}</label>
                 <textarea
+                  id="cf-message"
                   name="message" rows={4} placeholder={cp.messagePlaceholder}
                   value={form.message} onChange={handleChange}
                   className={errors.message ? 'cf-input-error' : ''}
@@ -347,26 +338,29 @@ export default function Contact() {
                 {errors.message && <span className="cf-err-msg">{errors.message}</span>}
               </div>
 
-              {/* File attach */}
-              <div className="cf-attach" onClick={() => fileRef.current.click()}>
-                <span>{file ? file.name : 'Attach File'}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <button type="button" className={`cf-attach ${file ? 'has-file' : ''}`} onClick={() => fileRef.current.click()}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
                 </svg>
-                <input ref={fileRef} type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files[0])} />
-              </div>
+                <span>{file ? file.name : (h.attachFile || 'Attach File')}</span>
+              </button>
+              <input ref={fileRef} type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files[0])} />
 
-              {/* NDA note */}
               <div className="cf-nda">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Your idea is 100% protected by our <strong>Non Disclosure Agreement</strong>.</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>{h.ndaPrefix || 'Your idea is 100% protected by our'} <strong>{h.ndaStrong || 'Non Disclosure Agreement'}</strong>.</span>
               </div>
 
               {status === 'success' && <p className="cf-success">{cp.success}</p>}
               {status === 'error'   && <p className="cf-error">{cp.error}</p>}
 
               <button type="submit" className="cf-submit" disabled={status === 'loading'}>
-                {status === 'loading' ? 'Sending...' : 'Submit'}
+                {status === 'loading' ? (h.sending || cp.sending || 'Sending...') : (
+                  <>
+                    {h.submit || cp.send || 'Submit'}
+                    <span className="btn-arrow" aria-hidden="true">→</span>
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -374,47 +368,78 @@ export default function Contact() {
       </div>
       </div>{/* end contact-hero */}
 
-      {/* ── Trusted Clients — full width white section ── */}
-      <section className="clients-section">
-        <div className="clients-inner">
-          <p className="clients-tag">Our clients</p>
-          <h2 className="clients-title">We are trusted</h2>
-          <div className="clients-grid">
-            <div className="client-tile"><span className="client-logo-sap">SAP</span></div>
-            <div className="client-tile">
+      {/* ── Trusted Clients ── */}
+      <section className="contact-clients">
+        <div className="contact-clients-inner">
+          <header className="contact-clients-header">
+            <p className="contact-clients-tag">{h.clientsTag || 'Our clients'}</p>
+            <h2 className="contact-clients-title">{h.clientsTitle || 'We are trusted'}</h2>
+          </header>
+          <ul className="contact-clients-grid" aria-label="Trusted clients">
+            <li className="contact-client">
+              <span className="client-logo-sap">SAP</span>
+            </li>
+            <li className="contact-client">
               <span className="client-logo-decard">
-                <span className="decard-star">✳</span>
+                <span className="decard-star" aria-hidden="true">✳</span>
                 <small>DECARD</small>
               </span>
-            </div>
-            <div className="client-tile"><span className="client-logo-oracle">ORACLE</span></div>
-            <div className="client-tile"><span className="client-logo-coinhook"><b>C</b>&nbsp;coinhook</span></div>
-            <div className="client-tile"><span className="client-logo-nextstreet">next street</span></div>
-            <div className="client-tile"><span className="client-logo-paid">⊛&nbsp;Paid</span></div>
-            <div className="client-tile"><span className="client-logo-xbto">⬡&nbsp;XBTO</span></div>
-            <div className="client-tile"><span className="client-logo-deverus"><em>de</em>verus</span></div>
-          </div>
+            </li>
+            <li className="contact-client">
+              <span className="client-logo-oracle">ORACLE</span>
+            </li>
+            <li className="contact-client">
+              <span className="client-logo-coinhook"><b>C</b>&nbsp;coinhook</span>
+            </li>
+            <li className="contact-client">
+              <span className="client-logo-nextstreet">next street</span>
+            </li>
+            <li className="contact-client">
+              <span className="client-logo-paid">⊛&nbsp;Paid</span>
+            </li>
+            <li className="contact-client">
+              <span className="client-logo-xbto">⬡&nbsp;XBTO</span>
+            </li>
+            <li className="contact-client">
+              <span className="client-logo-deverus"><em>de</em>verus</span>
+            </li>
+          </ul>
         </div>
       </section>
 
       {/* ── Testimonials ── */}
       <section className="testimonials-section">
+        <div className="testimonials-atmosphere" aria-hidden="true" />
         <div className="testimonials-inner">
-          <p className="testimonials-tag">Reviews</p>
-          <h2 className="testimonials-title">Highly satisfied clients</h2>
+          <div className="testimonials-header">
+            <p className="testimonials-tag">{h.reviewsTag || 'Reviews'}</p>
+            <h2 className="testimonials-title">{h.reviewsTitle || 'Highly satisfied clients'}</h2>
+            <p className="testimonials-subtitle">{h.reviewsSub}</p>
+          </div>
           <TestimonialsSlider />
         </div>
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="contact-cta-banner">
-        <div className="cta-banner-content">
-          <h2>Ready to discuss your project with us?</h2>
-          <p>Share your requirements and our team will contact you shortly to plan the next steps and kick off your project fast.</p>
-          <button className="cta-banner-btn" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            Contact us
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-          </button>
+      <section className="contact-cta">
+        <div className="contact-cta-glow" aria-hidden="true" />
+        <div className="contact-cta-inner">
+          <p className="contact-cta-brand">DefiGate</p>
+          <h2 className="contact-cta-title">
+            {t.sections?.ctaTitle || 'Ready to ship your blockchain product?'}
+          </h2>
+          <p className="contact-cta-sub">
+            {t.sections?.ctaSub || "Let's build the infrastructure that powers the next generation of Web3."}
+          </p>
+          <div className="contact-cta-actions">
+            <button
+              type="button"
+              className="contact-cta-btn"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              {t.nav?.contactUs || 'Contact'}
+            </button>
+          </div>
         </div>
       </section>
 

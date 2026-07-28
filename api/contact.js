@@ -57,7 +57,7 @@ export default async function handler(req, res) {
   const attachments = file ? [{ filename: file.originalname, content: file.content }] : [];
 
   const html = `
-    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
+    <div style="font-family:'Roboto',Arial,sans-serif;max-width:600px;margin:0 auto;color:#1e293b">
       <div style="background:#0ea5e9;padding:24px 32px;border-radius:10px 10px 0 0">
         <h1 style="color:#fff;margin:0;font-size:20px">New Project Inquiry</h1>
         <p style="color:#e0f2fe;margin:6px 0 0;font-size:14px">Via "Share Your Project's Vision" form</p>

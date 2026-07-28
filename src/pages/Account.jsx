@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import AvatarCropper from '../components/AvatarCropper';
-import WalletPay from '../components/WalletPay';
 import './Account.css';
 import './Membership.css';
+
+const AvatarCropper = lazy(() => import('../components/AvatarCropper'));
+const WalletPay = lazy(() => import('../components/WalletPay'));
 
 const TABS = [
   { id: 'profile',       label: 'Profile',                icon: '👤' },
@@ -115,12 +116,14 @@ export default function Account() {
             {activeTab === 'membership' && (
               <div className="account-membership">
                 {walletPlan && (
-                  <WalletPay
-                    plan={walletPlan}
-                    billing={annual ? 'annual' : 'monthly'}
-                    onSuccess={handleWalletSuccess}
-                    onCancel={() => setWalletPlan(null)}
-                  />
+                  <Suspense fallback={null}>
+                    <WalletPay
+                      plan={walletPlan}
+                      billing={annual ? 'annual' : 'monthly'}
+                      onSuccess={handleWalletSuccess}
+                      onCancel={() => setWalletPlan(null)}
+                    />
+                  </Suspense>
                 )}
                 <div className="membership-header" style={{ textAlign: 'center', marginBottom: 32 }}>
                   <span className="tag">Plans</span>
@@ -252,11 +255,13 @@ function ProfileTab({ user }) {
   return (
     <>
       {cropping && (
-        <AvatarCropper
-          imageSrc={rawSrc}
-          onDone={handleCropDone}
-          onCancel={() => setCropping(false)}
-        />
+        <Suspense fallback={null}>
+          <AvatarCropper
+            imageSrc={rawSrc}
+            onDone={handleCropDone}
+            onCancel={() => setCropping(false)}
+          />
+        </Suspense>
       )}
       <h2>Profile</h2>
       <form className="profile-form" onSubmit={handleSave}>

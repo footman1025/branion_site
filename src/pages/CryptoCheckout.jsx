@@ -1,176 +1,149 @@
 import { Link } from 'react-router-dom';
+import { useLang } from '../context/LangContext';
 import './CryptoCheckout.css';
-import heroImg from '../assets/service_3.png';
+import heroImg from '../assets/service_3.jpg';
 
-const features = [
-  { 
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 0 1-8 0"/>
-      </svg>
-    ), 
-    title: 'Crypto Payment Integration', 
-    desc: 'Accept payments with stablecoins (USDC, USDT, DAI) and major cryptocurrencies without platform rebuilds.' 
-  },
-  { 
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49"/>
-      </svg>
-    ), 
-    title: 'Seamless Checkout Flow', 
-    desc: 'Smooth, intuitive payment experience that reduces friction and increases conversion rates.' 
-  },
-  { 
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="m21 21-4.35-4.35"/>
-      </svg>
-    ), 
-    title: 'Wallet Connection', 
-    desc: 'Support for MetaMask, WalletConnect, Coinbase Wallet, and other major Web3 wallets.' 
-  },
-  { 
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="1" y="5" width="22" height="14" rx="7"/>
-        <path d="M8 12h8"/>
-        <path d="M12 8v8"/>
-      </svg>
-    ), 
-    title: 'Transaction Tracking', 
-    desc: 'Real-time transaction confirmation, status updates, and comprehensive settlement reporting.' 
-  },
-  { 
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 12l2 2 4-4"/>
-        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
-        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
-        <path d="M3 12h6m6 0h6"/>
-      </svg>
-    ), 
-    title: 'Multi-Chain Support', 
-    desc: 'Accept payments across Ethereum, Polygon, Solana, BNB Chain, and other major blockchains.' 
-  },
-  { 
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 3v5h5"/>
-        <path d="M3 8a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 4"/>
-        <path d="M21 21v-5h-5"/>
-        <path d="M21 16a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 20"/>
-      </svg>
-    ), 
-    title: 'Instant Settlement', 
-    desc: 'Receive stable, reliable transactions with instant settlement and minimal fees.' 
-  },
+const FEATURE_ICONS = [
+  (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  ),
+  (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49" />
+    </svg>
+  ),
+  (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="6" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+      <circle cx="16" cy="14" r="1.5" />
+    </svg>
+  ),
+  (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+      <polyline points="16 7 22 7 22 13" />
+    </svg>
+  ),
+  (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 2L2 7l10 5 10-5-10-5z" />
+      <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+    </svg>
+  ),
+  (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+      <path d="M21 3v5h-5" />
+      <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+      <path d="M3 21v-5h5" />
+    </svg>
+  ),
 ];
 
-const stack = ['Solidity', 'React', 'Node.js', 'Ethereum', 'Polygon', 'Solana', 'USDC', 'USDT', 'DAI', 'MetaMask', 'WalletConnect', 'Stripe'];
-
-const steps = [
-  { num: '01', title: 'Integration Setup', desc: 'API key generation, webhook configuration, and sandbox testing environment.' },
-  { num: '02', title: 'Smart Contracts', desc: 'Audited payment contracts with escrow, refund mechanisms, and security controls.' },
-  { num: '03', title: 'Checkout UI', desc: 'Customizable payment widget that integrates seamlessly with your existing checkout.' },
-  { num: '04', title: 'Launch & Support', desc: 'Mainnet deployment, monitoring, and 24/7 technical support.' },
-];
-
-const benefits = [
-  'Expand your customer base to crypto-native users',
-  'Reduce payment friction and increase conversion rates',
-  'Accept the future of payments without complexity',
-  'Instant settlements with stablecoins',
-  'No platform rebuilds required',
-  'Comprehensive transaction tracking and reporting',
-];
+const STACK = ['Solidity', 'React', 'Node.js', 'Ethereum', 'Polygon', 'Solana', 'USDC', 'USDT', 'DAI', 'MetaMask', 'WalletConnect', 'Stripe'];
 
 export default function CryptoCheckout() {
+  const { t } = useLang();
+  const p = t.cryptoCheckout;
+
   return (
     <main className="cc-page">
-
-      {/* Hero */}
       <section className="cc-hero">
         <img
           src={heroImg}
-          alt="Crypto Checkout"
+          alt={p.heroImgAlt}
           className="cc-hero-img"
+          width={2976}
+          height={1190}
+          decoding="async"
         />
       </section>
 
-      {/* What We Deliver */}
-      <section className="cc-section">
+      <section className="cc-features-section">
         <div className="cc-container">
-          <span className="cc-label">What We Deliver</span>
-          <h2 className="cc-title">Complete Payment Solution</h2>
+          <header className="cc-features-header">
+            <span className="cc-label">{p.featuresLabel}</span>
+            <h2 className="cc-title">{p.featuresTitle}</h2>
+          </header>
           <div className="cc-features-grid">
-            {features.map(f => (
-              <div key={f.title} className="cc-feature-card">
-                <span className="cc-feature-icon">{f.icon}</span>
+            {p.features.map((f, i) => (
+              <article key={f.title} className="cc-feature">
+                <span className="cc-feature-icon">{FEATURE_ICONS[i]}</span>
                 <h3>{f.title}</h3>
                 <p>{f.desc}</p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Why It Matters */}
       <section className="cc-benefits-section">
         <div className="cc-container">
-          <span className="cc-label">Why It Matters</span>
-          <h2 className="cc-title">Key Benefits</h2>
-          <div className="cc-benefits-grid">
-            {benefits.map((benefit, idx) => (
-              <div key={idx} className="cc-benefit-item">
-                <div className="cc-benefit-check">✓</div>
+          <header className="cc-benefits-header">
+            <span className="cc-label">{p.benefitsLabel}</span>
+            <h2 className="cc-title">{p.benefitsTitle}</h2>
+          </header>
+          <ul className="cc-benefits-grid">
+            {p.benefits.map(benefit => (
+              <li key={benefit} className="cc-benefit-item">
+                <span className="cc-benefit-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </span>
                 <p>{benefit}</p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Stack */}
       <section className="cc-stack-section">
         <div className="cc-container">
-          <span className="cc-label">Tech Stack</span>
-          <h2 className="cc-title">Technologies We Use</h2>
-          <div className="cc-stack-pills">
-            {stack.map(s => <span key={s} className="cc-pill">{s}</span>)}
-          </div>
+          <header className="cc-stack-header">
+            <span className="cc-label">{p.stackLabel}</span>
+            <h2 className="cc-title">{p.stackTitle}</h2>
+          </header>
+          <ul className="cc-stack-list">
+            {STACK.map(s => (
+              <li key={s} className="cc-stack-item">{s}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* Process */}
-      <section className="cc-section">
+      <section className="cc-process-section">
         <div className="cc-container">
-          <span className="cc-label">Our Process</span>
-          <h2 className="cc-title">How We Deliver</h2>
-          <div className="cc-steps">
-            {steps.map(s => (
-              <div key={s.num} className="cc-step">
+          <header className="cc-process-header">
+            <span className="cc-label">{p.processLabel}</span>
+            <h2 className="cc-title">{p.processTitle}</h2>
+          </header>
+          <ol className="cc-steps">
+            {p.steps.map(s => (
+              <li key={s.num} className="cc-step">
                 <span className="cc-step-num">{s.num}</span>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* CTA */}
       <section className="cc-cta-section">
+        <div className="cc-cta-glow" aria-hidden="true" />
         <div className="cc-container cc-cta-inner">
-          <h2>Ready to accept crypto payments?</h2>
-          <p>Start accepting the future of payments—without complexity. We'll handle the integration.</p>
-          <Link to="/contact" className="cc-hero-btn">Start a Project</Link>
+          <p className="cc-cta-brand">DefiGate</p>
+          <h2>{p.ctaTitle}</h2>
+          <p className="cc-cta-sub">{p.ctaSub}</p>
+          <Link to="/contact" className="cc-hero-btn cc-cta-btn">{p.ctaBtn}</Link>
         </div>
       </section>
-
     </main>
   );
 }

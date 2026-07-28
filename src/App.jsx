@@ -1,13 +1,16 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { LangProvider } from './context/LangContext';
+import { LangProvider, useLang } from './context/LangContext';
+import { AuthProvider } from './context/AuthContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Chatbot from './components/Chatbot';
-import CookieBanner from './components/CookieBanner';
 import PageProgress from './components/PageProgress';
+
+// Defer non-critical chrome so first paint stays light
+const Chatbot = lazy(() => import('./components/Chatbot'));
+const CookieBanner = lazy(() => import('./components/CookieBanner'));
 
 // Lazy load pages for code splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -36,9 +39,11 @@ const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const Careers = lazy(() => import('./pages/Careers'));
 const JobDetail = lazy(() => import('./pages/JobDetail'));
 const JobApply = lazy(() => import('./pages/JobApply'));
+const Account = lazy(() => import('./pages/Account'));
+const Membership = lazy(() => import('./pages/Membership'));
 
-// Loading fallback component
 function PageLoader() {
+  const { t } = useLang();
   return (
     <div style={{
       display: 'flex',
@@ -48,7 +53,7 @@ function PageLoader() {
       color: '#6b7280',
       fontSize: '14px'
     }}>
-      Loading...
+      {t.common?.loading || 'Loading...'}
     </div>
   );
 }
@@ -127,6 +132,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <LangProvider>
+      <AuthProvider>
         <BrowserRouter>
         <NavigationProvider>
         <PageProgress />
@@ -141,6 +147,8 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/membership" element={<Membership />} />
             <Route path="/products" element={<Products />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/refer" element={<Refer />} />
@@ -161,15 +169,20 @@ export default function App() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/careers/:slug" element={<JobDetail />} />
             <Route path="/careers/:slug/apply" element={<JobApply />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
           </Routes>
           </PageContent>
         </Suspense>
         <Footer />
-        <Chatbot />
+        <Suspense fallback={null}>
+          <Chatbot />
+          <CookieBanner />
+        </Suspense>
         <ScrollToTopBtn />
-        <CookieBanner />
         </NavigationProvider>
       </BrowserRouter>
+      </AuthProvider>
     </LangProvider>
     </HelmetProvider>
   );

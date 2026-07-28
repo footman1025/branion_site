@@ -1,103 +1,44 @@
-﻿import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../context/LangContext';
 import SEO from '../components/SEO';
 import './Home.css';
 import achivementImg from '../assets/achivement.jpg';
-import introductionImg from '../assets/introduction.png';
-import homeImg from '../assets/home.png';
+import introductionImg from '../assets/introduction.jpg';
+import homeImg from '../assets/home.jpg';
 import companyLogo1 from '../assets/company_logo_!.webp';
 import companyLogo2 from '../assets/company_logo_2.webp';
-import products1Img from '../assets/service_1.png';
-import products2Img from '../assets/service_2.png';
-import products3Img from '../assets/service_3.png';
-import products4Img from '../assets/service_4.png';
-import products5Img from '../assets/landing_service_1.png';
-import products0Img from '../assets/landing_service_2.png';
-import products7Img from '../assets/landing_service_3.png';
-import products8Img from '../assets/landing_service_4.png';
+import products1Img from '../assets/service_1.jpg';
+import products2Img from '../assets/service_2.jpg';
+import products3Img from '../assets/service_3.jpg';
+import products4Img from '../assets/service_4.jpg';
+import products5Img from '../assets/landing_service_1.jpg';
+import products0Img from '../assets/landing_service_2.jpg';
+import products7Img from '../assets/landing_service_3.jpg';
+import products8Img from '../assets/landing_service_4.jpg';
 import companyLogo3 from '../assets/company_logo_3.webp';
 import companyLogo4 from '../assets/company_logo_4.webp';
 import companyLogo5 from '../assets/company_logo_5.webp';
 import companyLogo6 from '../assets/company_logo_6.webp';
 import companyLogo7 from '../assets/company_logo_7.webp';
 import companyLogo8 from '../assets/company_logo_8.webp';
-import ceoImg from '../assets/CEO.png';
-import ctoImg from '../assets/CTO.png';
-import cfoImg from '../assets/CFO.png';
-import projectManagerImg from '../assets/project manager.png';
-import marketingManagerImg from '../assets/marketing manager.png';
-import recruiterImg from '../assets/recruiter.png';
-import seniorBlockchainDeveloperImg from '../assets/senior blockchain developer.png';
-import seniorAIDeveloperImg from '../assets/senior AI developer.png';
-import service1 from '../assets/service_1.png';
-import service2 from '../assets/service_2.png';
-import service3 from '../assets/service_3.png';
-import service4 from '../assets/service_4.png';
-import landingService1 from '../assets/landing_service_1.png';
-import landingService2 from '../assets/landing_service_2.png';
-import landingService3 from '../assets/landing_service_3.png';
-import landingService4 from '../assets/landing_service_4.png';
+import ceoImg from '../assets/CEO.jpg';
+import ctoImg from '../assets/CTO.jpg';
+import cfoImg from '../assets/CFO.jpg';
+import projectManagerImg from '../assets/project manager.jpg';
+import marketingManagerImg from '../assets/marketing manager.jpg';
+import recruiterImg from '../assets/recruiter.jpg';
+import seniorBlockchainDeveloperImg from '../assets/senior blockchain developer.jpg';
+import seniorAIDeveloperImg from '../assets/senior AI developer.jpg';
+import service1 from '../assets/service_1.jpg';
+import service2 from '../assets/service_2.jpg';
+import service3 from '../assets/service_3.jpg';
+import service4 from '../assets/service_4.jpg';
+import landingService1 from '../assets/landing_service_1.jpg';
+import landingService2 from '../assets/landing_service_2.jpg';
+import landingService3 from '../assets/landing_service_3.jpg';
+import landingService4 from '../assets/landing_service_4.jpg';
 import landingProductImg from '../assets/landing_product.jpg';
-
-const TESTIMONIALS = [
-  {
-    rating: 5,
-    review: "In less than three months, DefiGate successfully delivered a stable application. External stakeholders gave overall positive feedback, and the client was impressed with the team's project management. They communicated effectively through Slack, video meetings, Confluence, and Jira.",
-    name: 'Marcus Eng',
-    role: 'CEO, Anatomia (PhysAct)',
-    project: 'Project',
-    projectDesc: 'PhysAct is a mobile app for patients combined with a web platform for doctors that works as a bridge between doctors and patients struggling with depression. Our goal was to develop a product that will successfully launch, attract an audience and help people fight mild depression.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "DefiGate delivered our blockchain platform on time and within budget. The smart contracts were thoroughly audited and the team was proactive in suggesting improvements. Highly recommend for any Web3 project.",
-    name: 'Sarah Chen',
-    role: 'CTO, ChainVault',
-    project: 'Project',
-    projectDesc: 'ChainVault is a DeFi lending protocol built on Ethereum. The platform allows users to deposit collateral and borrow stablecoins with competitive interest rates and full on-chain transparency.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "The team exceeded our expectations at every stage. From discovery to launch, communication was seamless and the final product was polished and performant. We will definitely work with DefiGate again.",
-    name: 'James Rivera',
-    role: 'Founder, NexusAI',
-    project: 'Project',
-    projectDesc: 'NexusAI is an AI-powered SaaS platform that automates customer support workflows using large language models. The platform integrates with existing CRM tools and reduces support ticket volume by up to 60%.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "Professional, fast, and detail-oriented. DefiGate built our cross-platform mobile app in React Native and it works flawlessly on both iOS and Android. The code quality was excellent.",
-    name: 'Priya Patel',
-    role: 'Product Manager, MediTrack',
-    project: 'Project',
-    projectDesc: 'MediTrack is a healthcare mobile application that allows patients to track medications, schedule appointments, and communicate securely with their healthcare providers.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "We hired DefiGate for a security audit and penetration test. They found critical vulnerabilities we had missed and provided clear remediation steps. Our platform is now SOC2 compliant thanks to their work.",
-    name: 'Alex Morgan',
-    role: 'CEO, CloudShield',
-    project: 'Project',
-    projectDesc: 'CloudShield is a cybersecurity platform offering automated vulnerability scanning, compliance reporting, and real-time threat monitoring for cloud-native applications.',
-    caseLink: '#',
-  },
-  {
-    rating: 5,
-    review: "Outstanding work on our NFT marketplace. The team handled everything from smart contract development to the frontend UI. Launch day was smooth with zero critical issues.",
-    name: 'Liam Chen',
-    role: 'Co-Founder, NFTForge',
-    project: 'Project',
-    projectDesc: 'NFTForge is a multi-chain NFT marketplace supporting ERC-721 and ERC-1155 tokens. The platform features lazy minting, royalty management, and a curated discovery feed.',
-    caseLink: '#',
-  },
-];
-
-
 
 const SERVICES_DATA = [
   { 
@@ -183,60 +124,94 @@ const homeTeam = [
 function Stars({ rating }) {
   return (
     <div className="t-stars">
-      <span className="t-rating">{rating}</span>
-      {[1,2,3,4,5].map(i => (
-        <svg key={i} width="16" height="16" viewBox="0 0 24 24"
-          fill={i <= Math.floor(rating) ? '#ef4444' : i - 0.5 === rating ? 'url(#half)' : '#e5e7eb'}
-          xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="half"><stop offset="50%" stopColor="#ef4444"/><stop offset="50%" stopColor="#e5e7eb"/></linearGradient>
-          </defs>
-          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-        </svg>
-      ))}
+      <span className="t-rating">{rating.toFixed(1)}</span>
+      <div className="t-stars-icons" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill={i <= rating ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        ))}
+      </div>
     </div>
   );
 }
 
 function TestimonialsSlider() {
+  const { t: lang } = useLang();
   const [idx, setIdx] = useState(0);
-  const total = TESTIMONIALS.length;
-  const t = TESTIMONIALS[idx];
-  const prev = () => setIdx(i => (i - 1 + total) % total);
-  const next = () => setIdx(i => (i + 1) % total);
+  const [paused, setPaused] = useState(false);
+  const items = lang.home?.testimonials || [];
+  const total = items.length;
+  const t = items[idx] || {};
+  const initials = (t.name || '').split(' ').map((n) => n[0]).join('').slice(0, 2);
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+  const next = () => setIdx((i) => (i + 1) % total);
 
   useEffect(() => {
+    if (paused || total === 0) return undefined;
     const interval = setInterval(() => {
-      setIdx(i => (i + 1) % total);
-    }, 4000);
+      setIdx((i) => (i + 1) % total);
+    }, 5500);
     return () => clearInterval(interval);
-  }, [total]);
+  }, [total, paused, idx]);
+
+  if (!total) return null;
 
   return (
-    <div className="t-slider">
-      <div className="t-body">
+    <div
+      className="t-slider"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="t-progress" aria-hidden="true">
+        <span key={idx} className={`t-progress-bar ${paused ? 'is-paused' : ''}`} />
+      </div>
+
+      <div className="t-body" key={idx}>
         <div className="t-left">
+          <div className="t-quote-mark" aria-hidden="true">“</div>
           <Stars rating={t.rating} />
-          <p className="t-review">"{t.review}"</p>
+          <p className="t-review">{t.review}</p>
           <div className="t-author">
-            <strong>{t.name}</strong>
-            <span>{t.role}</span>
+            <div className="t-avatar" aria-hidden="true">{initials}</div>
+            <div className="t-author-text">
+              <strong>{t.name}</strong>
+              <span>{t.role}</span>
+            </div>
           </div>
         </div>
-        <div className="t-divider" />
+
         <div className="t-right">
+          <span className="t-project-label">{lang.home?.caseStudy || 'Case study'}</span>
           <h4>{t.project}</h4>
           <p>{t.projectDesc}</p>
-          <a href={t.caseLink} className="t-case-btn">Full case</a>
+          <Link to={t.caseLink || '/case-studies'} className="t-case-btn">
+            {lang.home?.fullCase || 'Full case'}
+            <span className="btn-arrow" aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
+
       <div className="t-nav">
-        <button onClick={prev} aria-label="Previous" className="t-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <button type="button" onClick={prev} aria-label="Previous review" className="t-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
         </button>
-        <span className="t-counter">{idx + 1} / {total}</span>
-        <button onClick={next} aria-label="Next" className="t-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <div className="t-dots" role="tablist" aria-label="Reviews">
+          {items.map((item, i) => (
+            <button
+              key={item.name}
+              type="button"
+              role="tab"
+              aria-selected={idx === i}
+              aria-label={`Review from ${item.name}`}
+              className={`t-dot ${idx === i ? 'is-active' : ''}`}
+              onClick={() => setIdx(i)}
+            />
+          ))}
+        </div>
+        <span className="t-counter">{String(idx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+        <button type="button" onClick={next} aria-label="Next review" className="t-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
         </button>
       </div>
     </div>
@@ -312,75 +287,111 @@ function ServicesSlider({ services, serviceImages, t }) {
 }
 
 function ExpertiseAccordion() {
+  const { t } = useLang();
   const [expandedIdx, setExpandedIdx] = useState(0);
-  
+
   const expertiseAreas = [
-    { 
-      title: 'Smart Payments', 
+    {
+      title: 'Smart Payments',
       description: 'Production-grade payment solutions with zero transaction fees and instant settlement. Accept 20+ cryptocurrencies directly to your wallet with complete control over your funds. No intermediaries, no chargebacks, no account freezing.',
-      image: landingService1, 
-      link: '/smart-payments' 
+      image: landingService1,
+      link: '/smart-payments',
     },
-    { 
-      title: 'AI Recommendations', 
+    {
+      title: 'AI Recommendations',
       description: 'Intelligent recommendation engine powered by advanced machine learning algorithms. Personalize user experiences and increase conversion rates with AI-driven insights. Real-time analytics and natural language processing for smarter business decisions.',
-      image: landingService2, 
-      link: '/ai-recommendations' 
+      image: landingService2,
+      link: '/ai-recommendations',
     },
-    { 
-      title: 'Crypto Checkout', 
+    {
+      title: 'Crypto Checkout',
       description: 'Seamless cryptocurrency payment integration for e-commerce platforms and SaaS applications. Support multiple payment methods with instant confirmation and webhook notifications. Reduce payment friction and increase customer satisfaction with crypto options.',
-      image: landingService3, 
-      link: '/crypto-checkout' 
+      image: landingService3,
+      link: '/crypto-checkout',
     },
-    { 
-      title: 'Web3 MVPs', 
+    {
+      title: 'Web3 MVPs',
       description: 'Rapid development of Web3 minimum viable products and prototypes with production-ready infrastructure. From smart contracts to frontend dApps, we handle the complete development lifecycle. Launch your blockchain project in weeks, not months.',
-      image: landingService4, 
-      link: '/web3-mvps' 
+      image: landingService4,
+      link: '/web3-mvps',
     },
-  ];
+  ].map(area => {
+    const service = t.servicesMenu?.find(item => item.key === ({ 'Smart Payments': 'web3', 'AI Recommendations': 'nft-dev', 'Crypto Checkout': 'nft-market', 'Web3 MVPs': 'crypto' }[area.title]));
+    return service ? { ...area, title: service.title, description: service.desc } : area;
+  });
 
   return (
     <section className="expertise-accordion-section">
+      <div className="expertise-atmosphere" aria-hidden="true" />
       <div className="expertise-container">
-        {/* Left: Service Image */}
         <div className="expertise-left">
           <div className="service-image-display">
-            <img loading="lazy" key={expandedIdx}
-              src={expertiseAreas[expandedIdx].image} 
-              alt={expertiseAreas[expandedIdx].title} 
-              className="service-display-img" 
-            />
+            {expertiseAreas.map((area, idx) => (
+              <img
+                key={area.title}
+                loading="lazy"
+                src={area.image}
+                alt={area.title}
+                className={`service-display-img ${expandedIdx === idx ? 'is-active' : ''}`}
+              />
+            ))}
+            <div className="expertise-image-meta" key={expandedIdx}>
+              <span className="expertise-image-index">0{expandedIdx + 1}</span>
+              <span className="expertise-image-label">{expertiseAreas[expandedIdx].title}</span>
+            </div>
+          </div>
+          <div className="expertise-dots" role="tablist" aria-label="Expertise areas">
+            {expertiseAreas.map((area, idx) => (
+              <button
+                key={area.title}
+                type="button"
+                role="tab"
+                aria-selected={expandedIdx === idx}
+                className={`expertise-dot ${expandedIdx === idx ? 'is-active' : ''}`}
+                onClick={() => setExpandedIdx(idx)}
+                aria-label={area.title}
+              />
+            ))}
           </div>
         </div>
-        
-        {/* Right: Accordion */}
+
         <div className="expertise-right">
           <div className="expertise-header">
-            <span className="expertise-tag">Expertise</span>
-            <h2 className="expertise-title">Areas of expertise</h2>
+            <span className="expertise-tag">{t.home.expertiseTag}</span>
+            <h2 className="expertise-title">{t.home.expertiseTitle}</h2>
+            <p className="expertise-subtitle">{t.home.expertiseSub}</p>
           </div>
           <div className="accordion-list">
-            {expertiseAreas.map((area, idx) => (
-              <div key={idx} className="accordion-item">
-                <button 
-                  className={`accordion-header ${expandedIdx === idx ? 'active' : ''}`}
-                  onClick={() => setExpandedIdx(idx)}
-                >
-                  <span className="accordion-title">{area.title}</span>
-                  <span className="accordion-icon">{expandedIdx === idx ? '✕' : '+'}</span>
-                </button>
-                {expandedIdx === idx && (
-                  <div className="accordion-content">
-                    <p>{area.description}</p>
-                    <Link to={area.link} className="accordion-btn">
-                      Learn More <span className="btn-arrow">→</span>
-                    </Link>
+            {expertiseAreas.map((area, idx) => {
+              const isOpen = expandedIdx === idx;
+              return (
+                <div key={area.title} className={`accordion-item ${isOpen ? 'is-open' : ''}`}>
+                  <button
+                    type="button"
+                    className={`accordion-header ${isOpen ? 'active' : ''}`}
+                    onClick={() => setExpandedIdx(idx)}
+                    aria-expanded={isOpen}
+                  >
+                    <span className="accordion-num">0{idx + 1}</span>
+                    <span className="accordion-title">{area.title}</span>
+                    <span className="accordion-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M3 9h12M9 3v12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  </button>
+                  <div className={`accordion-panel ${isOpen ? 'is-open' : ''}`}>
+                    <div className="accordion-content">
+                      <p>{area.description}</p>
+                      <Link to={area.link} className="accordion-btn">
+                        {t.home.learnMore}
+                        <span className="btn-arrow" aria-hidden="true">→</span>
+                      </Link>
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -389,71 +400,62 @@ function ExpertiseAccordion() {
 }
 
 function PlatformSection() {
+  const { t } = useLang();
+  const features = t.home.platformFeatures || [];
+  const featureIcons = [
+    (
+      <svg key="fee" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <line x1="12" y1="1" x2="12" y2="23" />
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+      </svg>
+    ),
+    (
+      <svg key="shield" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+    (
+      <svg key="sync" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+        <path d="M21 3v5h-5" />
+        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+        <path d="M3 21v-5h5" />
+      </svg>
+    ),
+  ];
+
   return (
-    <section className="platform-section" style={{ backgroundImage: `url(${landingProductImg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
-      <div className="platform-overlay"></div>
+    <section
+      className="platform-section"
+      style={{ backgroundImage: `url(${landingProductImg})` }}
+    >
+      <div className="platform-overlay" aria-hidden="true" />
       <div className="platform-container">
-        {/* Left: Content */}
         <div className="platform-left">
-          <span className="platform-tag">SELF-HOSTED PAYMENT GATEWAY</span>
-          <h2 className="platform-title">Accept Crypto Payments with Zero Fees.</h2>
-          <p className="platform-description">
-            DefiGate is a self-hosted cryptocurrency payment gateway designed specifically for e-commerce businesses. Accept 20+ cryptocurrencies with zero transaction fees, instant settlement, and complete control over your funds. No intermediaries, no chargebacks, no account freezing.
-          </p>
-          
-          <div className="platform-features">
-            <div className="platform-feature">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 1v22M17 5H9.5a4 4 0 0 0 0 8h5m0 0H9.5a4 4 0 0 1 0-8H17"/>
-                </svg>
-              </div>
-              <div className="feature-text">
-                <h4>Zero Transaction Fees</h4>
-                <p>Keep 100% of your revenue. No 2.9% + $0.30 fees like traditional processors. Save thousands annually.</p>
-              </div>
-            </div>
-            
-            <div className="platform-feature">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="M12 12v4M10 14h4"/>
-                </svg>
-              </div>
-              <div className="feature-text">
-                <h4>Non-Custodial Security</h4>
-                <p>You control your private keys and funds. Payments go directly to your wallet. No third-party can freeze or seize your assets.</p>
-              </div>
-            </div>
-            
-            <div className="platform-feature">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                  <path d="M21 3v5h-5"/>
-                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-                  <path d="M3 21v-5h5"/>
-                </svg>
-              </div>
-              <div className="feature-text">
-                <h4>Self-Hosted Control</h4>
-                <p>Deploy on your own infrastructure. Complete data privacy and independence. No vendor lock-in or monthly fees.</p>
-              </div>
-            </div>
-          </div>
-          
+          <p className="platform-brand">DefiGate</p>
+          <p className="platform-tag">{t.home.platformTag}</p>
+          <h2 className="platform-title">{t.home.platformTitle}</h2>
+          <p className="platform-description">{t.home.platformDesc}</p>
+
+          <ul className="platform-highlights">
+            {features.map((feat, idx) => (
+              <li className="platform-highlight" key={feat.title}>
+                <span className="platform-highlight-icon">{featureIcons[idx]}</span>
+                <span className="platform-highlight-label">{feat.title}</span>
+              </li>
+            ))}
+          </ul>
+
           <div className="platform-actions">
             <a href="https://demo.DefiGate.org" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              Try Live Demo
+              {t.home.tryDemo}
             </a>
-            <Link to="/contact" className="btn btn-outline">
-              Get Started
+            <Link to="/contact" className="btn btn-outline platform-btn-ghost">
+              {t.home.getStartedCta}
             </Link>
           </div>
         </div>
-        
-        {/* Right: Dashboard Image */}
+
         <div className="platform-right">
           <img loading="lazy" src={homeImg} alt="DefiGate Dashboard" className="platform-image" />
         </div>
@@ -465,19 +467,14 @@ function PlatformSection() {
 function HomeContact() {
   const { t } = useLang();
   const cp = t.contactPage;
+  const h = t.home;
   const [form, setForm] = useState({ name: '', email: '', country: '', phone: '', message: '' });
   const [file, setFile]   = useState(null);
   const [status, setStatus] = useState(null);
   const [errors, setErrors] = useState({});
   const fileRef = useRef(null);
 
-  const steps = [
-    'Install DefiGate in 5 minutes using Docker Compose or Kubernetes.',
-    'Enable the cryptocurrencies you want to accept (BTC, ETH, USDT, etc.).',
-    'Generate API keys and configure webhooks for payment notifications.',
-    'Integrate with your store using ready-made plugins or REST API.',
-    'Start accepting crypto payments with zero transaction fees and instant settlement.',
-  ];
+  const steps = h.steps || [];
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -486,19 +483,19 @@ function HomeContact() {
 
   const validate = () => {
     const errs = {};
-    if (!form.name.trim()) errs.name = 'Name is required';
+    if (!form.name.trim()) errs.name = h.validation.nameRequired;
     if (!form.email.trim()) {
-      errs.email = 'Email is required';
+      errs.email = h.validation.emailRequired;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      errs.email = 'Enter a valid email';
+      errs.email = h.validation.emailInvalid;
     }
-    if (!form.country) errs.country = 'Please select a country';
+    if (!form.country) errs.country = h.validation.countryRequired;
     if (!form.phone.trim()) {
-      errs.phone = 'Phone number is required';
+      errs.phone = h.validation.phoneRequired;
     } else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone)) {
-      errs.phone = 'Enter a valid phone number';
+      errs.phone = h.validation.phoneInvalid;
     }
-    if (!form.message.trim()) errs.message = 'Please describe your project';
+    if (!form.message.trim()) errs.message = h.validation.messageRequired;
     return errs;
   };
 
@@ -532,98 +529,130 @@ function HomeContact() {
   };
 
   return (
-    <section className="home-contact-section">
+    <section className="home-contact-section" id="get-started">
+      <div className="hc-atmosphere" aria-hidden="true" />
+      <div className="hc-atmosphere hc-atmosphere-2" aria-hidden="true" />
       <div className="home-contact-container">
         <div className="hc-left">
-          <h2 className="hc-title">Ready to accept crypto payments with zero fees?</h2>
-          <p className="hc-sub">Deploy DefiGate in 5 minutes. Complete control over your funds. Start accepting 20+ cryptocurrencies today.</p>
-          <h3 className="hc-next-title">How we get started:</h3>
-          <div className="hc-steps">
-            {steps.map((s, i) => (
-              <div key={i} className="hc-step">
-                <div className="hc-step-num">0{i + 1}</div>
-                <p>{s}</p>
-              </div>
-            ))}
+          <div className="hc-intro">
+            <span className="hc-tag">{h.getStartedTag}</span>
+            <h2 className="hc-title">{h.platformTitle}</h2>
+            <p className="hc-sub">{h.platformDesc}</p>
+          </div>
+
+          <div className="hc-process">
+            <div className="hc-process-head">
+              <h3 className="hc-next-title">{h.howWeStart}</h3>
+              <span className="hc-process-count">{String(steps.length).padStart(2, '0')}</span>
+            </div>
+            <ol className="hc-steps">
+              {steps.map((s, i) => (
+                <li key={s.title} className="hc-step" style={{ '--hc-delay': `${i * 55}ms` }}>
+                  <div className="hc-step-num" aria-hidden="true">
+                    <span>{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <div className="hc-step-body">
+                    <strong>{s.title}</strong>
+                    <p>{s.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
+
         <div className="hc-right">
           <div className="hc-card">
-            <h3 className="hc-card-title">Share Your Project's Vision</h3>
-            {status === 'success' ? (
-              <p className="hc-success">Thanks! Our team will contact you within 24 hours.</p>
-            ) : (
-              <form className="hc-form" onSubmit={handleSubmit} noValidate>
-                <div className="hc-row">
-                  <div className="hc-field">
-                    <input
-                      name="name" type="text" placeholder={cp.namePlaceholder}
-                      value={form.name} onChange={handleChange}
-                      className={errors.name ? 'hc-input-error' : ''}
-                    />
-                    {errors.name && <span className="hc-err-msg">{errors.name}</span>}
-                  </div>
-                  <div className="hc-field">
-                    <input
-                      name="email" type="email" placeholder={cp.emailPlaceholder}
-                      value={form.email} onChange={handleChange}
-                      className={errors.email ? 'hc-input-error' : ''}
-                    />
-                    {errors.email && <span className="hc-err-msg">{errors.email}</span>}
-                  </div>
-                </div>
-
-                <div className="hc-row">
-                  <div className="hc-field">
-                    <select name="country" value={form.country} onChange={handleChange}
-                      className={errors.country ? 'hc-input-error' : ''}>
-                      <option value="">Country</option>
-                      {['United States','United Kingdom','Canada','Australia','Germany','France','India','UAE','Singapore','Other'].map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                    {errors.country && <span className="hc-err-msg">{errors.country}</span>}
-                  </div>
-                  <div className="hc-field">
-                    <input
-                      name="phone" type="tel" placeholder="Phone Number"
-                      value={form.phone} onChange={handleChange}
-                      className={errors.phone ? 'hc-input-error' : ''}
-                    />
-                    {errors.phone && <span className="hc-err-msg">{errors.phone}</span>}
-                  </div>
-                </div>
-
+            <div className="hc-card-header">
+              <span className="hc-card-eyebrow">{h.getStartedTag}</span>
+              <h3 className="hc-card-title">{h.formTitle}</h3>
+              <p className="hc-card-sub">{h.formSub}</p>
+            </div>
+            <form className="hc-form" onSubmit={handleSubmit} noValidate>
+              <div className="hc-row">
                 <div className="hc-field">
-                  <textarea
-                    name="message" rows={4} placeholder={cp.messagePlaceholder}
-                    value={form.message} onChange={handleChange}
-                    className={errors.message ? 'hc-input-error' : ''}
+                  <label className="hc-field-label" htmlFor="hc-name">{h.nameLabel || 'Name'}</label>
+                  <input
+                    id="hc-name"
+                    name="name" type="text" placeholder={cp.namePlaceholder}
+                    value={form.name} onChange={handleChange}
+                    className={errors.name ? 'hc-input-error' : ''}
                   />
-                  {errors.message && <span className="hc-err-msg">{errors.message}</span>}
+                  {errors.name && <span className="hc-err-msg">{errors.name}</span>}
                 </div>
-
-                {/* File attach */}
-                <div className="hc-attach" onClick={() => fileRef.current.click()}>
-                  <span>{file ? file.name : 'Attach File'}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
-                  </svg>
-                  <input ref={fileRef} type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files[0])} />
+                <div className="hc-field">
+                  <label className="hc-field-label" htmlFor="hc-email">{h.emailLabel || 'Email'}</label>
+                  <input
+                    id="hc-email"
+                    name="email" type="email" placeholder={cp.emailPlaceholder}
+                    value={form.email} onChange={handleChange}
+                    className={errors.email ? 'hc-input-error' : ''}
+                  />
+                  {errors.email && <span className="hc-err-msg">{errors.email}</span>}
                 </div>
+              </div>
 
-                {/* NDA note */}
-                <div className="hc-nda">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Your idea is 100% protected by our <strong>Non Disclosure Agreement</strong>.</span>
+              <div className="hc-row">
+                <div className="hc-field">
+                  <label className="hc-field-label" htmlFor="hc-country">{h.countryLabel || 'Country'}</label>
+                  <select
+                    id="hc-country"
+                    name="country" value={form.country} onChange={handleChange}
+                    className={errors.country ? 'hc-input-error' : ''}
+                  >
+                    <option value="">{h.selectCountry || 'Select country'}</option>
+                    {['United States','United Kingdom','Canada','Australia','Germany','France','India','UAE','Singapore','Other'].map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                  {errors.country && <span className="hc-err-msg">{errors.country}</span>}
                 </div>
+                <div className="hc-field">
+                  <label className="hc-field-label" htmlFor="hc-phone">{h.phoneLabel || 'Phone'}</label>
+                  <input
+                    id="hc-phone"
+                    name="phone" type="tel" placeholder={h.phonePlaceholder || 'Phone Number'}
+                    value={form.phone} onChange={handleChange}
+                    className={errors.phone ? 'hc-input-error' : ''}
+                  />
+                  {errors.phone && <span className="hc-err-msg">{errors.phone}</span>}
+                </div>
+              </div>
 
-                {status === 'success' && <p className="hc-success">Thanks! Our team will contact you within 24 hours.</p>}
-                {status === 'error'   && <p className="hc-error">Something went wrong. Please try again.</p>}
+              <div className="hc-field">
+                <label className="hc-field-label" htmlFor="hc-message">{h.messageLabel || 'Project details'}</label>
+                <textarea
+                  id="hc-message"
+                  name="message" rows={4} placeholder={cp.messagePlaceholder}
+                  value={form.message} onChange={handleChange}
+                  className={errors.message ? 'hc-input-error' : ''}
+                />
+                {errors.message && <span className="hc-err-msg">{errors.message}</span>}
+              </div>
 
-                <button type="submit" className="hc-submit" disabled={status === 'loading'}>
-                  {status === 'loading' ? 'Sending...' : 'Submit'}
-                </button>
-              </form>
-            )}
+              <button type="button" className={`hc-attach ${file ? 'has-file' : ''}`} onClick={() => fileRef.current.click()}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                </svg>
+                <span>{file ? file.name : h.attachFile}</span>
+              </button>
+              <input ref={fileRef} type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files[0])} />
+
+              <div className="hc-nda">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>{h.ndaPrefix} <strong>{h.ndaStrong}</strong>.</span>
+              </div>
+
+              {status === 'success' && <p className="hc-success">{cp.success || 'Thanks! Our team will contact you within 24 hours.'}</p>}
+              {status === 'error' && <p className="hc-error">{cp.error || 'Something went wrong. Please try again.'}</p>}
+
+              <button type="submit" className="hc-submit" disabled={status === 'loading'}>
+                {status === 'loading' ? (h.sending || 'Sending...') : (
+                  <>
+                    {h.submit || 'Submit'}
+                    <span className="btn-arrow" aria-hidden="true">→</span>
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -632,11 +661,12 @@ function HomeContact() {
 }
 
 function HomeTeam() {
+  const { t } = useLang();
   return (
     <section className="home-team-section">
       <div className="container">
-        <span className="tag">THE TEAM</span>
-        <h2 className="section-title">Meet Our Team</h2>
+        <span className="tag">{t.home?.teamTag || t.aboutPage?.teamTag || 'THE TEAM'}</span>
+        <h2 className="section-title">{t.home?.teamTitle || t.aboutPage?.teamTitle || 'Meet Our Team'}</h2>
 
         {/* Founders */}
         <div className="team-founders-grid">
@@ -676,42 +706,42 @@ function HomeTeam() {
 }
 
 function EngagementModel() {
+  const { t } = useLang();
+  const e = t.home?.engagement;
+  if (!e) return null;
   return (
     <section className="engagement-model-section">
+      <div className="engagement-atmosphere" aria-hidden="true" />
       <div className="engagement-model-container">
-        <span className="engagement-model-tag">BLOCKCHAIN DEVELOPMENT</span>
-        <h2 className="engagement-model-title">From Protocol to <span className="gradient-text">Production</span>.</h2>
-        <p className="engagement-model-subtitle">A proven four-phase methodology for building production-grade blockchain protocols with security-first development and institutional-grade infrastructure.</p>
-        
-        <div className="engagement-phases">
-          <div className="phase-card phase-card-1">
-            <div className="phase-number">01</div>
-            <h3 className="phase-title">Protocol Design & Tokenomics</h3>
-            <p className="phase-description">Economic modeling, tokenomics design, security architecture, and technical requirements. Deliverable: comprehensive protocol specification, economic audit, and security model documentation.</p>
-            <div className="phase-timeline">Week 1-2</div>
-          </div>
-          
-          <div className="phase-card phase-card-2">
-            <div className="phase-number">02</div>
-            <h3 className="phase-title">Smart Contract Development</h3>
-            <p className="phase-description">Solidity/Rust development with formal verification, automated testing suites, gas optimization, and security vulnerability assessment — all code reviewed and audited before deployment.</p>
-            <div className="phase-timeline">Week 2-6</div>
-          </div>
-          
-          <div className="phase-card phase-card-3">
-            <div className="phase-number">03</div>
-            <h3 className="phase-title">Security Audit & Testing</h3>
-            <p className="phase-description">Comprehensive security audits with third-party verification, mainnet simulation, stress testing, and economic attack vector analysis across all protocol components.</p>
-            <div className="phase-timeline">Week 6-8</div>
-          </div>
-          
-          <div className="phase-card phase-card-4">
-            <div className="phase-number">04</div>
-            <h3 className="phase-title">Deployment & Monitoring</h3>
-            <p className="phase-description">Mainnet deployment, real-time monitoring setup, on-chain analytics implementation, and ongoing security support. Most protocols continue with us for long-term maintenance.</p>
-            <div className="phase-timeline">Ongoing</div>
-          </div>
-        </div>
+        <header className="engagement-header">
+          <span className="engagement-model-tag">{e.tag}</span>
+          <h2 className="engagement-model-title">
+            {e.titleBefore}{' '}
+            <span className="engagement-title-accent">{e.titleHighlight}</span>
+            {e.titleAfter}
+          </h2>
+          <p className="engagement-model-subtitle">{e.subtitle}</p>
+        </header>
+
+        <ol className="engagement-phases">
+          {e.phases.map((phase, idx) => (
+            <li
+              className={`phase-card phase-card-${idx + 1}`}
+              key={phase.title}
+              style={{ '--phase-i': idx }}
+            >
+              <div className="phase-rail" aria-hidden="true">
+                <span className="phase-node">{String(idx + 1).padStart(2, '0')}</span>
+                {idx < e.phases.length - 1 && <span className="phase-connector" />}
+              </div>
+              <div className="phase-body">
+                <h3 className="phase-title">{phase.title}</h3>
+                <p className="phase-description">{phase.desc}</p>
+                <span className="phase-timeline">{phase.timeline}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -720,6 +750,7 @@ function EngagementModel() {
 export default function Home() {
   const { t } = useLang();
   const [services] = useState(SERVICES_DATA);
+  const heroWords = t.hero.titleWords || `${t.hero.title1} ${t.hero.title2}`.split(' ');
 
   const svcPrev = () => {};
   const svcNext = () => {};
@@ -733,7 +764,11 @@ export default function Home() {
       />
       {/* Hero */}
       <section className="hero">
-        <img loading="eager" className="hero-image"
+        <img
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="hero-image"
           src={introductionImg}
           alt="Blockchain Infrastructure"
         />
@@ -742,9 +777,9 @@ export default function Home() {
           <div className="hero-content">
             <p className="hero-eyebrow">{t.hero.eyebrow}</p>
             <h1>
-              <span className="hero-word-1">CREATE.</span>{' '}
-              <span className="hero-word-2">INNOVATE.</span>{' '}
-              <span className="hero-word-3">EVOLVE.</span>
+              {heroWords.slice(0, 3).map((word, index) => (
+                <span key={word} className={`hero-word-${index + 1}`}>{word}{index < Math.min(heroWords.length, 3) - 1 ? ' ' : ''}</span>
+              ))}
             </h1>
             <p className="hero-sub">{t.hero.sub}</p>
             <div className="hero-actions">
@@ -756,26 +791,15 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      {/* Stats Section */}
       <section className="stats-section">
-        <div className="container">
+        <div className="stats-inner">
           <div className="stats-grid">
-            <div className="stat-card">
-              <h3>$20M+</h3>
-              <p>TVL Secured</p>
-            </div>
-            <div className="stat-card">
-              <h3>20+</h3>
-              <p>Protocols Deployed</p>
-            </div>
-            <div className="stat-card">
-              <h3>20+</h3>
-              <p>Chains Supported</p>
-            </div>
-            <div className="stat-card">
-              <h3>100%</h3>
-              <p>Audit Pass Rate</p>
-            </div>
+            {t.stats.map(stat => (
+              <div className="stat-item" key={stat.label}>
+                <span className="stat-value">{stat.value}</span>
+                <span className="stat-label">{stat.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -791,9 +815,13 @@ export default function Home() {
 
       {/* Testimonials */}
       <section className="testimonials-section">
+        <div className="testimonials-atmosphere" aria-hidden="true" />
         <div className="testimonials-inner">
-          <p className="testimonials-tag">Reviews</p>
-          <h2 className="testimonials-title">Highly satisfied clients</h2>
+          <div className="testimonials-header">
+            <p className="testimonials-tag">{t.home.reviewsTag}</p>
+            <h2 className="testimonials-title">{t.home.reviewsTitle}</h2>
+            <p className="testimonials-subtitle">{t.home.reviewsSub}</p>
+          </div>
           <TestimonialsSlider />
         </div>
       </section>
@@ -801,39 +829,30 @@ export default function Home() {
       {/* Trusted Clients */}
       <section className="clients-section">
         <div className="clients-inner">
-          <p className="clients-tag">Our clients</p>
-          <h2 className="clients-title">We are trusted</h2>
-          <div className="clients-scroll-container">
-            <div className="clients-scroll-track">
-              <div className="client-tile"><span className="client-logo-sap">SAP</span></div>
-              <div className="client-tile">
-                <span className="client-logo-decard">
-                  <span className="decard-star">✳</span>
-                  <small>DECARD</small>
-                </span>
+          <header className="clients-header">
+            <p className="clients-tag">{t.home.clientsTag}</p>
+            <h2 className="clients-title">{t.home.clientsTitle}</h2>
+          </header>
+        </div>
+        <div className="clients-scroll-container" aria-label="Trusted clients">
+          <div className="clients-scroll-track">
+            {[0, 1].map((copy) => (
+              <div className="clients-scroll-group" key={copy} aria-hidden={copy === 1}>
+                <div className="client-tile"><span className="client-logo-sap">SAP</span></div>
+                <div className="client-tile">
+                  <span className="client-logo-decard">
+                    <span className="decard-star">✳</span>
+                    <small>DECARD</small>
+                  </span>
+                </div>
+                <div className="client-tile"><span className="client-logo-oracle">ORACLE</span></div>
+                <div className="client-tile"><span className="client-logo-coinhook"><b>C</b>&nbsp;coinhook</span></div>
+                <div className="client-tile"><span className="client-logo-nextstreet">next street</span></div>
+                <div className="client-tile"><span className="client-logo-paid">⊛&nbsp;Paid</span></div>
+                <div className="client-tile"><span className="client-logo-xbto">⬡&nbsp;XBTO</span></div>
+                <div className="client-tile"><span className="client-logo-deverus"><em>de</em>verus</span></div>
               </div>
-              <div className="client-tile"><span className="client-logo-oracle">ORACLE</span></div>
-              <div className="client-tile"><span className="client-logo-coinhook"><b>C</b>&nbsp;coinhook</span></div>
-              <div className="client-tile"><span className="client-logo-nextstreet">next street</span></div>
-              <div className="client-tile"><span className="client-logo-paid">⊛&nbsp;Paid</span></div>
-              <div className="client-tile"><span className="client-logo-xbto">⬡&nbsp;XBTO</span></div>
-              <div className="client-tile"><span className="client-logo-deverus"><em>de</em>verus</span></div>
-              
-              {/* Duplicate for seamless loop */}
-              <div className="client-tile"><span className="client-logo-sap">SAP</span></div>
-              <div className="client-tile">
-                <span className="client-logo-decard">
-                  <span className="decard-star">✳</span>
-                  <small>DECARD</small>
-                </span>
-              </div>
-              <div className="client-tile"><span className="client-logo-oracle">ORACLE</span></div>
-              <div className="client-tile"><span className="client-logo-coinhook"><b>C</b>&nbsp;coinhook</span></div>
-              <div className="client-tile"><span className="client-logo-nextstreet">next street</span></div>
-              <div className="client-tile"><span className="client-logo-paid">⊛&nbsp;Paid</span></div>
-              <div className="client-tile"><span className="client-logo-xbto">⬡&nbsp;XBTO</span></div>
-              <div className="client-tile"><span className="client-logo-deverus"><em>de</em>verus</span></div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

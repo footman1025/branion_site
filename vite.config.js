@@ -6,21 +6,27 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui': ['framer-motion', 'react-icons'],
-        }
-      }
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+          if (id.includes('react-dom') || id.includes('/react/') || id.includes('react-router')) {
+            return 'vendor';
+          }
+          if (id.includes('ethers')) return 'ethers';
+          if (id.includes('axios')) return 'axios';
+          if (id.includes('react-easy-crop')) return 'cropper';
+          if (id.includes('framer-motion') || id.includes('react-icons')) return 'ui';
+        },
+      },
     },
     minify: 'esbuild',
     cssCodeSplit: true,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
-    // Inline assets smaller than 8KB as base64
-    assetsInlineLimit: 8192,
+    // Prefer separate requests over large base64 in JS for images
+    assetsInlineLimit: 2048,
     reportCompressedSize: true,
-    // Target modern browsers for smaller output
     target: 'es2020',
+    modulePreload: { polyfill: false },
   },
   server: {
     host: '0.0.0.0',
@@ -29,10 +35,10 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true,
-      }
+      },
     },
     headers: {
-      'Content-Security-Policy': "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: ws: wss: http: https:"
-    }
-  }
+      'Content-Security-Policy': "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: ws: wss: http: https:",
+    },
+  },
 });

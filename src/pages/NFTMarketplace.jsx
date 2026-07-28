@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './NFTMarketplace.css';
-import heroImg from '../assets/service_3.png';
+import heroImg from '../assets/service_3.jpg';
 
 const features = [
   { 

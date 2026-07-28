@@ -7,14 +7,22 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (!id.includes('node_modules')) return;
-          if (id.includes('react-dom') || id.includes('/react/') || id.includes('react-router')) {
+          const path = id.replace(/\\/g, '/');
+          if (!path.includes('/node_modules/')) return;
+
+          // Keep React + router together. Do NOT split react-easy-crop into its
+          // own chunk — that created a vendor↔cropper circular import and made
+          // React undefined at runtime (Cannot read properties of undefined (reading 'Component')).
+          if (
+            path.includes('/node_modules/react/') ||
+            path.includes('/node_modules/react-dom/') ||
+            path.includes('/node_modules/react-router') ||
+            path.includes('/node_modules/scheduler/')
+          ) {
             return 'vendor';
           }
-          if (id.includes('ethers')) return 'ethers';
-          if (id.includes('axios')) return 'axios';
-          if (id.includes('react-easy-crop')) return 'cropper';
-          if (id.includes('framer-motion') || id.includes('react-icons')) return 'ui';
+          if (path.includes('/node_modules/ethers/')) return 'ethers';
+          if (path.includes('/node_modules/axios/')) return 'axios';
         },
       },
     },
@@ -22,11 +30,9 @@ export default defineConfig({
     cssCodeSplit: true,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
-    // Prefer separate requests over large base64 in JS for images
     assetsInlineLimit: 2048,
     reportCompressedSize: true,
     target: 'es2020',
-    modulePreload: { polyfill: false },
   },
   server: {
     host: '0.0.0.0',

@@ -5,6 +5,8 @@ export const caseStudiesPageTranslations = {
       heroTitle: 'Case Studies &\nCompleted Projects',
       heroSubtitle: 'We work with innovative entrepreneurs to launch products that solve real market needs and create delightful experiences for their users.',
       heroBtn: 'Book a call',
+      sectionTitle: 'Selected work',
+      sectionSub: 'Production builds across blockchain, AI, commerce, and infrastructure.',
       categories: [
         { key: 'All', label: 'All' },
         { key: 'E-Commerce', label: 'E-Commerce' },
@@ -17,7 +19,7 @@ export const caseStudiesPageTranslations = {
         { key: 'DevOps', label: 'DevOps' },
       ],
       featuredLabel: 'Featured',
-      learnMore: 'Learn More →',
+      learnMore: 'Learn more',
       emptyMessage: 'No products found in this category.',
       ctaTitle: 'Have a project in mind?',
       ctaSubtitle: "Let's build something great together. Our team is ready to start within 48 hours.",

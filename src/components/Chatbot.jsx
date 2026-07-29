@@ -134,7 +134,7 @@ export default function Chatbot() {
     <>
       <button className="chat-fab" onClick={() => setOpen(!open)} aria-label={open ? cb.closeChat : cb.openChat}>
         {open ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M18 6 6 18M6 6l12 12" />
           </svg>
         ) : (
@@ -144,20 +144,6 @@ export default function Chatbot() {
 
       {open && (
         <div className="chat-window">
-          <div className="chat-topbar">
-            <div className="chat-topbar-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-              </svg>
-              {cb.messagesTitle}
-            </div>
-            <button className="chat-topbar-close" onClick={() => setOpen(false)} aria-label={cb.minimizeChat}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </button>
-          </div>
-
           <div className="chat-header">
             <div className="chat-header-left">
               <div className="chat-avatar">
@@ -165,10 +151,16 @@ export default function Chatbot() {
                 <span className="chat-avatar-online" />
               </div>
               <div className="chat-header-info">
+                <p className="chat-header-brand">DefiGate</p>
                 <strong>{cb.botName}</strong>
                 <span className="chat-header-sub">{cb.headerSub}</span>
               </div>
             </div>
+            <button className="chat-header-close" onClick={() => setOpen(false)} aria-label={cb.minimizeChat}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
           </div>
 
           <div className="chat-body">
@@ -182,7 +174,8 @@ export default function Chatbot() {
                 <div className="msg-content">
                   {m.from === 'bot' && (
                     <div className="msg-sender">
-                      {cb.assistantName} <span className="msg-bot-tag">{cb.botTag}</span>
+                      {cb.assistantName}
+                      <span className="msg-bot-tag">{cb.botTag}</span>
                     </div>
                   )}
                   <div className={`chat-bubble ${m.from}`}>

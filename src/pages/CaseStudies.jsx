@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLang } from '../context/LangContext';
+import SEO from '../components/SEO';
 import './CaseStudies.css';
-
-const CATEGORIES = ['All', 'E-Commerce', 'Blockchain', 'AI / SaaS', 'Healthcare', 'Cybersecurity', 'Logistics', 'Fintech', 'DevOps'];
 
 const PRODUCTS = [
   { _id:'1', name:'NexusAI',       tagline:'AI-Powered Business Intelligence',      category:'AI / SaaS',     image:'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop', tags:['GPT-4','Python','React','Analytics'], featured:true, link:'#' },
@@ -20,81 +20,147 @@ const PRODUCTS = [
 ];
 
 export default function CaseStudies() {
-  const [products] = useState(PRODUCTS);
+  const { t } = useLang();
+  const c = t.caseStudiesPage || {};
   const [filter, setFilter] = useState('All');
 
-  const filtered = filter === 'All' ? products : products.filter(p => p.category === filter);
+  const categories = c.categories || [
+    { key: 'All', label: 'All' },
+    { key: 'E-Commerce', label: 'E-Commerce' },
+    { key: 'Blockchain', label: 'Blockchain' },
+    { key: 'AI / SaaS', label: 'AI / SaaS' },
+    { key: 'Healthcare', label: 'Healthcare' },
+    { key: 'Cybersecurity', label: 'Cybersecurity' },
+    { key: 'Logistics', label: 'Logistics' },
+    { key: 'Fintech', label: 'Fintech' },
+    { key: 'DevOps', label: 'DevOps' },
+  ];
+
+  const localizedProducts = PRODUCTS.map((p) => {
+    const loc = c.products?.find((x) => x._id === p._id);
+    return loc?.tagline ? { ...p, tagline: loc.tagline } : p;
+  });
+
+  const filtered =
+    filter === 'All'
+      ? localizedProducts
+      : localizedProducts.filter((p) => p.category === filter);
+
+  const titleLines = (c.heroTitle || 'Case Studies &\nCompleted Projects').split('\n');
+
   return (
     <main className="cs-page">
+      <SEO
+        title="Case Studies"
+        description={c.heroSubtitle || 'Explore DefiGate case studies and completed blockchain, AI, and product projects.'}
+        path="/case-studies"
+      />
 
-      {/* Hero */}
-      <section className="cs-hero">
-        <div className="cs-hero-overlay" />
-        <img loading="lazy" className="cs-hero-bg"
-          src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1600&auto=format&fit=crop&q=80"
-          alt=""
-          aria-hidden="true"
-        />
-        <div className="cs-hero-content">
-          <span className="cs-hero-eyebrow">Portfolio</span>
-          <h1>Case Studies &amp;<br />Completed Projects</h1>
-          <p>We work with innovative entrepreneurs to launch products that solve real market needs and create delightful experiences for their users.</p>
-          <Link to="/contact" className="cs-hero-btn">Book a call</Link>
-        </div>
-      </section>
-
-      {/* Products */}
-      {products.length > 0 && (
-        <section className="cs-section cs-products-section">
-          <div className="cs-container">
-            {/* Filter tabs */}
-            <div className="cs-filter">
-              {CATEGORIES.map(c => (
-                <button
-                  key={c}
-                  className={`cs-filter-btn ${filter === c ? 'active' : ''}`}
-                  onClick={() => setFilter(c)}
-                >
-                  {c}
-                </button>
+      <section
+        className="cs-hero"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1600&auto=format&fit=crop&q=80')",
+        }}
+      >
+        <div className="cs-hero-overlay" aria-hidden="true" />
+        <div className="cs-hero-container">
+          <div className="cs-hero-content">
+            <p className="cs-hero-brand">DefiGate</p>
+            <h1 className="cs-hero-title">
+              {titleLines.map((line) => (
+                <span key={line} className="cs-hero-title-line">
+                  {line}
+                </span>
               ))}
-            </div>
-
-            <div className="cs-grid">
-              {filtered.map(p => (
-                <div className="cs-card" key={p._id}>
-                  <div className="cs-img-wrap">
-                    <img loading="lazy" src={p.image} alt={p.name} className="cs-img" />
-                    <span className="cs-category">{p.category}</span>
-                    {p.featured && <span className="cs-featured-badge">Featured</span>}
-                  </div>
-                  <div className="cs-body">
-                    <h3>{p.name}</h3>
-                    <p>{p.tagline || p.description}</p>
-                    <div className="cs-tech">
-                      {(p.tags || []).map(t => <span key={t} className="cs-tag">{t}</span>)}
-                    </div>
-                    <a href={p.link} className="cs-product-link">Learn More →</a>
-                  </div>
-                </div>
-              ))}
-              {filtered.length === 0 && (
-                <p className="cs-empty">No products found in this category.</p>
-              )}
+            </h1>
+            <p className="cs-hero-sub">
+              {c.heroSubtitle ||
+                'We work with innovative entrepreneurs to launch products that solve real market needs and create delightful experiences for their users.'}
+            </p>
+            <div className="cs-hero-actions">
+              <Link to="/contact" className="cs-hero-btn">
+                {c.heroBtn || 'Book a call'}
+              </Link>
             </div>
           </div>
-        </section>
-      )}
-
-      {/* CTA */}
-      <section className="cs-cta">
-        <div className="cs-container cs-cta-inner">
-          <h2>Have a project in mind?</h2>
-          <p>Let's build something great together. Our team is ready to start within 48 hours.</p>
-          <Link to="/contact" className="cs-hero-btn">Start a project</Link>
         </div>
       </section>
 
+      <section className="cs-section cs-products-section">
+        <div className="cs-container">
+          <header className="cs-products-header">
+            <span className="cs-section-tag">{c.heroEyebrow || 'Portfolio'}</span>
+            <h2 className="cs-section-title">
+              {c.sectionTitle || 'Selected work'}
+            </h2>
+            <p className="cs-section-sub">
+              {c.sectionSub || 'Production builds across blockchain, AI, commerce, and infrastructure.'}
+            </p>
+          </header>
+
+          <div className="cs-filter" role="tablist" aria-label="Filter projects">
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                type="button"
+                role="tab"
+                aria-selected={filter === cat.key}
+                className={`cs-filter-btn ${filter === cat.key ? 'active' : ''}`}
+                onClick={() => setFilter(cat.key)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="cs-grid">
+            {filtered.map((p, index) => (
+              <article className="cs-item" key={p._id}>
+                <a href={p.link} className="cs-item-media">
+                  <img loading="lazy" src={p.image} alt={p.name} className="cs-img" />
+                  <span className="cs-item-index">{String(index + 1).padStart(2, '0')}</span>
+                </a>
+                <div className="cs-item-body">
+                  <div className="cs-item-meta">
+                    <span className="cs-item-cat">{p.category}</span>
+                    {p.featured && (
+                      <span className="cs-item-featured">{c.featuredLabel || 'Featured'}</span>
+                    )}
+                  </div>
+                  <h3 className="cs-item-title">{p.name}</h3>
+                  <p className="cs-item-desc">{p.tagline}</p>
+                  <p className="cs-item-stack">{(p.tags || []).join(' · ')}</p>
+                  <a href={p.link} className="cs-item-link">
+                    {c.learnMore || 'Learn more'}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </article>
+            ))}
+            {filtered.length === 0 && (
+              <p className="cs-empty">{c.emptyMessage || 'No products found in this category.'}</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-cta">
+        <div className="cs-cta-glow" aria-hidden="true" />
+        <div className="cs-container cs-cta-inner">
+          <p className="cs-cta-brand">DefiGate</p>
+          <h2 className="cs-cta-title">{c.ctaTitle || 'Have a project in mind?'}</h2>
+          <p className="cs-cta-sub">
+            {c.ctaSubtitle ||
+              "Let's build something great together. Our team is ready to start within 48 hours."}
+          </p>
+          <div className="cs-cta-actions">
+            <Link to="/contact" className="cs-cta-btn">
+              {c.ctaBtn || 'Start a project'}
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -1,9 +1,3 @@
-const RATING_TECHS = [
-  'Solidity', 'Ethereum', 'Smart Contracts', 'Web3.js / ethers.js',
-  'Hardhat / Foundry', 'IPFS', 'DeFi Protocols', 'ERC Standards (ERC-20, ERC-721)',
-  'NFTs', 'DeFi (Uniswap, GMX, dYdX)', 'Git',
-];
-
 const jobApplyEn = {
   backToJob: 'Back to Job',
   back: 'Back',
@@ -93,9 +87,7 @@ const jobApplyEn = {
     githubRequired: 'GitHub profile URL is required.',
     githubInvalid: 'Please enter a valid URL (starting with https://).',
     referralRequired: 'Please tell us how you heard about this role.',
-    expSolidityRequired: 'Please select your Solidity experience.',
-    expSmartContractsRequired: 'Please select your Smart Contracts experience.',
-    expDeFiRequired: 'Please select your DeFi experience.',
+    expSkillRequired: 'Please select your {skill} experience.',
     ratingsRequired: 'Please rate all technologies. Missing: {missing}.',
     skillsRequired: 'Please list your key technical skills.',
     projectLinkRequired: 'A project link is required.',
@@ -139,12 +131,7 @@ const jobApplyEn = {
   visaOptions: ['Yes', 'No', 'Not sure'],
   ratingHint: '0 = No experience | 10 = Expert level',
   ratingQuestion: 'Rate your proficiency (0–10)',
-  expQuestions: {
-    expSolidity: 'How many years of experience do you have in Solidity?',
-    expSmartContracts: 'How many years of experience do you have with Smart Contracts?',
-    expDeFi: 'How many years of experience do you have with DeFi Protocols?',
-  },
-  ratingTechs: RATING_TECHS,
+  expQuestionTemplate: 'How many years of experience do you have in {skill}?',
 };
 
 const jobsEn = {
@@ -419,9 +406,7 @@ export const jobsPageTranslations = {
         githubRequired: 'La URL del perfil de GitHub es obligatoria.',
         githubInvalid: 'Introduce una URL válida (que comience con https://).',
         referralRequired: 'Cuéntanos cómo te enteraste de este puesto.',
-        expSolidityRequired: 'Selecciona tu experiencia en Solidity.',
-        expSmartContractsRequired: 'Selecciona tu experiencia con Smart Contracts.',
-        expDeFiRequired: 'Selecciona tu experiencia con DeFi.',
+        expSkillRequired: 'Selecciona tu experiencia en {skill}.',
         ratingsRequired: 'Califica todas las tecnologías. Faltan: {missing}.',
         skillsRequired: 'Enumera tus habilidades técnicas clave.',
         projectLinkRequired: 'Se requiere un enlace al proyecto.',
@@ -465,12 +450,7 @@ export const jobsPageTranslations = {
       visaOptions: ['Sí', 'No', 'No estoy seguro/a'],
       ratingHint: '0 = Sin experiencia | 10 = Nivel experto',
       ratingQuestion: 'Califica tu dominio (0–10)',
-      expQuestions: {
-        expSolidity: '¿Cuántos años de experiencia tienes en Solidity?',
-        expSmartContracts: '¿Cuántos años de experiencia tienes con Smart Contracts?',
-        expDeFi: '¿Cuántos años de experiencia tienes con protocolos DeFi?',
-      },
-      ratingTechs: RATING_TECHS,
+      expQuestionTemplate: '¿Cuántos años de experiencia tienes en {skill}?',
     },
     jobs: {
       'senior-blockchain-engineer': {
@@ -727,9 +707,7 @@ export const jobsPageTranslations = {
         githubRequired: 'L’URL du profil GitHub est obligatoire.',
         githubInvalid: 'Veuillez saisir une URL valide (commençant par https://).',
         referralRequired: 'Dites-nous comment vous avez entendu parler de ce poste.',
-        expSolidityRequired: 'Veuillez sélectionner votre expérience en Solidity.',
-        expSmartContractsRequired: 'Veuillez sélectionner votre expérience avec les Smart Contracts.',
-        expDeFiRequired: 'Veuillez sélectionner votre expérience avec la DeFi.',
+        expSkillRequired: 'Veuillez sélectionner votre expérience en {skill}.',
         ratingsRequired: 'Veuillez noter toutes les technologies. Manquantes : {missing}.',
         skillsRequired: 'Veuillez lister vos compétences techniques clés.',
         projectLinkRequired: 'Un lien vers le projet est obligatoire.',
@@ -773,12 +751,7 @@ export const jobsPageTranslations = {
       visaOptions: ['Oui', 'Non', 'Pas sûr'],
       ratingHint: '0 = Aucune expérience | 10 = Niveau expert',
       ratingQuestion: 'Évaluez votre maîtrise (0–10)',
-      expQuestions: {
-        expSolidity: 'Combien d’années d’expérience avez-vous en Solidity ?',
-        expSmartContracts: 'Combien d’années d’expérience avez-vous avec les Smart Contracts ?',
-        expDeFi: 'Combien d’années d’expérience avez-vous avec les protocoles DeFi ?',
-      },
-      ratingTechs: RATING_TECHS,
+      expQuestionTemplate: "Combien d'années d'expérience avez-vous en {skill} ?",
     },
     jobs: {
       'senior-blockchain-engineer': {
@@ -1035,9 +1008,7 @@ export const jobsPageTranslations = {
         githubRequired: 'GitHub-profiel-URL is verplicht.',
         githubInvalid: 'Voer een geldige URL in (beginnend met https://).',
         referralRequired: 'Vertel ons hoe je over deze functie hoorde.',
-        expSolidityRequired: 'Selecteer je Solidity-ervaring.',
-        expSmartContractsRequired: 'Selecteer je Smart Contracts-ervaring.',
-        expDeFiRequired: 'Selecteer je DeFi-ervaring.',
+        expSkillRequired: 'Selecteer je {skill}-ervaring.',
         ratingsRequired: 'Beoordeel alle technologieën. Ontbrekend: {missing}.',
         skillsRequired: 'Noem je belangrijkste technische vaardigheden.',
         projectLinkRequired: 'Een projectlink is verplicht.',
@@ -1081,12 +1052,7 @@ export const jobsPageTranslations = {
       visaOptions: ['Ja', 'Nee', 'Weet ik niet'],
       ratingHint: '0 = Geen ervaring | 10 = Expertniveau',
       ratingQuestion: 'Beoordeel je vaardigheid (0–10)',
-      expQuestions: {
-        expSolidity: 'Hoeveel jaar ervaring heb je met Solidity?',
-        expSmartContracts: 'Hoeveel jaar ervaring heb je met Smart Contracts?',
-        expDeFi: 'Hoeveel jaar ervaring heb je met DeFi-protocollen?',
-      },
-      ratingTechs: RATING_TECHS,
+      expQuestionTemplate: 'Hoeveel jaar ervaring heb je met {skill}?',
     },
     jobs: {
       'senior-blockchain-engineer': {
@@ -1343,9 +1309,7 @@ export const jobsPageTranslations = {
         githubRequired: 'A URL do perfil do GitHub é obrigatória.',
         githubInvalid: 'Insira uma URL válida (começando com https://).',
         referralRequired: 'Conte-nos como você soube desta vaga.',
-        expSolidityRequired: 'Selecione sua experiência em Solidity.',
-        expSmartContractsRequired: 'Selecione sua experiência com Smart Contracts.',
-        expDeFiRequired: 'Selecione sua experiência com DeFi.',
+        expSkillRequired: 'Selecione sua experiência em {skill}.',
         ratingsRequired: 'Avalie todas as tecnologias. Faltando: {missing}.',
         skillsRequired: 'Liste suas principais habilidades técnicas.',
         projectLinkRequired: 'Um link do projeto é obrigatório.',
@@ -1389,12 +1353,7 @@ export const jobsPageTranslations = {
       visaOptions: ['Sim', 'Não', 'Não tenho certeza'],
       ratingHint: '0 = Sem experiência | 10 = Nível expert',
       ratingQuestion: 'Avalie sua proficiência (0–10)',
-      expQuestions: {
-        expSolidity: 'Quantos anos de experiência você tem em Solidity?',
-        expSmartContracts: 'Quantos anos de experiência você tem com Smart Contracts?',
-        expDeFi: 'Quantos anos de experiência você tem com protocolos DeFi?',
-      },
-      ratingTechs: RATING_TECHS,
+      expQuestionTemplate: 'Quantos anos de experiência você tem em {skill}?',
     },
     jobs: {
       'senior-blockchain-engineer': {
@@ -1651,9 +1610,7 @@ export const jobsPageTranslations = {
         githubRequired: 'L’URL del profilo GitHub è obbligatorio.',
         githubInvalid: 'Inserisci un URL valido (che inizia con https://).',
         referralRequired: 'Dicci come hai saputo di questo ruolo.',
-        expSolidityRequired: 'Seleziona la tua esperienza in Solidity.',
-        expSmartContractsRequired: 'Seleziona la tua esperienza con Smart Contracts.',
-        expDeFiRequired: 'Seleziona la tua esperienza con DeFi.',
+        expSkillRequired: 'Seleziona la tua esperienza in {skill}.',
         ratingsRequired: 'Valuta tutte le tecnologie. Mancanti: {missing}.',
         skillsRequired: 'Elenca le tue competenze tecniche principali.',
         projectLinkRequired: 'È richiesto un link al progetto.',
@@ -1697,12 +1654,7 @@ export const jobsPageTranslations = {
       visaOptions: ['Sì', 'No', 'Non sono sicuro'],
       ratingHint: '0 = Nessuna esperienza | 10 = Livello expert',
       ratingQuestion: 'Valuta la tua competenza (0–10)',
-      expQuestions: {
-        expSolidity: 'Quanti anni di esperienza hai in Solidity?',
-        expSmartContracts: 'Quanti anni di esperienza hai con Smart Contracts?',
-        expDeFi: 'Quanti anni di esperienza hai con protocolli DeFi?',
-      },
-      ratingTechs: RATING_TECHS,
+      expQuestionTemplate: 'Quanti anni di esperienza hai in {skill}?',
     },
     jobs: {
       'senior-blockchain-engineer': {

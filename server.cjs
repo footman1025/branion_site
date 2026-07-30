@@ -41,9 +41,13 @@ app.post('/api/send-application', async (req, res) => {
       </table>
       <h2 style="color:#0ea5e9;font-size:16px;border-bottom:1px solid #e2e8f0;padding-bottom:8px">Previous Experience</h2>
       <table style="width:100%;border-collapse:collapse;margin-bottom:12px">
-        ${row('Solidity Experience',d.exp_solidity)}
-        ${row('Smart Contracts Experience',d.exp_contracts)}
-        ${row('DeFi Protocols Experience',d.exp_defi)}
+        ${Array.isArray(d.experience_rows) && d.experience_rows.length
+          ? d.experience_rows.map((item) => row(item.label, item.value)).join('')
+          : [
+              row('Solidity Experience', d.exp_solidity),
+              row('Smart Contracts Experience', d.exp_contracts),
+              row('DeFi Protocols Experience', d.exp_defi),
+            ].join('')}
       </table>
       <p style="font-weight:600;margin:0 0 8px;font-size:14px">Technology Ratings (0–10):</p>
       <pre style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:12px;font-size:13px;white-space:pre-wrap;margin:0 0 24px">${d.ratings}</pre>

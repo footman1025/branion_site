@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { useLang } from '../context/LangContext';
+import { getJobApplyProfile } from '../i18n/jobApplyProfiles';
 import './JobApply.css';
 
 const TOTAL_STEPS = 4;
@@ -202,13 +203,15 @@ function validateStep1(d, v) {
   return e;
 }
 
-function validateStep2(d, v, ratingTechs) {
+function validateStep2(d, v, expSkills, ratingTechs) {
   const e = {};
-  if (!d.expSolidity)       e.expSolidity       = v.expSolidityRequired;
-  if (!d.expSmartContracts) e.expSmartContracts  = v.expSmartContractsRequired;
-  if (!d.expDeFi)           e.expDeFi            = v.expDeFiRequired;
+  for (const skill of expSkills) {
+    if (!d.answers?.[skill]) {
+      e[`exp:${skill}`] = v.expSkillRequired.replace('{skill}', skill);
+    }
+  }
   const unrated = ratingTechs.filter(t => !d.ratings?.[t]);
-  if (unrated.length > 0)   e.ratings = v.ratingsRequired.replace('{missing}', unrated.join(', '));
+  if (unrated.length > 0) e.ratings = v.ratingsRequired.replace('{missing}', unrated.join(', '));
   return e;
 }
 
@@ -327,7 +330,7 @@ function RadioGroup({ question, name, value, onChange, error, options }) {
   );
 }
 
-function RatingGrid({ ratings, onChange, error, ja }) {
+function RatingGrid({ ratings, onChange, error, ja, ratingTechs }) {
   const cols = [1,2,3,4,5,6,7,8,9,10];
   return (
     <div className="ja-rating-section">
@@ -338,7 +341,7 @@ function RatingGrid({ ratings, onChange, error, ja }) {
           <div className="ja-rating-tech-col" />
           {cols.map(n => <div key={n} className="ja-rating-num">{n}</div>)}
         </div>
-        {ja.ratingTechs.map(tech => (
+        {ratingTechs.map(tech => (
           <div key={tech} className={`ja-rating-row ${!ratings[tech] && error ? 'ja-rating-row--missing' : ''}`}>
             <div className="ja-rating-tech-col">{tech}</div>
             {cols.map(n => (
@@ -355,15 +358,18 @@ function RatingGrid({ ratings, onChange, error, ja }) {
   );
 }
 
-function StepExperience({ data, onChange, errors, ja }) {
+function StepExperience({ data, onChange, errors, ja, profile }) {
   return (
     <div className="ja-form-card">
       <h2 className="ja-form-card-title">{ja.steps.experience.title}</h2>
-      {Object.entries(ja.expQuestions).map(([key, label]) => (
+      {profile.expSkills.map((skill) => (
         <RadioGroup
-          key={key} question={label} name={key}
-          value={data[key] || ''} onChange={val => onChange(key, val)}
-          error={errors[key]}
+          key={skill}
+          question={ja.expQuestionTemplate.replace('{skill}', skill)}
+          name={`exp-${skill}`}
+          value={data.answers?.[skill] || ''}
+          onChange={(val) => onChange('answers', { ...(data.answers || {}), [skill]: val })}
+          error={errors[`exp:${skill}`]}
           options={ja.expYears}
         />
       ))}
@@ -372,13 +378,14 @@ function StepExperience({ data, onChange, errors, ja }) {
         onChange={(tech, val) => onChange('ratings', { ...(data.ratings || {}), [tech]: val })}
         error={errors.ratings}
         ja={ja}
+        ratingTechs={profile.ratingTechs}
       />
     </div>
   );
 }
 
 /* ─── Step 3: Skills & Portfolio ─── */
-function StepSkills({ data, onChange, errors, ja }) {
+function StepSkills({ data, onChange, errors, ja, skillsPlaceholder }) {
   const s = ja.steps.skills;
   return (
     <>
@@ -386,7 +393,7 @@ function StepSkills({ data, onChange, errors, ja }) {
         <h2 className="ja-form-card-title">{s.title}</h2>
         <div className="ja-field">
           <label>{s.skills} <span className="ja-req">*</span></label>
-          <input type="text" placeholder={s.skillsPlaceholder}
+          <input type="text" placeholder={skillsPlaceholder || s.skillsPlaceholder}
             value={data.skills} onChange={e => onChange('skills', e.target.value)}
             className={errors.skills ? 'ja-input-invalid' : ''} />
           <FieldError msg={errors.skills} />
@@ -526,6 +533,7 @@ export default function JobApply() {
   const { t } = useLang();
   const ja = t.jobApply;
   const role = t.jobs?.[slug];
+  const profile = getJobApplyProfile(slug);
 
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
@@ -534,9 +542,15 @@ export default function JobApply() {
   const [sendError, setSendError] = useState('');
 
   const [personal,    setPersonal]    = useState({ fullName:'', gender:'', email:'', location:'', linkedin:'', github:'', referral:'' });
-  const [experience,  setExperience]  = useState({ expSolidity:'', expSmartContracts:'', expDeFi:'', ratings:{} });
+  const [experience,  setExperience]  = useState({ answers: {}, ratings: {} });
   const [skills,      setSkills]      = useState({ skills:'', portfolio:'', projectLink:'', projectDesc:'', cvLink:'', proudOf:'', whyFit:'' });
   const [final,       setFinal]       = useState({ startDate:'', salary:'', assessment:'', extra:'', availability:'', hoursPerWeek:'', startImmediately:'', legallyAuthorized:'', visaSponsorship:'' });
+
+  useEffect(() => {
+    setExperience({ answers: {}, ratings: {} });
+    setErrors({});
+    setStep(1);
+  }, [slug]);
 
   if (!role) return <Navigate to="/careers" replace />;
 
@@ -547,7 +561,7 @@ export default function JobApply() {
     const v = ja.validation;
     switch (step) {
       case 1: return validateStep1(personal, v);
-      case 2: return validateStep2(experience, v, ja.ratingTechs);
+      case 2: return validateStep2(experience, v, profile.expSkills, profile.ratingTechs);
       case 3: return validateStep3(skills, v);
       case 4: return validateStep4(final, v);
       default: return {};
@@ -574,7 +588,11 @@ export default function JobApply() {
 
     setSending(true);
     setSendError('');
-    const ratingsText = Object.entries(experience.ratings || {}).map(([t, s]) => `${t}: ${s}/10`).join('\n');
+    const ratingsText = Object.entries(experience.ratings || {}).map(([tech, score]) => `${tech}: ${score}/10`).join('\n');
+    const experienceRows = profile.expSkills.map((skill) => ({
+      label: `${skill} Experience`,
+      value: experience.answers?.[skill] || '',
+    }));
     try {
       const res = await fetch('/api/send-application', {
         method: 'POST',
@@ -583,8 +601,8 @@ export default function JobApply() {
           role_title: role.title,
           full_name: personal.fullName, gender: personal.gender, email: personal.email,
           location: personal.location, linkedin: personal.linkedin, github: personal.github,
-          referral: personal.referral, exp_solidity: experience.expSolidity,
-          exp_contracts: experience.expSmartContracts, exp_defi: experience.expDeFi,
+          referral: personal.referral,
+          experience_rows: experienceRows,
           ratings: ratingsText, skills: skills.skills, portfolio: skills.portfolio || 'N/A',
           project_link: skills.projectLink, project_desc: skills.projectDesc, cv_link: skills.cvLink,
           proud_of: skills.proudOf, why_fit: skills.whyFit, start_date: final.startDate,
@@ -652,8 +670,8 @@ export default function JobApply() {
         )}
 
         {step === 1 && <StepPersonal   data={personal}   onChange={updateField(setPersonal)}   errors={errors} ja={ja} />}
-        {step === 2 && <StepExperience data={experience} onChange={updateField(setExperience)} errors={errors} ja={ja} />}
-        {step === 3 && <StepSkills     data={skills}     onChange={updateField(setSkills)}     errors={errors} ja={ja} />}
+        {step === 2 && <StepExperience data={experience} onChange={updateField(setExperience)} errors={errors} ja={ja} profile={profile} />}
+        {step === 3 && <StepSkills     data={skills}     onChange={updateField(setSkills)}     errors={errors} ja={ja} skillsPlaceholder={profile.skillsPlaceholder} />}
         {step === 4 && <StepFinal      data={final}      onChange={updateField(setFinal)}      errors={errors} ja={ja} />}
 
         <div className="ja-nav">

@@ -321,21 +321,24 @@ export default function Careers() {
           <span className="careers-tag">Open Positions</span>
           <h2 className="careers-section-title">Current Openings</h2>
           <div className="roles-list">
-            {openRoles.map(role => (
+            {openRoles.map(role => {
+              const localized = t.jobs?.[role.slug] || role;
+              return (
               <Link key={role.slug} to={`/careers/${role.slug}`} className="role-card">
                 <div className="role-info">
-                  <span className="role-dept">{role.dept}</span>
-                  <h3 className="role-title">{role.title}</h3>
+                  <span className="role-dept">{localized.dept}</span>
+                  <h3 className="role-title">{localized.title}</h3>
                   <div className="role-meta">
-                    <span className="role-badge">{role.type}</span>
-                    <span className="role-badge">{role.location}</span>
+                    <span className="role-badge">{localized.type}</span>
+                    <span className="role-badge">{localized.location}</span>
                   </div>
                 </div>
                 <svg className="role-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

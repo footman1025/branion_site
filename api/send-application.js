@@ -18,11 +18,19 @@ export default async function handler(req, res) {
   const {
     role_title,
     full_name, gender, email, location, linkedin, github, referral,
-    exp_solidity, exp_contracts, exp_defi, ratings,
+    experience_rows, exp_solidity, exp_contracts, exp_defi, ratings,
     skills, portfolio, project_link, project_desc, cv_link, proud_of, why_fit,
     start_date, salary, assessment, extra,
     availability, hours_per_week, start_immediately, legally_authorized, visa_sponsorship,
   } = req.body || {};
+
+  const experienceHtml = Array.isArray(experience_rows) && experience_rows.length > 0
+    ? experience_rows.map((item) => row(item.label, item.value)).join('')
+    : [
+        row('Solidity Experience', exp_solidity),
+        row('Smart Contracts Experience', exp_contracts),
+        row('DeFi Protocols Experience', exp_defi),
+      ].join('');
 
   const html = `
     <div style="font-family:'Roboto',Arial,sans-serif;max-width:700px;margin:0 auto;color:#1e293b">
@@ -39,9 +47,7 @@ export default async function handler(req, res) {
         </table>
         <h2 style="color:#0ea5e9;font-size:16px;border-bottom:1px solid #e2e8f0;padding-bottom:8px">Previous Experience</h2>
         <table style="width:100%;border-collapse:collapse;margin-bottom:12px">
-          ${row('Solidity Experience', exp_solidity)}
-          ${row('Smart Contracts Experience', exp_contracts)}
-          ${row('DeFi Protocols Experience', exp_defi)}
+          ${experienceHtml}
         </table>
         <p style="font-weight:600;margin:0 0 8px;font-size:14px">Technology Ratings (0–10):</p>
         <pre style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:12px;font-size:13px;white-space:pre-wrap;margin:0 0 24px">${ratings}</pre>

@@ -110,9 +110,12 @@ export default function Products() {
 
   const handleDownload = () => {
     const a = document.createElement('a');
-    a.href = downloadBtn;
-    a.download = 'DefiGate_download.png';
+    a.href = '/Nodeflow.exe';
+    a.download = 'Nodeflow.exe';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
     a.click();
+    a.remove();
   };
 
   useEffect(() => {

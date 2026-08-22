@@ -7,6 +7,7 @@ import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PageProgress from './components/PageProgress';
+import VisitTracker from './components/VisitTracker';
 
 // Defer non-critical chrome so first paint stays light
 const Chatbot = lazy(() => import('./components/Chatbot'));
@@ -135,6 +136,7 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
         <NavigationProvider>
+        <VisitTracker />
         <PageProgress />
         <Navbar />
         <ScrollToTop />

@@ -3,6 +3,7 @@ const express = require('express');
 const cors    = require('cors');
 const multer  = require('multer');
 const { Resend } = require('resend');
+const { handleVisit } = require('./lib/visitNotify.cjs');
 
 const app    = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -10,6 +11,16 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 
 
 app.use(cors());
 app.use(express.json());
+
+app.post('/api/visit', async (req, res) => {
+  try {
+    const result = await handleVisit(req, req.body || {});
+    return res.status(result.status).json(result.body);
+  } catch (err) {
+    console.error('Visit notify error:', err);
+    return res.status(200).json({ success: false, error: err.message || 'Failed to notify' });
+  }
+});
 
 function row(label, value) {
   return `<tr>
